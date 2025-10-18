@@ -31,7 +31,7 @@ namespace QuanLyCuaHangBanh
             }
             else
             {
-                MessageBox.Show("Sai tài kho?n ho?c m?t kh?u!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Sai tài khoản hoặc mật khẩu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

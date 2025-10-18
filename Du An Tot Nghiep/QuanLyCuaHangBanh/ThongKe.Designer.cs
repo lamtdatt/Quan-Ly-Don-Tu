@@ -55,8 +55,6 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges28 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             groupBox1 = new GroupBox();
             btnTimKiemSanPHAM = new Guna.UI2.WinForms.Guna2Button();
             btnTimKiemMaNV = new Guna.UI2.WinForms.Guna2Button();
@@ -75,7 +73,6 @@
             groupBox3 = new GroupBox();
             btnXoaHoaDon = new Guna.UI2.WinForms.Guna2Button();
             txtTongTienn = new Guna.UI2.WinForms.Guna2TextBox();
-            btnLamMoiThongKe = new Guna.UI2.WinForms.Guna2Button();
             dgvDSHD = new DataGridView();
             btnInHoaDon = new Guna.UI2.WinForms.Guna2Button();
             txtTongTien = new Guna.UI2.WinForms.Guna2TextBox();
@@ -272,16 +269,16 @@
             txtMaHD.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
             txtMaHD.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
             txtMaHD.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtMaHD.Font = new Font("Segoe UI", 9F);
+            txtMaHD.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtMaHD.ForeColor = Color.LightGray;
             txtMaHD.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtMaHD.Location = new Point(158, 68);
-            txtMaHD.Margin = new Padding(3, 4, 3, 4);
+            txtMaHD.Location = new Point(156, 74);
+            txtMaHD.Margin = new Padding(4, 5, 4, 5);
             txtMaHD.Name = "txtMaHD";
             txtMaHD.PlaceholderText = "";
             txtMaHD.SelectedText = "";
             txtMaHD.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            txtMaHD.Size = new Size(225, 44);
+            txtMaHD.Size = new Size(226, 51);
             txtMaHD.TabIndex = 4;
             txtMaHD.TextChanged += guna2TextBox1_TextChanged;
             // 
@@ -325,7 +322,6 @@
             // 
             groupBox3.Controls.Add(btnXoaHoaDon);
             groupBox3.Controls.Add(txtTongTienn);
-            groupBox3.Controls.Add(btnLamMoiThongKe);
             groupBox3.Controls.Add(dgvDSHD);
             groupBox3.Controls.Add(btnInHoaDon);
             groupBox3.Controls.Add(txtTongTien);
@@ -350,7 +346,7 @@
             btnXoaHoaDon.ForeColor = Color.White;
             btnXoaHoaDon.Image = (Image)resources.GetObject("btnXoaHoaDon.Image");
             btnXoaHoaDon.ImageSize = new Size(40, 40);
-            btnXoaHoaDon.Location = new Point(1225, 29);
+            btnXoaHoaDon.Location = new Point(1169, 29);
             btnXoaHoaDon.Name = "btnXoaHoaDon";
             btnXoaHoaDon.ShadowDecoration.CustomizableEdges = customizableEdges18;
             btnXoaHoaDon.Size = new Size(54, 49);
@@ -379,25 +375,6 @@
             txtTongTienn.Size = new Size(208, 56);
             txtTongTienn.TabIndex = 35;
             // 
-            // btnLamMoiThongKe
-            // 
-            btnLamMoiThongKe.CustomizableEdges = customizableEdges21;
-            btnLamMoiThongKe.DisabledState.BorderColor = Color.DarkGray;
-            btnLamMoiThongKe.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnLamMoiThongKe.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnLamMoiThongKe.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnLamMoiThongKe.FillColor = Color.White;
-            btnLamMoiThongKe.Font = new Font("Segoe UI", 9F);
-            btnLamMoiThongKe.ForeColor = Color.White;
-            btnLamMoiThongKe.Image = (Image)resources.GetObject("btnLamMoiThongKe.Image");
-            btnLamMoiThongKe.ImageSize = new Size(40, 40);
-            btnLamMoiThongKe.Location = new Point(1164, 29);
-            btnLamMoiThongKe.Name = "btnLamMoiThongKe";
-            btnLamMoiThongKe.ShadowDecoration.CustomizableEdges = customizableEdges22;
-            btnLamMoiThongKe.Size = new Size(52, 49);
-            btnLamMoiThongKe.TabIndex = 35;
-            btnLamMoiThongKe.Click += btnLamMoiThongKe_Click;
-            // 
             // dgvDSHD
             // 
             dgvDSHD.BackgroundColor = SystemColors.ButtonHighlight;
@@ -412,7 +389,7 @@
             // 
             // btnInHoaDon
             // 
-            btnInHoaDon.CustomizableEdges = customizableEdges23;
+            btnInHoaDon.CustomizableEdges = customizableEdges21;
             btnInHoaDon.DisabledState.BorderColor = Color.DarkGray;
             btnInHoaDon.DisabledState.CustomBorderColor = Color.DarkGray;
             btnInHoaDon.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -424,7 +401,7 @@
             btnInHoaDon.ImageSize = new Size(90, 90);
             btnInHoaDon.Location = new Point(1225, 216);
             btnInHoaDon.Name = "btnInHoaDon";
-            btnInHoaDon.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            btnInHoaDon.ShadowDecoration.CustomizableEdges = customizableEdges22;
             btnInHoaDon.Size = new Size(126, 116);
             btnInHoaDon.TabIndex = 3;
             btnInHoaDon.Click += btnInHoaDon_Click;
@@ -433,7 +410,7 @@
             // 
             txtTongTien.BorderColor = Color.LightGray;
             txtTongTien.CharacterCasing = CharacterCasing.Upper;
-            txtTongTien.CustomizableEdges = customizableEdges25;
+            txtTongTien.CustomizableEdges = customizableEdges23;
             txtTongTien.DefaultText = "";
             txtTongTien.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtTongTien.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -448,14 +425,14 @@
             txtTongTien.Name = "txtTongTien";
             txtTongTien.PlaceholderText = "";
             txtTongTien.SelectedText = "";
-            txtTongTien.ShadowDecoration.CustomizableEdges = customizableEdges26;
+            txtTongTien.ShadowDecoration.CustomizableEdges = customizableEdges24;
             txtTongTien.Size = new Size(212, 52);
             txtTongTien.TabIndex = 2;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(1236, 126);
+            label5.Location = new Point(1239, 117);
             label5.Name = "label5";
             label5.Size = new Size(87, 23);
             label5.TabIndex = 1;
@@ -464,12 +441,12 @@
             // 
             // guna2PictureBox1
             // 
-            guna2PictureBox1.CustomizableEdges = customizableEdges27;
+            guna2PictureBox1.CustomizableEdges = customizableEdges25;
             guna2PictureBox1.Image = (Image)resources.GetObject("guna2PictureBox1.Image");
             guna2PictureBox1.ImageRotate = 0F;
             guna2PictureBox1.Location = new Point(-1, -7);
             guna2PictureBox1.Name = "guna2PictureBox1";
-            guna2PictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges28;
+            guna2PictureBox1.ShadowDecoration.CustomizableEdges = customizableEdges26;
             guna2PictureBox1.Size = new Size(429, 75);
             guna2PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             guna2PictureBox1.TabIndex = 13;
@@ -520,7 +497,6 @@
         private Guna.UI2.WinForms.Guna2Button btnTimKiemMaNV;
         private Guna.UI2.WinForms.Guna2Button btnTimKiemTheoNgay;
         private Guna.UI2.WinForms.Guna2Button btnTimKiemHD;
-        private Guna.UI2.WinForms.Guna2Button btnLamMoiThongKe;
         private Guna.UI2.WinForms.Guna2TextBox txtTongTienn;
         private Guna.UI2.WinForms.Guna2Button btnXoaHoaDon;
     }

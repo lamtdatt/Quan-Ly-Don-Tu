@@ -7,8 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO_CuaHangBanh;
 
-
-
     namespace DAL_CuaHangBanh
     {
         public class DALKhachHang

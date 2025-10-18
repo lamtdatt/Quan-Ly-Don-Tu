@@ -76,41 +76,104 @@ namespace GUI_CuaHangBanh
             string tenBan = txtTenBan.Text.Trim();
             string trangThai = LayTrangThai();
 
-            DTOBanAn ban = new DTOBanAn(0, tenBan, trangThai);
-            bus.Them(ban);
-            LoadDanhSachBanAn();
-            ClearForm();
+            // 🔸 Kiểm tra tên bàn trống
+            if (string.IsNullOrWhiteSpace(tenBan))
+            {
+                MessageBox.Show("Tên bàn không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenBan.Focus();
+                return;
+            }
+
+            // 🔸 Kiểm tra tên bàn toàn số
+            if (System.Text.RegularExpressions.Regex.IsMatch(tenBan, @"^\d+$"))
+            {
+                MessageBox.Show("Tên bàn không hợp lệ! Không được chỉ chứa số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenBan.Focus();
+                return;
+            }
+
+            try
+            {
+                DTOBanAn ban = new DTOBanAn(0, tenBan, trangThai);
+                bus.Them(ban);
+                LoadDanhSachBanAn();
+                ClearForm();
+                MessageBox.Show("Thêm bàn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm bàn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnSuaBan_Click(object sender, EventArgs e)
         {
             if (selectedMaBan == -1)
             {
-                MessageBox.Show("Vui lòng chọn bàn để sửa.");
+                MessageBox.Show("Vui lòng chọn bàn để sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             string tenBan = txtTenBan.Text.Trim();
             string trangThai = LayTrangThai();
 
-            DTOBanAn ban = new DTOBanAn(selectedMaBan, tenBan, trangThai);
-            bus.CapNhat(ban);
-            LoadDanhSachBanAn();
-            ClearForm();
+            if (string.IsNullOrWhiteSpace(tenBan))
+            {
+                MessageBox.Show("Tên bàn không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenBan.Focus();
+                return;
+            }
+
+            if (System.Text.RegularExpressions.Regex.IsMatch(tenBan, @"^\d+$"))
+            {
+                MessageBox.Show("Tên bàn không hợp lệ! Không được chỉ chứa số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenBan.Focus();
+                return;
+            }
+
+            try
+            {
+                DTOBanAn ban = new DTOBanAn(selectedMaBan, tenBan, trangThai);
+                bus.CapNhat(ban);
+                LoadDanhSachBanAn();
+                ClearForm();
+                MessageBox.Show("Cập nhật bàn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi cập nhật bàn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnXoaBan_Click(object sender, EventArgs e)
         {
             if (selectedMaBan == -1)
             {
-                MessageBox.Show("Vui lòng chọn bàn để xóa.");
+                MessageBox.Show("Vui lòng chọn bàn để xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            bus.Xoa(selectedMaBan);
-            LoadDanhSachBanAn();
-            ClearForm();
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa bàn này không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    bus.Xoa(selectedMaBan);
+                    LoadDanhSachBanAn();
+                    ClearForm();
+                    MessageBox.Show("Xóa bàn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi xóa bàn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Hủy thao tác xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
+
 
         private void btnLamMoiBan_Click(object sender, EventArgs e)
         {

@@ -86,7 +86,6 @@ namespace GUI_CuaHangBanh
         {
 
         }
-
         private void dgvDSHD_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && dgvDSHD.Columns.Contains("MaHoaDon"))
@@ -96,8 +95,6 @@ namespace GUI_CuaHangBanh
                 if (cellValue != null)
                 {
                     string maHD = cellValue.ToString();
-
-                    // Gọi đúng hàm DAL/BUS để lấy chi tiết hóa đơn
                     DataTable dtCT = DAL_CuaHangBanh.DALThongKe.TK_ChiTietHoaDon(maHD);
 
                     if (dtCT != null && dtCT.Rows.Count > 0)
@@ -110,7 +107,6 @@ namespace GUI_CuaHangBanh
                             dgvChiTietHoaDon.Columns["DonGia"].DefaultCellStyle.Format = "N0";
                             dgvChiTietHoaDon.Columns["DonGia"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                         }
-
                         decimal tongTien = 0;
                         foreach (DataRow row in dtCT.Rows)
                         {
@@ -120,7 +116,6 @@ namespace GUI_CuaHangBanh
                                 tongTien += sl * dg;
                             }
                         }
-
                         txtTongTienn.Text = tongTien.ToString("N0");
                     }
                     else
@@ -136,10 +131,6 @@ namespace GUI_CuaHangBanh
                 }
             }
         }
-
-
-
-
         private void btnTimKiemHD_Click(object sender, EventArgs e)
         {
             try
@@ -188,11 +179,9 @@ namespace GUI_CuaHangBanh
         }
         private void btnTimKiemMaNV_Click(object sender, EventArgs e)
         {
-
             try
             {
-                string maNV = cmbMaNhanVien.SelectedValue?.ToString(); // hoặc cmbMaNhanVien.Text.Trim() nếu không dùng ValueMember
-
+                string maNV = cmbMaNhanVien.SelectedValue?.ToString(); 
                 string sql = @"
             SELECT * 
             FROM HoaDon 
@@ -232,32 +221,20 @@ namespace GUI_CuaHangBanh
                 MessageBox.Show("Lỗi tìm kiếm theo ngày: " + ex.Message);
             }
         }
-
         private void btnLamMoiThongKe_Click(object sender, EventArgs e)
         {
             try
             {
-                // Reset mã hóa đơn
                 if (txtMaHD != null)
                     txtMaHD.Clear();
-
-                // Reset combobox sản phẩm
                 if (cmbSanPham != null && cmbSanPham.Items.Count > 0)
                     cmbSanPham.SelectedIndex = -1;
-
-                // Reset combobox nhân viên
                 if (cmbMaNhanVien != null && cmbMaNhanVien.Items.Count > 0)
                     cmbMaNhanVien.SelectedIndex = -1;
-
-                // Reset ngày
                 if (dtpNgay != null)
                     dtpNgay.Value = DateTime.Now.Date;
-
-                // Load lại danh sách hóa đơn
                 if (dgvDSHD != null)
                     dgvDSHD.DataSource = BUSHoaDon.LayTatCaHoaDon();
-
-                // Xóa bảng chi tiết và tổng tiền
                 if (dgvChiTietHoaDon != null)
                     dgvChiTietHoaDon.DataSource = null;
 

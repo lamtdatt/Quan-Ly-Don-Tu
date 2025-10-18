@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -173,29 +174,8 @@ namespace GUI_CuaHangBanh
             MessageBox.Show("Cập nhật thành công");
             LoadNhanVien();
         }
-        private void btnXoaNV_Click(object sender, EventArgs e)
-        {
-            if (!int.TryParse(txtMaNV.Text, out int maNV))
-            {
-                MessageBox.Show("Chọn nhân viên để xóa!");
-                return;
-            }
-            var result = MessageBox.Show("Bạn có chắc muốn xóa?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    BUSNhanVien bus = new BUSNhanVien();
-                    bus.XoaNhanVien(maNV);
-                    MessageBox.Show("Xóa thành công", "Thông báo");
-                    LoadNhanVien();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Lỗi khi xóa: " + ex.Message);
-                }
-            }
-        }
+
+
         private void btnLamMoiNV_Click(object sender, EventArgs e)
         {
             txtMaNV.Clear();
@@ -229,6 +209,32 @@ namespace GUI_CuaHangBanh
                                }).ToList();
 
             dgvNhanVien.DataSource = ds;
+        }
+
+        private void btnXoaNV_Click(object sender, EventArgs e)
+        {
+
+            if (!int.TryParse(txtMaNV.Text, out int maNV))
+            {
+                MessageBox.Show("Chọn nhân viên để xóa!");
+                return;
+            }
+            var result = MessageBox.Show("Bạn có chắc muốn xóa?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    BUSNhanVien bus = new BUSNhanVien();
+                    bus.XoaNhanVien(maNV);
+                    MessageBox.Show("Xóa thành công", "Thông báo");
+                    LoadNhanVien();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi xóa: " + ex.Message);
+                }
+
+            }
         }
     }
 }

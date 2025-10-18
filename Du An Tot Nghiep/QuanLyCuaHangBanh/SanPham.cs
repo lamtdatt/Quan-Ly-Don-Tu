@@ -99,27 +99,41 @@ namespace GUI_CuaHangBanh
         {
             if (string.IsNullOrWhiteSpace(txtTenSanPham.Text) || Regex.IsMatch(txtTenSanPham.Text.Trim(), @"^\d+$"))
             {
-                MessageBox.Show("Tên sản phẩm không hợp lệ! Không được để trống hoặc chỉ chứa số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Tên sản phẩm không hợp lệ! Không được để trống hoặc chỉ chứa số.",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtTenSanPham.Focus();
                 return;
             }
 
+            // ✅ Sửa thông báo như bạn yêu cầu
             if (!decimal.TryParse(txtDonGia.Text.Trim(), out decimal donGia) || donGia <= 0)
             {
-                MessageBox.Show("Đơn giá không hợp lệ! Vui lòng nhập số > 0.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Đơn giá không hợp lệ! Vui lòng nhập đơn giá > 0.",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtDonGia.Focus();
                 return;
             }
 
-            if (!int.TryParse(nudSoLuong.Text.Trim(), out int soLuong) || soLuong < 0)
+            if (!int.TryParse(nudSoLuong.Text.Trim(), out int soLuong))
             {
-                MessageBox.Show("Số lượng không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Số lượng không hợp lệ!",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 nudSoLuong.Focus();
                 return;
             }
+
+            if (soLuong == 0)
+            {
+                MessageBox.Show("Số lượng sản phẩm không được để 0!",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                nudSoLuong.Focus();
+                return;
+            }
+
             if (string.IsNullOrEmpty(tenFileAnhDuocChon))
             {
-                MessageBox.Show("Vui lòng chọn hình ảnh cho sản phẩm.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng chọn hình ảnh cho sản phẩm.",
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -132,17 +146,20 @@ namespace GUI_CuaHangBanh
                 MoTa = rtbMoTa.Text.Trim(),
                 HinhAnh = tenFileAnhDuocChon
             };
+
             try
             {
                 BUSSanPham bus = new BUSSanPham();
                 bus.ThemSanPham(sp);
                 LoadSanPham();
                 ResetForm();
-                MessageBox.Show("Thêm sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Thêm sản phẩm thành công!",
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi thêm sản phẩm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi thêm sản phẩm: " + ex.Message,
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

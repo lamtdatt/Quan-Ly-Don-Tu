@@ -29,17 +29,16 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DangNhap));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             txtTenDangNhap = new TextBox();
             txtMatKhau = new TextBox();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
             pictureBox1 = new PictureBox();
-            cbLuuDangNhap = new CheckBox();
             btnDangNhap = new Guna.UI2.WinForms.Guna2Button();
             btnThoat = new Guna.UI2.WinForms.Guna2Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -48,7 +47,7 @@
             // txtTenDangNhap
             // 
             txtTenDangNhap.BackColor = Color.BlanchedAlmond;
-            txtTenDangNhap.Location = new Point(770, 261);
+            txtTenDangNhap.Location = new Point(770, 287);
             txtTenDangNhap.Name = "txtTenDangNhap";
             txtTenDangNhap.Size = new Size(259, 27);
             txtTenDangNhap.TabIndex = 0;
@@ -56,7 +55,7 @@
             // txtMatKhau
             // 
             txtMatKhau.BackColor = Color.BlanchedAlmond;
-            txtMatKhau.Location = new Point(770, 334);
+            txtMatKhau.Location = new Point(770, 361);
             txtMatKhau.Name = "txtMatKhau";
             txtMatKhau.PasswordChar = '*';
             txtMatKhau.Size = new Size(259, 27);
@@ -67,7 +66,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Arial", 13.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.BlanchedAlmond;
-            label1.Location = new Point(591, 261);
+            label1.Location = new Point(591, 285);
             label1.Name = "label1";
             label1.Size = new Size(173, 26);
             label1.TabIndex = 2;
@@ -78,7 +77,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Arial", 13.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.BlanchedAlmond;
-            label2.Location = new Point(617, 335);
+            label2.Location = new Point(617, 359);
             label2.Name = "label2";
             label2.Size = new Size(110, 26);
             label2.TabIndex = 3;
@@ -107,23 +106,10 @@
             pictureBox1.TabIndex = 5;
             pictureBox1.TabStop = false;
             // 
-            // cbLuuDangNhap
-            // 
-            cbLuuDangNhap.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            cbLuuDangNhap.AutoSize = true;
-            cbLuuDangNhap.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cbLuuDangNhap.ForeColor = Color.FromArgb(255, 224, 192);
-            cbLuuDangNhap.Location = new Point(859, 392);
-            cbLuuDangNhap.Name = "cbLuuDangNhap";
-            cbLuuDangNhap.Size = new Size(148, 27);
-            cbLuuDangNhap.TabIndex = 9;
-            cbLuuDangNhap.Text = "Lưu đăng nhập";
-            cbLuuDangNhap.UseVisualStyleBackColor = true;
-            // 
             // btnDangNhap
             // 
             btnDangNhap.AutoRoundedCorners = true;
-            btnDangNhap.CustomizableEdges = customizableEdges1;
+            btnDangNhap.CustomizableEdges = customizableEdges5;
             btnDangNhap.DisabledState.BorderColor = Color.DarkGray;
             btnDangNhap.DisabledState.CustomBorderColor = Color.DarkGray;
             btnDangNhap.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -131,9 +117,9 @@
             btnDangNhap.FillColor = Color.FromArgb(255, 224, 192);
             btnDangNhap.Font = new Font("Arial", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             btnDangNhap.ForeColor = Color.Black;
-            btnDangNhap.Location = new Point(591, 457);
+            btnDangNhap.Location = new Point(591, 438);
             btnDangNhap.Name = "btnDangNhap";
-            btnDangNhap.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            btnDangNhap.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnDangNhap.Size = new Size(225, 56);
             btnDangNhap.TabIndex = 10;
             btnDangNhap.Text = "Đăng nhập";
@@ -142,7 +128,7 @@
             // btnThoat
             // 
             btnThoat.AutoRoundedCorners = true;
-            btnThoat.CustomizableEdges = customizableEdges3;
+            btnThoat.CustomizableEdges = customizableEdges7;
             btnThoat.DisabledState.BorderColor = Color.DarkGray;
             btnThoat.DisabledState.CustomBorderColor = Color.DarkGray;
             btnThoat.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -150,9 +136,9 @@
             btnThoat.FillColor = Color.FromArgb(255, 224, 192);
             btnThoat.Font = new Font("Arial", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             btnThoat.ForeColor = Color.Black;
-            btnThoat.Location = new Point(859, 457);
+            btnThoat.Location = new Point(857, 438);
             btnThoat.Name = "btnThoat";
-            btnThoat.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btnThoat.ShadowDecoration.CustomizableEdges = customizableEdges8;
             btnThoat.Size = new Size(225, 56);
             btnThoat.TabIndex = 11;
             btnThoat.Text = "Thoát";
@@ -166,7 +152,6 @@
             ClientSize = new Size(1105, 652);
             Controls.Add(btnThoat);
             Controls.Add(btnDangNhap);
-            Controls.Add(cbLuuDangNhap);
             Controls.Add(pictureBox1);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -191,7 +176,6 @@
         private Label label3;
         private PictureBox pictureBox1;
         private LinkLabel linkLabel1;
-        private CheckBox cbLuuDangNhap;
         private Guna.UI2.WinForms.Guna2Button btnDangNhap;
         private Guna.UI2.WinForms.Guna2Button btnThoat;
     }

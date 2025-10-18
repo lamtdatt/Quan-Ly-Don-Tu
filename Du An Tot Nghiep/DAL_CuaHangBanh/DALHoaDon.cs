@@ -34,11 +34,8 @@ namespace DAL_CuaHangBanh
         {
             try
             {
-              
                 string sqlCT = "DELETE FROM ChiTietHoaDon WHERE MaHoaDon = @0";
                 DBUtil.Update(sqlCT, new List<object> { maHoaDon });
-
-                // Sau đó xóa Hóa Đơn
                 string sqlHD = "DELETE FROM HoaDon WHERE MaHoaDon = @0";
                 DBUtil.Update(sqlHD, new List<object> { maHoaDon });
 
@@ -125,8 +122,6 @@ namespace DAL_CuaHangBanh
 
             return hd;
         }
-
-
         public DTOHoaDon GetLastHoaDon()
         {
             string sql = @"

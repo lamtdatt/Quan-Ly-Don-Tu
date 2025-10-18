@@ -21,7 +21,6 @@ namespace GUI_CuaHangBanh
             chiTiet = ds;
             this.tenBan = tenBan;
         }
-
         private void InHoaDon_Load(object sender, EventArgs e)
         {
             if (hoaDon == null || chiTiet == null) return;
@@ -52,6 +51,11 @@ namespace GUI_CuaHangBanh
             dgvInHoaDon.Columns["STT"].Width = 50;
             dgvInHoaDon.Columns["Đơn giá"].DefaultCellStyle.Format = "N0";
             dgvInHoaDon.Columns["Thành tiền"].DefaultCellStyle.Format = "N0";
+        }
+
+        private void dgvInHoaDon_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

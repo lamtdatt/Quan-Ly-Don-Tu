@@ -91,7 +91,7 @@
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(104, 41);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(76, 75);
+            pictureBox1.Size = new Size(76, 81);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 18;
             pictureBox1.TabStop = false;
@@ -257,6 +257,7 @@
             dgvInHoaDon.RowHeadersWidth = 51;
             dgvInHoaDon.Size = new Size(916, 264);
             dgvInHoaDon.TabIndex = 22;
+            dgvInHoaDon.CellContentClick += dgvInHoaDon_CellContentClick;
             // 
             // txtTongTien
             // 
@@ -309,7 +310,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
-            ClientSize = new Size(940, 646);
+            ClientSize = new Size(938, 652);
             Controls.Add(label10);
             Controls.Add(label4);
             Controls.Add(txtGiamGia);

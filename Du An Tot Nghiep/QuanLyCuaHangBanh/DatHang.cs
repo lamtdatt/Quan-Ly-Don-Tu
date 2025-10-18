@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -196,17 +196,45 @@ namespace GUI_CuaHangBanh
                 string tenKH = txtTenKhachHang.Text.Trim();
                 string sdt = txtSoDienThoai.Text.Trim();
 
-                if (string.IsNullOrEmpty(tenKH))
+                // ✅ 1. Kiểm tra nhập đầy đủ thông tin
+                if (string.IsNullOrEmpty(tenKH) || string.IsNullOrEmpty(sdt))
                 {
-                    MessageBox.Show("Vui lòng nhập tên khách hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin khách hàng!",
+                                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (string.IsNullOrEmpty(maBanDangChon))
+                // ✅ 2. Kiểm tra tên khách hàng hợp lệ (không được toàn số, không ký tự đặc biệt)
+                if (tenKH.All(char.IsDigit))
                 {
-                    MessageBox.Show("Vui lòng chọn bàn trước khi thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Tên khách hàng không được chỉ chứa số!",
+                                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(tenKH, @"^[\p{L}\s]+$"))
+                {
+                    MessageBox.Show("Tên khách hàng chỉ được chứa chữ và khoảng trắng!",
+                                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // ✅ 3. Kiểm tra số điện thoại hợp lệ (chỉ số, độ dài 9–11)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sdt, @"^\d{9,11}$"))
+                {
+                    MessageBox.Show("Số điện thoại không hợp lệ! Chỉ được nhập số (9–11 chữ số).",
+                                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // ✅ 4. Kiểm tra bàn
+                if (string.IsNullOrEmpty(maBanDangChon))
+                {
+                    MessageBox.Show("Vui lòng chọn bàn trước khi thanh toán!",
+                                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // --- Tiếp tục phần xử lý gốc ---
                 BUSKhachHang busKH = new BUSKhachHang();
                 var khach = busKH.TimKhachHangTheoSDT(sdt);
                 if (khach == null)
@@ -224,6 +252,7 @@ namespace GUI_CuaHangBanh
                         return;
                     }
                 }
+
                 string maKhachHang = khach.MaKhachHang.ToString();
                 int[] danhSachMaNV = { 1, 2, 3, 4, 5 };
                 Random rnd = new Random();
@@ -236,6 +265,7 @@ namespace GUI_CuaHangBanh
                 int phanTramGiam = (int)nudKhuyenMai.Value;
                 decimal soTienGiam = tongTienGoc * (phanTramGiam / 100m);
                 int tongSauGiam = tongTienGoc - (int)soTienGiam;
+
                 string tenBanFromDB = null;
                 int maBanInt = 0;
 
@@ -247,8 +277,10 @@ namespace GUI_CuaHangBanh
                     if (banInfo != null)
                         tenBanFromDB = banInfo.TenBan;
                 }
+
                 if (string.IsNullOrEmpty(tenBanFromDB))
                     tenBanFromDB = tenBanDangChon;
+
                 DTOHoaDon hd = new DTOHoaDon
                 {
                     DateCheck = _gioVao,
@@ -271,8 +303,9 @@ namespace GUI_CuaHangBanh
                     MessageBox.Show("Không thể lấy hóa đơn mới!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
                 BUSCTHoaDon busCTHD = new BUSCTHoaDon();
-                BUSSanPham busSP = new BUSSanPham(); 
+                BUSSanPham busSP = new BUSSanPham();
 
                 foreach (DataGridViewRow row in dgvSanPhamTheoBan.Rows)
                 {
@@ -290,11 +323,13 @@ namespace GUI_CuaHangBanh
 
                     busCTHD.ThemChiTietHoaDon(cthd);
                 }
+
                 if (maBanDangChon != "MangVe")
                 {
                     BUSBanAn busBan = new BUSBanAn();
                     busBan.CapNhatTrangThai(maBanInt, "Có khách");
                 }
+
                 DialogResult dr = MessageBox.Show("Thanh toán thành công!\nBạn có muốn in hóa đơn không?",
                                                   "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (dr == DialogResult.Yes)
@@ -326,6 +361,8 @@ namespace GUI_CuaHangBanh
                 MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
         private int indexSelected = -1;
         private void btnSuaSP_Click(object sender, EventArgs e)
         {

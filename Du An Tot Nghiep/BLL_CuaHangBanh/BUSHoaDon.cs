@@ -21,7 +21,6 @@ namespace BLL_CuaHangBanh
             return hoaDonDAL.GetById(maHoaDon);
         }
 
-
         public static DataTable LayTatCaHoaDon()
         {
             return DALThongKe.TK_HoaDon();
