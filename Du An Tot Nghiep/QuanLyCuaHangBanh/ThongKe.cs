@@ -181,7 +181,7 @@ namespace GUI_CuaHangBanh
         {
             try
             {
-                string maNV = cmbMaNhanVien.SelectedValue?.ToString(); 
+                string maNV = cmbMaNhanVien.SelectedValue?.ToString();
                 string sql = @"
             SELECT * 
             FROM HoaDon 
@@ -346,6 +346,8 @@ namespace GUI_CuaHangBanh
             }
         }
 
+            }
     }
-}
+
+
 

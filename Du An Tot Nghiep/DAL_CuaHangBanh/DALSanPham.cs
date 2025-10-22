@@ -70,7 +70,15 @@ public class DALSanPham
     };
         DBUtil.Update(sql, args);
     }
-    public void Delete(int maSP)
+    public void CapNhatSoLuongSauKhiBan(string maSP, int soLuongMua)
+    {
+        string sql = "UPDATE SanPham SET SoLuong = SoLuong - @0 WHERE MaSanPham = @1";
+        List<object> args = new List<object>() { soLuongMua, maSP };
+        DBUtil.Update(sql, args);
+    }
+
+
+public void Delete(int maSP)
     {
         string query = "DELETE FROM SanPham WHERE MaSanPham = @0";
         List<object> args = new List<object> { maSP };

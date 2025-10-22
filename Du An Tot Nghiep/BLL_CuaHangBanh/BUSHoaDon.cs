@@ -20,7 +20,6 @@ namespace BLL_CuaHangBanh
         {
             return hoaDonDAL.GetById(maHoaDon);
         }
-
         public static DataTable LayTatCaHoaDon()
         {
             return DALThongKe.TK_HoaDon();
@@ -44,5 +43,11 @@ namespace BLL_CuaHangBanh
         {
             return hoaDonDAL.GetLastHoaDon();
         }
+        private DALHoaDon dal = new DALHoaDon();
+        public DataTable LayHoaDonTheoNgay(DateTime ngay)
+        {
+            return dal.LayHoaDonTheoNgay(ngay);
+        }
     }
+
 }

@@ -80,6 +80,19 @@ namespace DAL_CuaHangBanh
                 }
             }
         }
+        public DataTable LayHoaDonTheoNgay(DateTime ngay)
+        {
+            string query = "SELECT * FROM HoaDon WHERE CAST(DateCheck AS DATE) = @0";
+            List<object> parameters = new List<object>() { ngay.Date };
+
+            using (SqlDataReader reader = DBUtil.Query(query, parameters, CommandType.Text))
+            {
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                return dt;
+
+            }
+        }
         public DTOHoaDon GetById(int maHoaDon)
         {
             string sql = @"

@@ -322,6 +322,9 @@ namespace GUI_CuaHangBanh
                     };
 
                     busCTHD.ThemChiTietHoaDon(cthd);
+                    int soLuongMua = Convert.ToInt32(row.Cells["SoLuong"].Value);
+                    DALSanPham dalSP = new DALSanPham();
+                    dalSP.CapNhatSoLuongSauKhiBan(maSP, soLuongMua);
                 }
 
                 if (maBanDangChon != "MangVe")
