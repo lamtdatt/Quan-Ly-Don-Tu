@@ -9,7 +9,7 @@ namespace DAL_CuaHangBanh
 {
     public class DBUtil
     {
-        private static string connString = @"Data Source=ADMIN\TIENDAT1;Initial Catalog=DATN_QLCuaHangBanh;Integrated Security=True;Encrypt=False";
+        private static string connString = @"Data Source=ADMIN\TIENDAT1;Initial Catalog=DATN_QLCuaHangBanh;Integrated Security=True";
 
         /// <summary> Xây dựng SqlCommand </summary>
         public static SqlCommand GetCommand(string sql, List<Object> args, CommandType cmdType)

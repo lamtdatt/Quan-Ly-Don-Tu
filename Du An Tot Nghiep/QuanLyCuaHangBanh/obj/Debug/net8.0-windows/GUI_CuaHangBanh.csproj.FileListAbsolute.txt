@@ -145,3 +145,305 @@ E:\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\refint\GUI_CuaHan
 E:\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.pdb
 E:\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.genruntimeconfig.cache
 E:\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\ref\GUI_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.csproj.AssemblyReference.cache
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\Interop.WMPLib.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\AxInterop.WMPLib.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.csproj.ResolveComReference.cache
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.BanAN.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\QuanLyCuaHangBanh.DangNhap.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.DanhMuc.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.DatHang.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.InHoaDon.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.KhachHang.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.ManHinhChinh.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.ManHinhCho.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.NhanVien.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.Properties.Resources.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.SanPham.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.ThongKe.resources
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.csproj.GenerateResource.cache
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.AssemblyInfoInputs.cache
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.AssemblyInfo.cs
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.csproj.CoreCompileInputs.cache
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.sourcelink.json
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\refint\GUI_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.pdb
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\anhnen.png
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Videointroduan(1).mp4
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\videoduan.mp4
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\GUI_CuaHangBanh.exe
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\GUI_CuaHangBanh.deps.json
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\GUI_CuaHangBanh.runtimeconfig.json
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\GUI_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\GUI_CuaHangBanh.pdb
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Azure.Core.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Azure.Identity.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Guna.UI2.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Bcl.Cryptography.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Data.SqlClient.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.Options.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.Primitives.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Identity.Client.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Logging.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Protocols.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Tokens.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.ReportViewer.Common.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.ReportViewer.DataVisualization.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.ReportViewer.Design.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.ReportViewer.ProcessingObjectModel.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.ReportViewer.WinForms.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.SqlServer.Server.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.SqlServer.Types.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\QRCoder.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.ClientModel.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Configuration.ConfigurationManager.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Data.SqlClient.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Management.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Memory.Data.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Security.Cryptography.Pkcs.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\WinForms.DataVisualization.Utilities.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\WinForms.DataVisualization.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\cs\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\de\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\es\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\fr\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\it\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ja\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ko\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pl\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pt-BR\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ru\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\tr\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-Hans\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-Hant\Microsoft.Data.SqlClient.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\de\Microsoft.ReportViewer.Common.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\de\Microsoft.ReportViewer.DataVisualization.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\de\Microsoft.ReportViewer.Design.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\de\Microsoft.ReportViewer.WinForms.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\es\Microsoft.ReportViewer.Common.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\es\Microsoft.ReportViewer.DataVisualization.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\es\Microsoft.ReportViewer.Design.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\es\Microsoft.ReportViewer.WinForms.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\fr\Microsoft.ReportViewer.Common.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\fr\Microsoft.ReportViewer.DataVisualization.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\fr\Microsoft.ReportViewer.Design.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\fr\Microsoft.ReportViewer.WinForms.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\it\Microsoft.ReportViewer.Common.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\it\Microsoft.ReportViewer.DataVisualization.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\it\Microsoft.ReportViewer.Design.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\it\Microsoft.ReportViewer.WinForms.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ja\Microsoft.ReportViewer.Common.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ja\Microsoft.ReportViewer.DataVisualization.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ja\Microsoft.ReportViewer.Design.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ja\Microsoft.ReportViewer.WinForms.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ko\Microsoft.ReportViewer.Common.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ko\Microsoft.ReportViewer.DataVisualization.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ko\Microsoft.ReportViewer.Design.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ko\Microsoft.ReportViewer.WinForms.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pt\Microsoft.ReportViewer.Common.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pt\Microsoft.ReportViewer.DataVisualization.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pt\Microsoft.ReportViewer.Design.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pt\Microsoft.ReportViewer.WinForms.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ru\Microsoft.ReportViewer.Common.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ru\Microsoft.ReportViewer.DataVisualization.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ru\Microsoft.ReportViewer.Design.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ru\Microsoft.ReportViewer.WinForms.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHS\Microsoft.ReportViewer.Common.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHS\Microsoft.ReportViewer.DataVisualization.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHS\Microsoft.ReportViewer.Design.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHS\Microsoft.ReportViewer.WinForms.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHT\Microsoft.ReportViewer.Common.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHT\Microsoft.ReportViewer.DataVisualization.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHT\Microsoft.ReportViewer.Design.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\unix\lib\net8.0\Microsoft.Data.SqlClient.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\Microsoft.Data.SqlClient.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-arm64\native\sni.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-x64\native\sni.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-x86\native\sni.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.SqlClient.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win\lib\net7.0\System.Management.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\BLL_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\DAL_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\DTO_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\UTIL_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\BLL_CuaHangBanh.pdb
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\DTO_CuaHangBanh.pdb
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\UTIL_CuaHangBanh.pdb
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\DAL_CuaHangBanh.pdb
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Interop.WMPLib.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\AxInterop.WMPLib.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaH.621BA44F.Up2Date
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.genruntimeconfig.cache
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\ref\GUI_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.ThongKe2.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.csproj.AssemblyReference.cache
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\Interop.WMPLib.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\AxInterop.WMPLib.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.csproj.ResolveComReference.cache
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.BanAN.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\QuanLyCuaHangBanh.DangNhap.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.DanhMuc.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.DatHang.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.InHoaDon.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.KhachHang.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.ManHinhChinh.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.ManHinhCho.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.NhanVien.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.Properties.Resources.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.SanPham.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.ThongKe.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.HoaDon.resources
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.csproj.GenerateResource.cache
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.GeneratedMSBuildEditorConfig.editorconfig
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.AssemblyInfoInputs.cache
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.AssemblyInfo.cs
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.csproj.CoreCompileInputs.cache
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.sourcelink.json
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\anhnen.png
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\videoduan.mp4
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Videointroduan(1).mp4
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\GUI_CuaHangBanh.exe
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\GUI_CuaHangBanh.deps.json
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\GUI_CuaHangBanh.runtimeconfig.json
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\GUI_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\GUI_CuaHangBanh.pdb
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Azure.Core.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Azure.Identity.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Guna.UI2.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Bcl.AsyncInterfaces.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Bcl.Cryptography.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Data.SqlClient.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.Caching.Abstractions.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.Caching.Memory.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.Options.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Extensions.Primitives.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Identity.Client.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.Identity.Client.Extensions.Msal.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Abstractions.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Logging.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Protocols.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.IdentityModel.Tokens.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.ReportViewer.Common.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.ReportViewer.DataVisualization.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.ReportViewer.Design.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.ReportViewer.ProcessingObjectModel.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.ReportViewer.WinForms.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.SqlServer.Server.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Microsoft.SqlServer.Types.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\QRCoder.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.ClientModel.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Configuration.ConfigurationManager.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Data.SqlClient.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.IdentityModel.Tokens.Jwt.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Management.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Memory.Data.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\System.Security.Cryptography.Pkcs.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\WinForms.DataVisualization.Utilities.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\WinForms.DataVisualization.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\cs\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\de\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\es\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\fr\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\it\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ja\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ko\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pl\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pt-BR\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ru\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\tr\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-Hans\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-Hant\Microsoft.Data.SqlClient.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\de\Microsoft.ReportViewer.Common.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\de\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\de\Microsoft.ReportViewer.Design.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\de\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\es\Microsoft.ReportViewer.Common.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\es\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\es\Microsoft.ReportViewer.Design.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\es\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\fr\Microsoft.ReportViewer.Common.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\fr\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\fr\Microsoft.ReportViewer.Design.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\fr\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\it\Microsoft.ReportViewer.Common.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\it\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\it\Microsoft.ReportViewer.Design.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\it\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ja\Microsoft.ReportViewer.Common.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ja\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ja\Microsoft.ReportViewer.Design.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ja\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ko\Microsoft.ReportViewer.Common.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ko\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ko\Microsoft.ReportViewer.Design.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ko\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pt\Microsoft.ReportViewer.Common.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pt\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pt\Microsoft.ReportViewer.Design.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\pt\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ru\Microsoft.ReportViewer.Common.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ru\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ru\Microsoft.ReportViewer.Design.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\ru\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHS\Microsoft.ReportViewer.Common.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHS\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHS\Microsoft.ReportViewer.Design.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHS\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHT\Microsoft.ReportViewer.Common.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHT\Microsoft.ReportViewer.DataVisualization.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHT\Microsoft.ReportViewer.Design.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\unix\lib\net8.0\Microsoft.Data.SqlClient.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\Microsoft.Data.SqlClient.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-arm64\native\sni.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-x64\native\sni.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win-x86\native\sni.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.SqlClient.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win\lib\net7.0\System.Management.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\BLL_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\DAL_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\DTO_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\UTIL_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\BLL_CuaHangBanh.pdb
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\DTO_CuaHangBanh.pdb
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\UTIL_CuaHangBanh.pdb
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\DAL_CuaHangBanh.pdb
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\Interop.WMPLib.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\bin\Debug\net8.0-windows\AxInterop.WMPLib.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaH.621BA44F.Up2Date
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\refint\GUI_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.pdb
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\GUI_CuaHangBanh.genruntimeconfig.cache
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\QuanLyCuaHangBanh\obj\Debug\net8.0-windows\ref\GUI_CuaHangBanh.dll

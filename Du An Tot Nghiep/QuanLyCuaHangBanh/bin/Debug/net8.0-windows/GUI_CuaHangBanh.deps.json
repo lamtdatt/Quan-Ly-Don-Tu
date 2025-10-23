@@ -14,6 +14,7 @@
           "Microsoft.ReportingServices.ReportViewerControl.Winforms": "150.1652.0",
           "QRCoder": "1.6.0",
           "UTIL_CuaHangBanh": "1.0.0",
+          "WinForms.DataVisualization": "1.10.0",
           "Interop.WMPLib": "1.0.0.0",
           "AxInterop.WMPLib": "1.0.0.0"
         },
@@ -682,6 +683,18 @@
       "System.Text.Encodings.Web/4.7.2": {},
       "System.Text.Json/4.7.2": {},
       "System.Threading.Tasks.Extensions/4.5.4": {},
+      "WinForms.DataVisualization/1.10.0": {
+        "runtime": {
+          "lib/net6.0-windows7.0/WinForms.DataVisualization.Utilities.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.10.0.0"
+          },
+          "lib/net6.0-windows7.0/WinForms.DataVisualization.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.10.0.0"
+          }
+        }
+      },
       "BLL_CuaHangBanh/1.0.0": {
         "dependencies": {
           "DAL_CuaHangBanh": "1.0.0",
@@ -1086,6 +1099,13 @@
       "sha512": "sha512-zteT+G8xuGu6mS+mzDzYXbzS7rd3K6Fjb9RiZlYlJPam2/hU7JCBZBVEcywNuR+oZ1ncTvc/cq0faRr3P01OVg==",
       "path": "system.threading.tasks.extensions/4.5.4",
       "hashPath": "system.threading.tasks.extensions.4.5.4.nupkg.sha512"
+    },
+    "WinForms.DataVisualization/1.10.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QKFQUf6xnsseiRsWfIeKvbWRJWvOKOvkoec/pWxEjwYrr4Vix4xmAWmvTpJGxoeWRXOzV7Pprm5SCFqzXzBA4g==",
+      "path": "winforms.datavisualization/1.10.0",
+      "hashPath": "winforms.datavisualization.1.10.0.nupkg.sha512"
     },
     "BLL_CuaHangBanh/1.0.0": {
       "type": "project",

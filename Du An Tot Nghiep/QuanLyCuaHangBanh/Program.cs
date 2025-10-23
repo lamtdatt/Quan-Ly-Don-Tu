@@ -12,7 +12,7 @@ namespace QuanLyCuaHangBanh
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ManHinhCho());
+            Application.Run(new DangNhap());
             //Application.Run(new ManHinhChinh());
             //ManHinhChinh frm = new ManHinhChinh(Convert.ToString(1));
             //frm.Show();

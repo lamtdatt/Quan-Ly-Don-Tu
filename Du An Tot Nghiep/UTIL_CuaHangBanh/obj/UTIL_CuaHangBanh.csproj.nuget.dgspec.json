@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Du An Tot Nghiep\\UTIL_CuaHangBanh\\UTIL_CuaHangBanh.csproj": {}
+    "E:\\QL_CuaHangBanh (2) (1)\\QL_CuaHangBanh\\Du An Tot Nghiep\\UTIL_CuaHangBanh\\UTIL_CuaHangBanh.csproj": {}
   },
   "projects": {
-    "E:\\Du An Tot Nghiep\\DTO_CuaHangBanh\\DTO_CuaHangBanh.csproj": {
+    "E:\\QL_CuaHangBanh (2) (1)\\QL_CuaHangBanh\\Du An Tot Nghiep\\DTO_CuaHangBanh\\DTO_CuaHangBanh.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Du An Tot Nghiep\\DTO_CuaHangBanh\\DTO_CuaHangBanh.csproj",
+        "projectUniqueName": "E:\\QL_CuaHangBanh (2) (1)\\QL_CuaHangBanh\\Du An Tot Nghiep\\DTO_CuaHangBanh\\DTO_CuaHangBanh.csproj",
         "projectName": "DTO_CuaHangBanh",
-        "projectPath": "E:\\Du An Tot Nghiep\\DTO_CuaHangBanh\\DTO_CuaHangBanh.csproj",
+        "projectPath": "E:\\QL_CuaHangBanh (2) (1)\\QL_CuaHangBanh\\Du An Tot Nghiep\\DTO_CuaHangBanh\\DTO_CuaHangBanh.csproj",
         "packagesPath": "C:\\Users\\Tien Dat\\.nuget\\packages\\",
-        "outputPath": "E:\\Du An Tot Nghiep\\DTO_CuaHangBanh\\obj\\",
+        "outputPath": "E:\\QL_CuaHangBanh (2) (1)\\QL_CuaHangBanh\\Du An Tot Nghiep\\DTO_CuaHangBanh\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -70,14 +70,14 @@
         }
       }
     },
-    "E:\\Du An Tot Nghiep\\UTIL_CuaHangBanh\\UTIL_CuaHangBanh.csproj": {
+    "E:\\QL_CuaHangBanh (2) (1)\\QL_CuaHangBanh\\Du An Tot Nghiep\\UTIL_CuaHangBanh\\UTIL_CuaHangBanh.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Du An Tot Nghiep\\UTIL_CuaHangBanh\\UTIL_CuaHangBanh.csproj",
+        "projectUniqueName": "E:\\QL_CuaHangBanh (2) (1)\\QL_CuaHangBanh\\Du An Tot Nghiep\\UTIL_CuaHangBanh\\UTIL_CuaHangBanh.csproj",
         "projectName": "UTIL_CuaHangBanh",
-        "projectPath": "E:\\Du An Tot Nghiep\\UTIL_CuaHangBanh\\UTIL_CuaHangBanh.csproj",
+        "projectPath": "E:\\QL_CuaHangBanh (2) (1)\\QL_CuaHangBanh\\Du An Tot Nghiep\\UTIL_CuaHangBanh\\UTIL_CuaHangBanh.csproj",
         "packagesPath": "C:\\Users\\Tien Dat\\.nuget\\packages\\",
-        "outputPath": "E:\\Du An Tot Nghiep\\UTIL_CuaHangBanh\\obj\\",
+        "outputPath": "E:\\QL_CuaHangBanh (2) (1)\\QL_CuaHangBanh\\Du An Tot Nghiep\\UTIL_CuaHangBanh\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -99,8 +99,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "E:\\Du An Tot Nghiep\\DTO_CuaHangBanh\\DTO_CuaHangBanh.csproj": {
-                "projectPath": "E:\\Du An Tot Nghiep\\DTO_CuaHangBanh\\DTO_CuaHangBanh.csproj"
+              "E:\\QL_CuaHangBanh (2) (1)\\QL_CuaHangBanh\\Du An Tot Nghiep\\DTO_CuaHangBanh\\DTO_CuaHangBanh.csproj": {
+                "projectPath": "E:\\QL_CuaHangBanh (2) (1)\\QL_CuaHangBanh\\Du An Tot Nghiep\\DTO_CuaHangBanh\\DTO_CuaHangBanh.csproj"
               }
             }
           }

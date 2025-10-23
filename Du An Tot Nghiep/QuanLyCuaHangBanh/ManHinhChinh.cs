@@ -98,6 +98,9 @@ namespace GUI_CuaHangBanh
                 case "btnDanhMuc":
                     LoadForm(new DanhMuc());
                     break;
+                case "btnHoaDon":
+                    LoadForm(new HoaDon());
+                    break;
             }
         }
 
@@ -313,7 +316,7 @@ namespace GUI_CuaHangBanh
         {
             var btn = (Guna.UI2.WinForms.Guna2Button)sender;
             HighlightButton(btn);
-            LoadForm(new ThongKe());
+            LoadForm(new HoaDon());
             btnThongKe.Dock = DockStyle.Fill;
 
         }
@@ -347,6 +350,14 @@ namespace GUI_CuaHangBanh
         private void timer1_Tick(object sender, EventArgs e)
         {
             lblThoiGian.Text = DateTime.Now.ToString("HH:mm:ss - dd/MM/yyyy");
+        }
+
+        private void btnHoaDon_Click(object sender, EventArgs e)
+        {
+            var btn = (Guna.UI2.WinForms.Guna2Button)sender;
+            HighlightButton(btn);
+            LoadForm(new ThongKe());
+            btnThongKe.Dock = DockStyle.Fill;
         }
     }
 }
