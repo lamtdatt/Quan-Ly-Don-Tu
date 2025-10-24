@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "DTO_CuaHangBanh/1.0.0": {
+        "runtime": {
+          "DTO_CuaHangBanh.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "DTO_CuaHangBanh/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

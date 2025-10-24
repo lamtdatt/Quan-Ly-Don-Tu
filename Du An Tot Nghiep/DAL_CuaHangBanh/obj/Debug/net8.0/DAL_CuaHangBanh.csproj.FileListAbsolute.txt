@@ -1,0 +1,53 @@
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DAL_CuaHangBanh.deps.json
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DAL_CuaHangBanh.dll
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DAL_CuaHangBanh.pdb
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DTO_CuaHangBanh.dll
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\UTIL_CuaHangBanh.dll
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DTO_CuaHangBanh.pdb
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\UTIL_CuaHangBanh.pdb
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.csproj.AssemblyReference.cache
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.GeneratedMSBuildEditorConfig.editorconfig
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.AssemblyInfoInputs.cache
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.AssemblyInfo.cs
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.csproj.CoreCompileInputs.cache
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaH.30673249.Up2Date
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.dll
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\refint\DAL_CuaHangBanh.dll
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.pdb
+E:\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\ref\DAL_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DAL_CuaHangBanh.deps.json
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DAL_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DAL_CuaHangBanh.pdb
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DTO_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\UTIL_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DTO_CuaHangBanh.pdb
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\UTIL_CuaHangBanh.pdb
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.csproj.AssemblyReference.cache
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.AssemblyInfoInputs.cache
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.AssemblyInfo.cs
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.csproj.CoreCompileInputs.cache
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.sourcelink.json
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaH.30673249.Up2Date
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\refint\DAL_CuaHangBanh.dll
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.pdb
+C:\Users\OS\Downloads\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\ref\DAL_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DAL_CuaHangBanh.deps.json
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DAL_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DAL_CuaHangBanh.pdb
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DTO_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\UTIL_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\DTO_CuaHangBanh.pdb
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\bin\Debug\net8.0\UTIL_CuaHangBanh.pdb
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.csproj.AssemblyReference.cache
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.GeneratedMSBuildEditorConfig.editorconfig
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.AssemblyInfoInputs.cache
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.AssemblyInfo.cs
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.csproj.CoreCompileInputs.cache
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.sourcelink.json
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaH.30673249.Up2Date
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\refint\DAL_CuaHangBanh.dll
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\DAL_CuaHangBanh.pdb
+E:\QL_CuaHangBanh (2) (1)\QL_CuaHangBanh\Du An Tot Nghiep\DAL_CuaHangBanh\obj\Debug\net8.0\ref\DAL_CuaHangBanh.dll

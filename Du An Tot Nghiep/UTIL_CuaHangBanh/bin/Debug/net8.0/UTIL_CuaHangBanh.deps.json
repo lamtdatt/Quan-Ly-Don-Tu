@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "UTIL_CuaHangBanh/1.0.0": {
+        "dependencies": {
+          "DTO_CuaHangBanh": "1.0.0"
+        },
+        "runtime": {
+          "UTIL_CuaHangBanh.dll": {}
+        }
+      },
+      "DTO_CuaHangBanh/1.0.0": {
+        "runtime": {
+          "DTO_CuaHangBanh.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "UTIL_CuaHangBanh/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DTO_CuaHangBanh/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
