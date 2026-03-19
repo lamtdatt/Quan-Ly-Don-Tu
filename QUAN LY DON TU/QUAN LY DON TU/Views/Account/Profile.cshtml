@@ -1,0 +1,209 @@
+@model DANGCAPNE.ViewModels.ProfileViewModel
+@{
+    ViewData["TitleI18n"] = "ProfileTitle";
+    ViewData["Title"] = "Hồ sơ cá nhân";
+}
+<div class="page-content">
+    <div style="max-width:800px;margin:0 auto">
+        <div class="glass-card mb-24 overflow-hidden">
+            <div class="card-body" style="text-align:center; padding:40px; display:flex; flex-direction:column; align-items:center;">
+                <div class="profile-avatar-wrapper mb-16">
+                    <div id="avatarContainer" class="user-avatar" style="width:120px;height:120px;font-size:48px;margin:0 auto; position: relative; cursor: pointer;" onclick="document.getElementById('avatarInput').click()">
+                        @if (!string.IsNullOrEmpty(Model.User?.AvatarUrl))
+                        {
+                            <img src="@Model.User.AvatarUrl" id="profileImg" style="width:100%; height:100%; object-fit: cover; border-radius: 50%;" />
+                        }
+                        else
+                        {
+                            <span id="avatarLetter">@Model.User?.FullName?.Substring(0, 1)</span>
+                        }
+                        <div class="avatar-overlay">
+                            <i class="bi bi-camera-fill"></i>
+                        </div>
+                    </div>
+                    <input type="file" id="avatarInput" hidden accept="image/*" onchange="uploadAvatar(this)" />
+                </div>
+                
+                <h2 class="fw-800 mb-4">@Model.User?.FullName</h2>
+                <p class="text-muted mb-24">@Model.User?.Email · @Model.User?.EmployeeCode</p>
+                
+                <div class="d-flex justify-center gap-40">
+                    <div class="text-center">
+                        <div class="fw-700 color-primary">@Model.User?.Department?.Name</div>
+                        <div class="text-muted smaller" data-i18n="ColDept">Phòng ban</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="fw-700 color-primary">@Model.User?.JobTitle?.Name</div>
+                        <div class="text-muted smaller" data-i18n="LabelJobTitle">Chức danh</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="fw-700 color-primary">@Model.User?.Branch?.Name</div>
+                        <div class="text-muted smaller" data-i18n="LabelBranch">Chi nhánh</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lịch sử chấm công -->
+        <div class="glass-card mb-24">
+            <div class="card-header">
+                <h3><i class="bi bi-clock-history text-primary"></i> Lịch sử chấm công gần đây</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Ngày</th>
+                                <th>Giờ vào</th>
+                                <th>Giờ ra</th>
+                                <th>Số giờ</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.AttendanceHistory.Any())
+                            {
+                                @foreach (var t in Model.AttendanceHistory)
+                                {
+                                    var stCls = t.Status == "EarlyLeave" ? "warning" : "approved";
+                                    var stTxt = t.Status == "EarlyLeave" ? "Thiếu giờ" : "Có mặt";
+                                    <tr>
+                                        <td><strong>@t.Date.ToString("dd/MM/yyyy")</strong></td>
+                                        <td class="text-success fw-600">@(t.CheckIn?.ToString("HH:mm") ?? "--:--")</td>
+                                        <td class="text-info fw-600">@(t.CheckOut?.ToString("HH:mm") ?? "--")</td>
+                                        <td>@(t.WorkHours > 0 ? t.WorkHours.ToString("0.#") + "h" : "--")</td>
+                                        <td><span class="status-badge @stCls">@stTxt</span></td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center p-24 text-muted">Chưa có dữ liệu chấm công.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.LeaveBalances.Any())
+        {
+            <div class="glass-card mb-24">
+                <div class="card-header"><h3><i class="bi bi-calendar-check text-success"></i> <span data-i18n="LeaveTitleYearPrefix">Quản lý Quỹ phép năm</span> @DateTime.Now.Year</h3></div>
+                <div class="card-body">
+                    @foreach (var lb in Model.LeaveBalances)
+                    {
+                        var pct = lb.TotalEntitled > 0 ? (lb.Used / lb.TotalEntitled * 100) : 0;
+                        var barCls = pct > 80 ? "danger" : pct > 60 ? "warning" : "";
+                        <div style="margin-bottom:16px">
+                            <div class="d-flex justify-between" style="font-size:13px;margin-bottom:4px">
+                                <span><i class="bi bi-circle-fill" style="color:@lb.LeaveType?.IconColor;font-size:8px"></i> @lb.LeaveType?.Name</span>
+                                <span><strong>@lb.Used</strong> / @lb.TotalEntitled <span data-i18n="LeaveUnitDay">ngày</span> (<span data-i18n="LeaveRemainPfx">Còn</span> <strong class="@(lb.Remaining <= 3 ? "text-danger" : "")">@lb.Remaining</strong>)</span>
+                            </div>
+                            <div class="leave-bar"><div class="leave-bar-fill @barCls" style="width:@pct%"></div></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="glass-card">
+            <div class="card-header"><h3><i class="bi bi-gear text-muted"></i> <span data-i18n="ChangePassword">Đổi mật khẩu</span></h3></div>
+            <div class="card-body">
+                <form method="post" asp-action="UpdateProfile">
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="NewPassword">Mật khẩu mới</label>
+                        <input type="password" name="NewPassword" class="form-control" data-i18n="PlaceholderNewPw" placeholder="Nhập mật khẩu mới" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="ConfirmPassword">Xác nhận mật khẩu</label>
+                        <input type="password" name="ConfirmPassword" class="form-control" data-i18n="PlaceholderConfirmPw" placeholder="Nhập lại mật khẩu" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> <span data-i18n="BtnUpdate">Cập nhật mật khẩu</span></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-avatar-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+    .avatar-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        border-radius: 50%;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+    #avatarContainer:hover .avatar-overlay {
+        opacity: 1;
+    }
+    .smaller { font-size: 12px; }
+</style>
+
+@section Scripts {
+    <script>
+        async function uploadAvatar(input) {
+            if (!input.files || !input.files[0]) return;
+
+            const formData = new FormData();
+            formData.append('file', input.files[0]);
+
+            Swal.fire({
+                title: 'Đang tải lên...',
+                didOpen: () => { Swal.showLoading(); }
+            });
+
+            try {
+                const response = await fetch('/Account/UploadAvatar', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: 'Ảnh đại diện đã được cập nhật.',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                    // Cập nhật giao diện
+                    let img = document.getElementById('profileImg');
+                    if (!img) {
+                        img = document.createElement('img');
+                        img.id = 'profileImg';
+                        img.className = 'profile-img'; // Class defined in CSS but using inline for now
+                        img.style = "width:100%; height:100%; object-fit: cover; border-radius: 50%;";
+                        const container = document.getElementById('avatarContainer');
+                        const letter = document.getElementById('avatarLetter');
+                        if (letter) letter.remove();
+                        container.insertBefore(img, container.firstChild);
+                    }
+                    img.src = result.url + '?t=' + new Date().getTime();
+                    
+                    // Cập nhật session cho sidebar (refresh page hoặc DOM update)
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    Swal.fire('Lỗi!', result.message, 'error');
+                }
+            } catch (err) {
+                Swal.fire('Lỗi!', 'Không thể kết nối đến máy chủ.', 'error');
+            }
+        }
+    </script>
+}

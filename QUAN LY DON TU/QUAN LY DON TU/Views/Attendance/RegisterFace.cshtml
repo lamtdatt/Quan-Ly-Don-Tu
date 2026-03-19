@@ -1,0 +1,213 @@
+@ViewData["Title"] = "Đăng ký khuôn mặt";
+@{
+    Layout = "_Layout";
+}
+
+<div class="page-content">
+    <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
+        <div class="card-header">
+            <h3><i class="bi bi-person-bounding-box text-primary"></i> Đăng ký khuôn mặt mẫu</h3>
+            <p class="text-muted">Khuôn mặt này sẽ được dùng để xác thực danh tính khi bạn chấm công.</p>
+        </div>
+        <div class="card-body text-center">
+            
+            <div id="setupStep">
+                <div class="video-container" style="position: relative; display: inline-block; border-radius: 24px; padding: 10px; background: #f8fafc; box-shadow: 0 20px 50px rgba(0,0,0,0.1);">
+                    <div id="frameRing" class="frame-ring"></div>
+                    <div style="position: relative; border-radius: 16px; overflow: hidden; background: #000; line-height: 0;">
+                        <video id="video" width="640" height="480" autoplay muted playsinline></video>
+                        <canvas id="overlay" style="position: absolute; top: 0; left: 0;"></canvas>
+                    </div>
+                </div>
+
+                <div class="mt-24">
+                    <button id="btnCapture" class="btn btn-primary btn-lg" disabled>
+                        <i class="bi bi-camera-fill"></i> Quét khuôn mặt mẫu
+                    </button>
+                    <p id="instruction" class="mt-16 text-muted">Đang tải dữ liệu nhận diện...</p>
+                </div>
+            </div>
+
+            <div id="successStep" style="display:none;">
+                <div class="text-center py-40">
+                    <div class="success-icon mb-24" style="font-size: 80px; color: var(--success);">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <h2 class="mb-16">Đăng ký thành công!</h2>
+                    <p class="text-muted mb-32">Bây giờ bạn có thể sử dụng khuôn mặt để chấm công nhanh chóng.</p>
+                    <a href="@Url.Action("Index")" class="btn btn-primary">Đến trang Chấm công</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <script>
+        const video = document.getElementById('video');
+        const btnCapture = document.getElementById('btnCapture');
+        const instruction = document.getElementById('instruction');
+        const setupStep = document.getElementById('setupStep');
+        const successStep = document.getElementById('successStep');
+
+        let modelsLoaded = false; // Added this variable
+
+        async function init() {
+            const MODEL_URL = 'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights/';
+            try {
+                instruction.innerText = "Đang tải dữ liệu nhận diện...";
+                await Promise.all([
+                    faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+                    faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+                    faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
+                ]);
+                modelsLoaded = true;
+                startCamera();
+            } catch (err) {
+                console.error(err);
+                instruction.innerText = "Lỗi khởi tạo mô hình.";
+            }
+        }
+
+        async function startCamera() { // Extracted camera logic into a new function
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+                video.srcObject = stream;
+                
+                video.onloadedmetadata = () => {
+                    instruction.innerText = "Vui lòng giữ mặt thẳng và ổn định...";
+                    startDetection();
+                };
+            } catch (err) {
+                instruction.innerHTML = `<span class="text-danger">Lỗi: ${err.message}</span>`;
+            }
+        }
+
+        let scanProgress = 0;
+        let isProcessingCapture = false;
+        let detectionInterval = null;
+
+        function stopCamera() {
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+            }
+            if (detectionInterval) {
+                clearInterval(detectionInterval);
+            }
+        }
+
+        async function startDetection() {
+            const displaySize = { width: video.videoWidth, height: video.videoHeight };
+            const frameRing = document.getElementById('frameRing');
+            
+            detectionInterval = setInterval(async () => {
+                if (isProcessingCapture) return;
+
+                const detection = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions())
+                    .withFaceLandmarks()
+                    .withFaceDescriptor();
+                
+                if (detection) {
+                    btnCapture.disabled = false;
+                    
+                    // Tăng tiến trình cực chậm
+                    scanProgress += 2;
+                    if (scanProgress > 100) scanProgress = 100;
+
+                    const color = scanProgress < 50 ? '#f97316' : (scanProgress < 100 ? '#eab308' : '#10b981');
+                    frameRing.style.background = `conic-gradient(${color} ${scanProgress}%, #f1f5f9 ${scanProgress}%)`;
+                    instruction.innerHTML = `<span class="text-success fw-600">Đang phân tích: ${Math.round(scanProgress)}%</span>`;
+                    
+                    window.lastDescriptor = detection.descriptor;
+
+                    if (scanProgress >= 100) {
+                        isProcessingCapture = true;
+                        frameRing.classList.add('success');
+                        instruction.innerHTML = `<span class="text-success fw-700">Đã sẵn sàng!</span>`;
+                        
+                        stopCamera();
+
+                        Swal.fire({
+                            title: 'LẤY MẪU THÀNH CÔNG!',
+                            text: 'Dữ liệu khuôn mặt đã sẵn sàng để lưu.',
+                            icon: 'success',
+                            confirmButtonText: 'Lưu ngay',
+                            allowOutsideClick: false,
+                            willClose: () => {
+                                btnCapture.click();
+                            }
+                        });
+                    }
+                }
+ else {
+                    resetProgress();
+                    btnCapture.disabled = true;
+                    instruction.innerText = "Vui lòng đưa mặt vào giữa khung hình...";
+                }
+            }, 200);
+        }
+
+        function resetProgress() {
+            scanProgress = 0;
+            const frameRing = document.getElementById('frameRing');
+            if (frameRing) {
+                frameRing.style.background = `conic-gradient(#f97316 0%, #f1f5f9 0%)`;
+                frameRing.classList.remove('success');
+            }
+        }
+
+        btnCapture.addEventListener('click', async () => {
+            if (!window.lastDescriptor) return;
+            
+            btnCapture.disabled = true;
+            btnCapture.innerHTML = `<i class="bi bi-arrow-repeat spin"></i> Đang lưu...`;
+
+            const descriptorArray = Array.from(window.lastDescriptor);
+            
+            const resp = await fetch('@Url.Action("SaveFaceDescriptor")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ descriptor: JSON.stringify(descriptorArray) })
+            });
+
+            const result = await resp.json();
+            if (result.success) {
+                setupStep.style.display = 'none';
+                successStep.style.display = 'block';
+            } else {
+                alert(result.message);
+                btnCapture.disabled = false;
+                btnCapture.innerHTML = `<i class="bi bi-camera-fill"></i> Quét khuôn mặt mẫu`;
+            }
+        });
+
+        init();
+    </script>
+}
+
+<style>
+    #video { transform: scaleX(-1); border-radius: 16px; }
+    
+    .frame-ring {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        border-radius: 24px;
+        padding: 4px;
+        background: conic-gradient(#f97316 0%, #f1f5f9 0%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    .frame-ring.success {
+        background: conic-gradient(#10b981 100%, #10b981 100%) !important;
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+    }
+
+    .spin { animation: rotation 2s infinite linear; }
+    @@keyframes rotation { from { transform: rotate(0deg); } to { transform: rotate(359deg); } }
+</style>

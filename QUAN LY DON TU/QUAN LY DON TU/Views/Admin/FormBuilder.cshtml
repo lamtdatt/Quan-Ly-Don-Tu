@@ -1,0 +1,83 @@
+﻿@model DANGCAPNE.ViewModels.FormBuilderViewModel
+@{
+    ViewData["Title"] = "Tạo biểu mẫu";
+}
+<div class="page-content">
+    <div class="d-flex justify-between align-center mb-24" style="flex-wrap:wrap;gap:16px">
+        <div>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px">Tạo / chỉnh sửa biểu mẫu</h2>
+            <p class="text-muted">Cấu hình thông tin biểu mẫu và gắn luồng duyệt</p>
+        </div>
+        <a href="@Url.Action("Index", "Admin", new { tab = "forms" })" class="btn btn-outline"><i class="bi bi-arrow-left"></i> Quay lại</a>
+    </div>
+
+    <div class="glass-card">
+        <div class="card-body">
+            <form method="post" asp-action="SaveFormTemplate">
+                <input type="hidden" name="Id" value="@Model.FormTemplate?.Id" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Tên biểu mẫu</label>
+                        <input type="text" name="Name" class="form-control" value="@Model.FormTemplate?.Name" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Danh mục</label>
+                        <input type="text" name="Category" class="form-control" value="@Model.FormTemplate?.Category" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Mô tả</label>
+                    <textarea name="Description" class="form-control" rows="3">@Model.FormTemplate?.Description</textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Icon (Bootstrap Icons)</label>
+                        <input type="text" name="Icon" class="form-control" value="@Model.FormTemplate?.Icon" placeholder="bi-file-earmark-text" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Màu icon</label>
+                        <input type="text" name="IconColor" class="form-control" value="@Model.FormTemplate?.IconColor" placeholder="#6366f1" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Luồng duyệt</label>
+                        <select name="WorkflowId" class="form-control">
+                            <option value="">-- Chọn luồng duyệt --</option>
+                            @foreach (var wf in Model.Workflows)
+                            {
+                                <option value="@wf.Id" selected="@(Model.FormTemplate?.WorkflowId == wf.Id)">@wf.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Trạng thái</label>
+                        <select name="IsActive" class="form-control">
+                            <option value="true" selected="@(Model.FormTemplate?.IsActive == true)">Hoạt động</option>
+                            <option value="false" selected="@(Model.FormTemplate?.IsActive == false)">Ẩn</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-check">
+                        <input type="checkbox" name="RequiresFinancialApproval" value="true" @(Model.FormTemplate?.RequiresFinancialApproval == true ? "checked" : "") />
+                        <span style="font-size:13px;color:var(--text-muted)">Cần phê duyệt tài chính</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Cấu hình field (JSON)</label>
+                    <textarea name="fieldsJson" class="form-control" rows="8" placeholder='[{"name":"Title","type":"text","required":true}]'></textarea>
+                    <div class="text-muted" style="font-size:12px;margin-top:6px">Hiện tại dùng JSON thủ công. Có thể nâng cấp UI builder sau.</div>
+                </div>
+
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Lưu biểu mẫu</button>
+            </form>
+        </div>
+    </div>
+</div>

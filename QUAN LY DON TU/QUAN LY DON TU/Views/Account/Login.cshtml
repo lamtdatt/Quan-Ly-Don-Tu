@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập - DANGCAPNE</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ===== BACKGROUND Intro Animation (Giai đoạn 1 & 2) ===== */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            background-image: url('/img/anhlogin.webp');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            opacity: 0;
+            transform: scale(0.95);
+            filter: brightness(1.1);
+            animation: bgIntroAppearance 0.5s ease-out forwards;
+        }
+
+        /* ===== DARK OVERLAY (Làm sáng hơn) ===== */
+        .bg-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: -1;
+            animation: overlayFadeIn 1.2s ease forwards;
+        }
+
+        /* ===== LOGOUT FADE OVERLAY ===== */
+        .logout-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0);
+            z-index: 9999;
+            pointer-events: none;
+            transition: background 0.5s ease;
+        }
+        .logout-overlay.active {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        /* ============================
+           @@keyframes — RIÊNG BIỆT
+           (dễ tùy chỉnh tốc độ)
+           ============================ */
+
+        /* 1. Hiện nền: mờ dần + phóng to nhẹ (0.95 -> 1) */
+        @@keyframes bgIntroAppearance {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* 2. Overlay mờ dần vào */
+        @@keyframes overlayFadeIn {
+            0%   { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* ===== GLASSMORPHISM CARD (Giai đoạn 3) ===== */
+        .glass-login {
+            position: relative;
+            z-index: 1;
+            width: min(420px, 90vw);
+            background: rgba(255, 255, 255, 0.00);
+            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 48px 44px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+
+            /* Xuất hiện sau 0.8s (hiện nền 0.3s + nghỉ 0.5s) */
+            opacity: 0;
+            animation: cardIntroSlideUp 1s cubic-bezier(0.22, 1, 0.36, 1) 0.8s forwards;
+        }
+
+        /* 3. Card slide-up: translateY(100px) → 0 */
+        @@keyframes cardIntroSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== LOGO / BRAND ===== */
+        .login-brand {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        .login-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+
+        .login-subtitle span {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* ===== ERROR ALERT ===== */
+        .alert-glass {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 14px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font-size: 13px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ===== FORM GROUPS ===== */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label-glass {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 10px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+
+        /* ===== PILL-SHAPE GLASS INPUTS ===== */
+        .glass-input-wrap {
+            position: relative;
+        }
+
+        .glass-input-wrap .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6366f1; /* Vibrant Indigo / Primary color */
+            font-size: 19px;
+            pointer-events: none;
+            z-index: 5;
+            filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.3));
+        }
+
+        .glass-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05) !important;
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 999px;
+            padding: 14px 20px 14px 50px;
+            font-size: 14px;
+            color: #ffffff !important;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .glass-input::placeholder {
+            color: rgba(255, 255, 255, 0.45);
+            font-weight: 400;
+        }
+
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+        }
+
+        /* ===== FORGOT ROW ===== */
+        .forgot-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .forgot-link {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-link:hover {
+            color: #ffffff;
+        }
+
+        /* ===== LOGIN BUTTON ===== */
+        .btn-glass-login {
+            width: 100%;
+            background: #ffffff;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 999px;
+            padding: 15px 24px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 28px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .btn-glass-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+            background: #f0f0ff;
+        }
+
+        .btn-glass-login:active {
+            transform: translateY(0);
+        }
+
+        /* ===== DIVIDER ===== */
+        .glass-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            margin: 32px 0 20px;
+        }
+
+        /* ===== FOOTER ===== */
+        .login-footer-text {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+</style>
+</head>
+<body>
+
+    <!-- ===== BACKGROUND ZOOM LAYER ===== -->
+    <div class="bg-layer"></div>
+
+    <!-- ===== DARK OVERLAY ===== -->
+    <div class="bg-overlay"></div>
+
+    <!-- ===== LOGOUT FADE OVERLAY ===== -->
+    <div class="logout-overlay" id="logoutOverlay"></div>
+
+    <div class="glass-login">
+
+        <!-- Brand -->
+        <div class="login-brand">
+            <div class="login-logo">
+                <i class="bi bi-shield-lock-fill"></i>
+            </div>
+            <h1 class="login-title" data-i18n="LoginTitle">Chào mừng trở lại</h1>
+            <p class="login-subtitle">
+                Hệ thống phê duyệt <span>DATLEE ERP</span>
+            </p>
+        </div>
+
+        <!-- Error -->
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert-glass">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                @ViewBag.Error
+            </div>
+        }
+
+        <!-- Form -->
+        <form method="post" asp-action="Login">
+
+            <div class="form-group">
+                <label class="form-label-glass" data-i18n="LabelEmail">Tên đăng nhập</label>
+                <div class="glass-input-wrap">
+                    <i class="bi bi-person-fill input-icon"></i>
+                    <input
+                        type="email"
+                        name="Email"
+                        class="glass-input"
+                        placeholder="email@congty.com"
+                        data-i18n="PlaceholderEmail"
+                        required
+                        autofocus />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label-glass" data-i18n="LabelPass">Mật khẩu</label>
+                <div class="glass-input-wrap">
+                    <i class="bi bi-lock-fill input-icon"></i>
+                    <input
+                        type="password"
+                        name="Password"
+                        class="glass-input"
+                        placeholder="••••••••"
+                        data-i18n="PlaceholderPass"
+                        required />
+                </div>
+                <div class="forgot-row">
+                    <a href="#" class="forgot-link" data-i18n="ForgotPass">Quên mật khẩu?</a>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-glass-login">
+                <span data-i18n="BtnLogin">Đăng nhập</span>
+                <i class="bi bi-arrow-right-circle-fill"></i>
+            </button>
+
+        </form>
+
+        <hr class="glass-divider">
+        <p class="login-footer-text">DANGCAPNE &copy; 2025 · <span data-i18n="SecurityPolicy">Bảo mật & Quyền riêng tư</span></p>
+    </div>
+
+    <script>
+        const loginDict = {
+            "vi": {
+                "LoginTitle": "Chào mừng trở lại",
+                "LabelEmail": "TÊN ĐĂNG NHẬP",
+                "PlaceholderEmail": "email@congty.com",
+                "LabelPass": "MẬT KHẨU",
+                "PlaceholderPass": "••••••••",
+                "ForgotPass": "Quên mật khẩu?",
+                "BtnLogin": "ĐĂNG NHẬP",
+                "SecurityPolicy": "Bảo mật & Quyền riêng tư"
+            },
+            "en": {
+                "LoginTitle": "Welcome back",
+                "LabelEmail": "USERNAME",
+                "PlaceholderEmail": "email@company.com",
+                "LabelPass": "PASSWORD",
+                "PlaceholderPass": "••••••••",
+                "ForgotPass": "Forgot password?",
+                "BtnLogin": "SIGN IN",
+                "SecurityPolicy": "Security & Privacy"
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const lang = localStorage.getItem('dangcapne_lang') || 'vi';
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const dict = loginDict[lang];
+                if (!dict || !dict[key]) return;
+                if (el.tagName === 'INPUT') {
+                    el.setAttribute('placeholder', dict[key]);
+                } else {
+                    const icon = el.querySelector('i');
+                    if (icon) {
+                        el.innerHTML = '';
+                        el.appendChild(icon);
+                        el.append(' ' + dict[key]);
+                    } else {
+                        el.innerText = dict[key];
+                    }
+                }
+            });
+        });
+
+        // ===== LOGOUT FADE-OUT =====
+        // Intercept any link to /Account/Logout and show fade overlay first
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('a[href*="Logout"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.href;
+                    const overlay = document.getElementById('logoutOverlay');
+                    if (overlay) {
+                        overlay.classList.add('active');
+                        setTimeout(() => { window.location.href = target; }, 500);
+                    } else {
+                        window.location.href = target;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

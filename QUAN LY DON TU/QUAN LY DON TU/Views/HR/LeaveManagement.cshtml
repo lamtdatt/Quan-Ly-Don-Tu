@@ -1,0 +1,37 @@
+@model List<DANGCAPNE.Models.Timekeeping.LeaveBalance>
+@{
+    ViewData["TitleI18n"] = "NavLeave";
+    ViewData["Title"] = "Quản lý phép";
+}
+<div class="page-content">
+    <div class="d-flex justify-between align-center mb-24">
+        <div>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px"><span data-i18n="LeaveTitleYearPrefix">Quản lý Quỹ phép năm</span> @DateTime.Now.Year</h2>
+            <p class="text-muted"><span data-i18n="LeaveTotalRecordsPfx">Tổng cộng</span> @Model.Count <span data-i18n="LeaveTotalRecordsSfx">bản ghi phép</span></p>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <div class="card-body" style="padding:0">
+            <table class="data-table">
+                <thead><tr><th data-i18n="ColEmp">Nhân viên</th><th data-i18n="ColDept">Phòng ban</th><th data-i18n="ColType">Loại phép</th><th data-i18n="ColTotalLeave">Được cấp</th><th data-i18n="ColUsed">Đã dùng</th><th data-i18n="ColRemain">Còn lại</th><th data-i18n="ColProgress">Tiến độ</th></tr></thead>
+                <tbody>
+                    @foreach (var lb in Model)
+                    {
+                        var pct = lb.TotalEntitled > 0 ? (lb.Used / lb.TotalEntitled * 100) : 0;
+                        var barCls = pct > 80 ? "danger" : pct > 60 ? "warning" : "";
+                        <tr>
+                            <td><strong>@lb.User?.FullName</strong></td>
+                            <td class="text-muted">@lb.User?.Department?.Name</td>
+                            <td><span style="color:@lb.LeaveType?.IconColor"><i class="bi bi-circle-fill" style="font-size:8px"></i> @lb.LeaveType?.Name</span></td>
+                            <td>@lb.TotalEntitled</td>
+                            <td>@lb.Used</td>
+                            <td class="@(lb.Remaining <= 3 ? "text-danger fw-600" : "fw-600")">@lb.Remaining</td>
+                            <td style="width:160px"><div class="leave-bar"><div class="leave-bar-fill @barCls" style="width:@pct%"></div></div></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

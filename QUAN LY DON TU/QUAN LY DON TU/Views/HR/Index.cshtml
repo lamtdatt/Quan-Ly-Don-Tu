@@ -1,0 +1,139 @@
+@model DANGCAPNE.ViewModels.HRDashboardViewModel
+@{
+    ViewData["TitleI18n"] = "NavHR";
+    ViewData["Title"] = "Bảng Kanban nhân sự";
+}
+<div class="page-content">
+    <div class="d-flex justify-between align-center mb-24">
+        <div>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px" data-i18n="HRKanbanTitle">Bảng Kanban nhân sự</h2>
+            <p class="text-muted"><span data-i18n="HRTotalReqPfx">Tổng cộng</span> @Model.AllRequests.Count <span data-i18n="HRTotalReqSfx">đơn từ · Nhân viên</span> @Model.Employees.Count</p>
+        </div>
+        <div class="d-flex gap-8">
+            <a href="@Url.Action("LeaveManagement")" class="btn btn-outline"><i class="bi bi-calendar2-week"></i> <span data-i18n="NavLeave">Quỹ phép</span></a>
+            <a href="@Url.Action("Timekeeping")" class="btn btn-outline"><i class="bi bi-clock"></i> <span data-i18n="NavTime">Chấm công</span></a>
+        </div>
+    </div>
+
+    @if (Model.Anomalies.Any())
+    {
+        <div class="mb-24">
+            <h3 style="font-size:16px;font-weight:600;margin-bottom:12px"><i class="bi bi-exclamation-triangle-fill text-warning"></i> <span data-i18n="HRAnomalyWarn">Cảnh báo bất thường</span></h3>
+            @foreach (var anomaly in Model.Anomalies)
+            {
+                <div class="anomaly-card @anomaly.Severity.ToLower()">
+                    <div class="flag">🚩</div>
+                    <div class="anomaly-info">
+                        <h4>@anomaly.EmployeeName - @anomaly.AlertType</h4>
+                        <p>@anomaly.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <div class="kanban-board">
+        <div class="kanban-column pending">
+            <div class="kanban-column-header">
+                <h4><i class="bi bi-hourglass text-warning"></i> <span data-i18n="HRColWait">Chờ xử lý</span></h4>
+                <span class="col-count">@Model.PendingRequests.Count</span>
+            </div>
+            <div class="kanban-cards">
+                @foreach (var r in Model.PendingRequests.Take(20))
+                {
+                    <a href="@Url.Action("Detail", "Requests", new { id = r.Id })" class="kanban-card">
+                        <div class="card-title">@r.Title</div>
+                        <div class="card-meta"><i class="bi @r.FormTemplate?.Icon" style="color:@r.FormTemplate?.IconColor"></i> @r.FormTemplate?.Name · @r.RequestCode</div>
+                        <div class="card-requester">
+                            <div class="mini-avatar">@r.Requester?.FullName?.Substring(0, 1)</div>
+                            <span style="font-size:12px">@r.Requester?.FullName</span>
+                            <span class="text-muted" style="margin-left:auto;font-size:11px">@r.CreatedAt.ToString("dd/MM")</span>
+                        </div>
+                    </a>
+                }
+                @if (!Model.PendingRequests.Any())
+                {
+                    <div class="empty-state" style="padding:24px"><p data-i18n="DashNoReq">Không có đơn nào</p></div>
+                }
+            </div>
+        </div>
+
+        <div class="kanban-column in-progress">
+            <div class="kanban-column-header">
+                <h4><i class="bi bi-arrow-repeat text-info"></i> <span data-i18n="HRColInProg">Đang xử lý</span></h4>
+                <span class="col-count">@Model.InProgressRequests.Count</span>
+            </div>
+            <div class="kanban-cards">
+                @foreach (var r in Model.InProgressRequests.Take(20))
+                {
+                    <a href="@Url.Action("Detail", "Requests", new { id = r.Id })" class="kanban-card">
+                        <div class="card-title">@r.Title</div>
+                        <div class="card-meta"><i class="bi @r.FormTemplate?.Icon" style="color:@r.FormTemplate?.IconColor"></i> @r.FormTemplate?.Name</div>
+                        <div class="card-requester">
+                            <div class="mini-avatar">@r.Requester?.FullName?.Substring(0, 1)</div>
+                            <span style="font-size:12px">@r.Requester?.FullName</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+
+        <div class="kanban-column approved">
+            <div class="kanban-column-header">
+                <h4><i class="bi bi-check-circle text-success"></i> <span data-i18n="HRColDone">Hoàn tất</span></h4>
+                <span class="col-count">@Model.ApprovedRequests.Count</span>
+            </div>
+            <div class="kanban-cards">
+                @foreach (var r in Model.ApprovedRequests.Take(15))
+                {
+                    <a href="@Url.Action("Detail", "Requests", new { id = r.Id })" class="kanban-card">
+                        <div class="card-title">@r.Title</div>
+                        <div class="card-meta">@r.FormTemplate?.Name</div>
+                        <div class="card-requester">
+                            <div class="mini-avatar">@r.Requester?.FullName?.Substring(0, 1)</div>
+                            <span style="font-size:12px">@r.Requester?.FullName</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+
+        <div class="kanban-column rejected">
+            <div class="kanban-column-header">
+                <h4><i class="bi bi-x-circle text-danger"></i> <span data-i18n="HRColRej">Từ chối / Hủy</span></h4>
+                <span class="col-count">@Model.RejectedRequests.Count</span>
+            </div>
+            <div class="kanban-cards">
+                @foreach (var r in Model.RejectedRequests.Take(15))
+                {
+                    <a href="@Url.Action("Detail", "Requests", new { id = r.Id })" class="kanban-card">
+                        <div class="card-title">@r.Title</div>
+                        <div class="card-meta">@r.FormTemplate?.Name</div>
+                        <div class="card-requester">
+                            <div class="mini-avatar">@r.Requester?.FullName?.Substring(0, 1)</div>
+                            <span style="font-size:12px">@r.Requester?.FullName</span>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+
+    @if (Model.DepartmentStats.Any())
+    {
+        <div class="glass-card mt-24">
+            <div class="card-header"><h3><i class="bi bi-bar-chart-fill text-primary"></i> <span data-i18n="HRDeptStats">Thống kê phòng ban</span></h3></div>
+            <div class="card-body">
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px">
+                    @foreach (var dept in Model.DepartmentStats)
+                    {
+                        <div style="background:var(--bg-glass);padding:16px;border-radius:var(--radius-md);border:1px solid var(--border-glass)">
+                            <div style="font-size:24px;font-weight:800;color:var(--accent-primary)">@dept.Value</div>
+                            <div style="font-size:13px;color:var(--text-muted)">@dept.Key</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

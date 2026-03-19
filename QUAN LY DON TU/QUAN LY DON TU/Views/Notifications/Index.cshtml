@@ -1,0 +1,50 @@
+@model List<DANGCAPNE.Models.SystemModels.Notification>
+@{
+    ViewData["TitleI18n"] = "NavNotif";
+    ViewData["Title"] = "Thông báo";
+}
+<div class="page-content">
+    <div class="notif-toolbar mb-24">
+        <div>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:6px" data-i18n="NavNotif">Thông báo</h2>
+            <div class="notif-count"><i class="bi bi-bell"></i> @ViewBag.UnreadCount <span data-i18n="NotifUnreadSfx">chưa đọc</span></div>
+        </div>
+        <button class="btn btn-outline" onclick="fetch('/Notifications/MarkAllAsRead',{method:'POST'}).then(()=>location.reload())">
+            <i class="bi bi-check2-all"></i> <span data-i18n="MarkAllRead">Đánh dấu tất cả đã đọc</span>
+        </button>
+    </div>
+
+    <div class="glass-card">
+        <div class="card-body notif-list" style="padding:0">
+            @if (Model.Any())
+            {
+                @foreach (var n in Model)
+                {
+                    var typIcon = n.Type switch { "Approval" => "bi-check2-circle text-warning", "Reminder" => "bi-alarm text-info", "Escalation" => "bi-arrow-up-circle text-danger", _ => "bi-info-circle text-muted" };
+                    <a href="@(n.ActionUrl ?? "#")" class="notif-item @(n.IsRead ? "" : "unread")"
+                       onclick="fetch('/Notifications/MarkAsRead',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'id=@n.Id'})">
+                        <div class="notif-icon">
+                            <i class="bi @typIcon" style="font-size:18px"></i>
+                        </div>
+                        <div>
+                            <div class="notif-title">@n.Title</div>
+                            <div class="notif-msg">@n.Message</div>
+                            <div class="notif-time">@n.CreatedAt.ToString("HH:mm dd/MM/yyyy")</div>
+                        </div>
+                        @if (!n.IsRead)
+                        {
+                            <div class="notif-dot"></div>
+                        }
+                    </a>
+                }
+            }
+            else
+            {
+                <div class="empty-state">
+                    <i class="bi bi-bell-slash"></i>
+                    <h3 data-i18n="EmptyNotif">Không có thông báo</h3>
+                </div>
+            }
+        </div>
+    </div>
+</div>

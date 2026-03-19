@@ -1,0 +1,120 @@
+@model DANGCAPNE.ViewModels.UserEditViewModel
+@{
+    ViewData["TitleI18n"] = Model.User?.Id > 0 ? "EditUserTitle" : "AddUserTitle";
+    ViewData["Title"] = Model.User?.Id > 0 ? "Chỉnh sửa nhân viên" : "Thêm nhân viên";
+}
+<div class="page-content">
+    <div style="max-width:800px;margin:0 auto">
+        <div class="glass-card">
+            <div class="card-header">
+                <h3><i class="bi bi-person-gear text-primary"></i> <span data-i18n="@ViewData["TitleI18n"]">@ViewData["Title"]</span></h3>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-action="SaveUser">
+                    <input type="hidden" name="User.Id" value="@(Model.User?.Id ?? 0)" />
+                    <div class="form-row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label"><span data-i18n="ColName">Họ và tên</span> *</label>
+                                <input type="text" name="User.FullName" class="form-control" value="@Model.User?.FullName" required />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label"><span data-i18n="ColCode">Mã nhân viên</span> *</label>
+                                <input type="text" name="User.EmployeeCode" class="form-control" value="@Model.User?.EmployeeCode" required />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Email *</label>
+                                <input type="email" name="User.Email" class="form-control" value="@Model.User?.Email" required />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="LabelPhone">Số điện thoại</label>
+                                <input type="text" name="User.Phone" class="form-control" value="@Model.User?.Phone" />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="ColDept">Phòng ban</label>
+                                <select name="User.DepartmentId" class="form-control">
+                                    <option value="" data-i18n="OptSelect">-- Chọn --</option>
+                                    @foreach (var d in Model.Departments)
+                                    {
+                                        <option value="@d.Id" selected="@(Model.User?.DepartmentId == d.Id)">@d.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="LabelBranch">Chi nhánh</label>
+                                <select name="User.BranchId" class="form-control">
+                                    <option value="" data-i18n="OptSelect">-- Chọn --</option>
+                                    @foreach (var b in Model.Branches)
+                                    {
+                                        <option value="@b.Id" selected="@(Model.User?.BranchId == b.Id)">@b.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="LabelJobTitle">Chức danh</label>
+                                <select name="User.JobTitleId" class="form-control">
+                                    <option value="" data-i18n="OptSelect">-- Chọn --</option>
+                                    @foreach (var j in Model.JobTitles)
+                                    {
+                                        <option value="@j.Id" selected="@(Model.User?.JobTitleId == j.Id)">@j.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="LabelDirectMgr">Quản lý trực tiếp</label>
+                                <select name="ManagerId" class="form-control">
+                                    <option value="" data-i18n="OptSelect">-- Chọn --</option>
+                                    @foreach (var m in Model.PotentialManagers)
+                                    {
+                                        <option value="@m.Id" selected="@(Model.ManagerId == m.Id)">@m.FullName (@m.EmployeeCode)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="ColStatus">Trạng thái</label>
+                                <select name="User.Status" class="form-control">
+                                    <option value="Active" selected="@(Model.User?.Status == "Active")" data-i18n="OptActive">Hoạt động</option>
+                                    <option value="Inactive" selected="@(Model.User?.Status == "Inactive")" data-i18n="OptInactive">Vô hiệu hóa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="ColRole">Vai trò</label>
+                                <div class="d-flex gap-16 flex-wrap">
+                                    @foreach (var role in Model.AllRoles)
+                                    {
+                                        <label class="form-check">
+                                            <input type="checkbox" name="roleIds" value="@role.Id" @(Model.SelectedRoleIds.Contains(role.Id) ? "checked" : "") />
+                                            <span>@role.Name - @role.Description</span>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:24px;padding-top:24px;border-top:1px solid var(--border-glass)">
+                        <a href="@Url.Action("Index", new { tab = "users" })" class="btn btn-outline"><i class="bi bi-arrow-left"></i> <span data-i18n="BtnBack">Quay lại</span></a>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> <span data-i18n="BtnSaveInfo">Lưu thông tin</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

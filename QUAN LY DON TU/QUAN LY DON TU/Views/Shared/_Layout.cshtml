@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(ViewData["Title"]) - DANGCAPNE</title>
+    <meta name="description" content="Hệ thống quản lý đơn từ và phê duyệt doanh nghiệp DANGCAPNE" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    @if (Context.Session.GetInt32("UserId") != null)
+    {
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon"><i class="bi bi-building"></i></div>
+                <div>
+                    <h1>DANGCAPNE<small>Quản trị nhân sự</small></h1>
+                </div>
+            </div>
+            <div class="sidebar-nav">
+                @{
+                    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+                    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+                    var roles = (Context.Session.GetString("Roles") ?? "").Split(",", StringSplitOptions.RemoveEmptyEntries);
+                    var isAdmin = roles.Contains("Admin");
+                    var isHR = roles.Contains("HR");
+                    var isManager = roles.Contains("Manager");
+                }
+                <div class="nav-section">
+                    <div class="nav-section-title" data-i18n="TitleDashboard">Tổng quan</div>
+                    <a href="@Url.Action("Index", "Home")" class="nav-link @(currentController == "Home" ? "active" : "")" data-i18n="NavOverview">
+                        <i class="bi bi-grid-1x2-fill"></i> Tổng quan
+                    </a>
+                    <a href="@Url.Action("Index", "Notifications")" class="nav-link @(currentController == "Notifications" ? "active" : "")" data-i18n="NavNotif">
+                        <i class="bi bi-bell-fill"></i> Thông báo
+                        <span class="badge-count" id="sidebarNotifCount" style="display:none"></span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title" data-i18n="NavRequests">Đơn từ</div>
+                    <a href="@Url.Action("SelectTemplate", "Requests")" class="nav-link @(currentAction == "SelectTemplate" ? "active" : "")" data-i18n="NavCreate">
+                        <i class="bi bi-plus-circle-fill"></i> Tạo đơn mới
+                    </a>
+                    <a href="@Url.Action("Index", "Requests")" class="nav-link @(currentController == "Requests" && currentAction == "Index" ? "active" : "")" data-i18n="NavMyReq">
+                        <i class="bi bi-file-earmark-text-fill"></i> Đơn từ của tôi
+                    </a>
+                </div>
+                @if (isManager || isAdmin || isHR)
+                {
+                    <div class="nav-section">
+                        <div class="nav-section-title" data-i18n="NavApproval">Phê duyệt</div>
+                        <a href="@Url.Action("Index", "Approvals")" class="nav-link @(currentController == "Approvals" ? "active" : "")" data-i18n="NavApproval">
+                            <i class="bi bi-check2-circle"></i> Duyệt đơn
+                            <span class="badge-count" id="sidebarApprovalCount" style="display:none"></span>
+                        </a>
+                    </div>
+                }
+                @if (isHR || isAdmin)
+                {
+                    <div class="nav-section">
+                        <div class="nav-section-title" data-i18n="NavHR">Nhân sự</div>
+                        <a href="@Url.Action("Index", "HR")" class="nav-link @(currentController == "HR" && currentAction == "Index" ? "active" : "")" data-i18n="NavHRKanban">
+                            <i class="bi bi-kanban-fill"></i> Bảng Kanban
+                        </a>
+                        <a href="@Url.Action("LeaveManagement", "HR")" class="nav-link @(currentAction == "LeaveManagement" ? "active" : "")" data-i18n="NavLeave">
+                            <i class="bi bi-calendar2-week-fill"></i> Quản lý phép
+                        </a>
+                        <a href="@Url.Action("Index", "Attendance")" class="nav-link @(currentController == "Attendance" && currentAction == "Index" ? "active" : "")" data-i18n="NavTime">
+                            <i class="bi bi-clock-fill"></i> Chấm công
+                        </a>
+                        <a href="@Url.Action("AdminReport", "Attendance")" class="nav-link @(currentController == "Attendance" && currentAction == "AdminReport" ? "active" : "")">
+                            <i class="bi bi-table"></i> Bảng chấm công
+                        </a>
+                    </div>
+                }
+                @if (isAdmin || isHR || isManager)
+                {
+                    <div class="nav-section">
+                        <div class="nav-section-title" data-i18n="NavModules">Phân hệ</div>
+                        <a href="@Url.Action("Index", "Modules")" class="nav-link @(currentController == "Modules" && currentAction == "Index" ? "active" : "")" data-i18n="NavModules">
+                            <i class="bi bi-grid-3x3-gap-fill"></i> Phân hệ mở rộng
+                        </a>
+                        <a href="@Url.Action("Rbac", "Modules")" class="nav-link @(currentController == "Modules" && currentAction == "Rbac" ? "active" : "")" data-i18n="NavRbac">
+                            <i class="bi bi-shield-lock-fill"></i> Phân quyền
+                        </a>
+                        <a href="@Url.Action("Recruitment", "Modules")" class="nav-link @(currentController == "Modules" && currentAction == "Recruitment" ? "active" : "")" data-i18n="NavRecruit">
+                            <i class="bi bi-person-plus-fill"></i> Tuyển dụng
+                        </a>
+                        <a href="@Url.Action("TrainingCompliance", "Modules")" class="nav-link @(currentController == "Modules" && currentAction == "TrainingCompliance" ? "active" : "")" data-i18n="NavTraining">
+                            <i class="bi bi-mortarboard-fill"></i> Đào tạo & Tuân thủ
+                        </a>
+                        <a href="@Url.Action("AdminOps", "Modules")" class="nav-link @(currentController == "Modules" && currentAction == "AdminOps" ? "active" : "")" data-i18n="NavAdminOps">
+                            <i class="bi bi-briefcase-fill"></i> Hành chính
+                        </a>
+                    </div>
+                }
+                @if (isAdmin)
+                {
+                    <div class="nav-section">
+                        <div class="nav-section-title" data-i18n="NavAdmin">Quản trị</div>
+                        <a href="@Url.Action("Index", "Admin", new { tab = "users" })" class="nav-link @(currentController == "Admin" && currentAction == "Index" ? "active" : "")" data-i18n="NavUsers">
+                            <i class="bi bi-people-fill"></i> Quản lý người dùng
+                        </a>
+                        <a href="@Url.Action("FormBuilder", "Admin")" class="nav-link @(currentAction == "FormBuilder" ? "active" : "")" data-i18n="NavBuilder">
+                            <i class="bi bi-ui-checks-grid"></i> Trình tạo biểu mẫu
+                        </a>
+                        <a href="@Url.Action("Delegation", "Admin")" class="nav-link @(currentAction == "Delegation" ? "active" : "")" data-i18n="NavDelegate">
+                            <i class="bi bi-arrow-left-right"></i> Ủy quyền
+                        </a>
+                        <a href="@Url.Action("AuditLogs", "Admin")" class="nav-link @(currentAction == "AuditLogs" ? "active" : "")" data-i18n="NavAudit">
+                            <i class="bi bi-shield-lock-fill"></i> Nhật ký hệ thống
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="sidebar-footer">
+                <a href="@Url.Action("Profile", "Account")" class="user-card">
+                    <div class="user-avatar">
+                        @if (!string.IsNullOrEmpty(Context.Session.GetString("Avatar")))
+                        {
+                            <img src="@Context.Session.GetString("Avatar")" style="width:100%; height:100%; object-fit: cover; border-radius: 50%;" />
+                        }
+                        else
+                        {
+                            @(Context.Session.GetString("FullName")?.Substring(0, 1) ?? "U")
+                        }
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">@Context.Session.GetString("FullName")</div>
+                        <div class="user-role">@Context.Session.GetString("PrimaryRole") · @Context.Session.GetString("Department")</div>
+                    </div>
+                </a>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            <header class="top-header">
+                <div class="d-flex align-center gap-16">
+                    <button class="mobile-toggle" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+                    <h2 class="page-title">
+                        @if(ViewData["TitleI18n"] != null) {
+                            <span data-i18n="@ViewData["TitleI18n"]">@ViewData["Title"]</span>
+                            if(ViewData["TitleSuffix"] != null) {
+                                <span> @ViewData["TitleSuffix"]</span>
+                            }
+                        } else {
+                            @ViewData["Title"]
+                        }
+                    </h2>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" onclick="toggleLanguage()" title="Ngôn ngữ / Language">
+                        <i class="bi bi-translate"></i>
+                        <span id="langDisplay" style="font-size:11px; font-weight:bold; margin-left:4px;">VI</span>
+                    </button>
+                    <div style="position:relative">
+                        <button class="header-btn" onclick="toggleNotifications()" id="notifBell">
+                            <i class="bi bi-bell"></i>
+                            <span class="notif-badge" id="notifBadge" style="display:none">0</span>
+                        </button>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h3><i class="bi bi-bell-fill"></i> <span data-i18n="NavNotif">Thông báo</span></h3>
+                                <button class="btn btn-ghost btn-sm" onclick="markAllRead()" data-i18n="MarkAllRead">Đánh dấu tất cả đã đọc</button>
+                            </div>
+                            <div id="notifList"></div>
+                            <a href="@Url.Action("Index", "Notifications")" class="notif-footer" data-i18n="ViewAllNotif">
+                                Xem tất cả thông báo
+                            </a>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Profile", "Account")" class="header-btn" style="padding:0; overflow:hidden;">
+                        @if (!string.IsNullOrEmpty(Context.Session.GetString("Avatar")))
+                        {
+                            <img src="@Context.Session.GetString("Avatar")" style="width:32px; height:32px; object-fit: cover; border-radius: 50%;" />
+                        }
+                        else
+                        {
+                            <i class="bi bi-person"></i>
+                        }
+                    </a>
+                    <a href="@Url.Action("Logout", "Account")" class="header-btn" title="Đăng xuất"><i class="bi bi-box-arrow-right"></i></a>
+                </div>
+            </header>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="page-content" style="padding-bottom:0">
+                    <div class="alert alert-success"><i class="bi bi-check-circle-fill"></i> @TempData["Success"]</div>
+                </div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="page-content" style="padding-bottom:0">
+                    <div class="alert alert-danger"><i class="bi bi-exclamation-triangle-fill"></i> @TempData["Error"]</div>
+                </div>
+            }
+
+            @RenderBody()
+        </div>
+    }
+    else
+    {
+        @RenderBody()
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    @RenderSection("Scripts", required: false)
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+        }
+
+        function toggleNotifications() {
+            const dd = document.getElementById('notifDropdown');
+            dd.classList.toggle('show');
+            if (dd.classList.contains('show')) loadNotifications();
+        }
+
+
+        /* --- Language Toggle --- */
+        const dict = {
+            "vi": {
+                // Sidebar
+                "TitleDashboard": "Tổng quan", "NavOverview": "Tổng quan", "NavNotif": "Thông báo", "NavRequests": "Đơn từ", "NavCreate": "Tạo đơn mới", "NavMyReq": "Đơn từ của tôi", "NavApproval": "Duyệt đơn", "NavHR": "Nhân sự", "NavLeave": "Quản lý phép", "NavTime": "Chấm công", "NavModules": "Phân hệ mở rộng", "NavAdmin": "Quản trị", "NavUsers": "Quản lý người dùng", "NavBuilder": "Trình tạo biểu mẫu",
+                // Dashboard & Shared
+                "DashPending": "Đang chờ xử lý", "DashApproved": "Đã duyệt", "DashRejected": "Bị từ chối", "DashLeave": "Ngày phép còn lại",
+                "DashWelcome": "Xin chào, ", "DashDatePfx": "", "DashNoReq": "Chưa có đơn nào", "BtnCreateReq": "Tạo đơn",
+                "TitleTeamLeave": "Quỹ phép nhóm", "ColEmp": "Nhân viên", "ColTotalLeave": "Tổng phép", "ColUsed": "Đã dùng", "ColRemain": "Còn lại", "ColProgress": "Tiến độ",
+                "PlaceholderSearchIndex": "Tìm theo mã đơn, tiêu đề...", "MsgNoReqFilters": "Chưa có đơn từ nào phù hợp với bộ lọc", "MsgNoData": "Không có dữ liệu", "BtnView": "Xem",
+                "ChartMonthly": "Đơn từ theo tháng", "ChartStatus": "Theo trạng thái", "ChartDept": "Theo phòng ban", "ChartType": "Theo loại đơn",
+                "TitleNeedApproval": "Đơn cần duyệt", "TitleRecent": "Đơn gần đây", "BtnViewAll": "Xem tất cả",
+                "LabelSearch": "Tìm kiếm...", "LabelFrom": "Từ ngày", "LabelTo": "Đến ngày", 
+                "FilterType": "Lọc theo loại đơn", "FilterStatus": "Lọc theo trạng thái", "FilterAllStatus": "Tất cả trạng thái",
+                "ColReqCode": "Mã đơn", "ColRequester": "Người gửi", "ColType": "Loại", "ColDate": "Ngày", "ColTitle": "Tiêu đề", "ColStatus": "Trạng thái", "ColAction": "Thao tác", "ColStep": "Bước", "ColSubmitDate": "Ngày gửi", "ColComment": "Nhận xét", "ColProcessedDate": "Ngày xử lý", "ColDept": "Phòng ban",
+                // Approvals
+                "TitleApproveReq": "Phê duyệt đơn từ", "SubtitlePendingReq": "đơn đang chờ xử lý", "BtnBulkApprove": "Duyệt hàng loạt",
+                "ApproveTabWait": "Đang chờ duyệt", "ApproveTabDone": "Đã xử lý", "BtnApproveAll": "Duyệt tất cả", "BtnRejectAll": "Từ chối tất cả", "LabelSelected": "Đã chọn", "PlaceholderComment": "Nhận xét (tùy chọn)",
+                // Details
+                "DetailTitle": "Chi tiết đơn từ", "CardGenInfo": "Thông tin chung", "CardReqData": "Dữ liệu đơn", "CardAppHistory": "Lịch sử phê duyệt", "CardAttach": "File đính kèm",
+                "BtnBackHome": "Về trang chủ", "BtnBackApprove": "Về danh sách duyệt", "BtnCancel": "Hủy đơn",
+                "CardApproveAction": "Thao tác phê duyệt", "LabelCommentReason": "Nhận xét / Lý do", "PlaceholderLongComment": "Nhập nhận xét (tùy chọn khi duyệt, bắt buộc khi từ chối)",
+                "LabelPin": "Mã PIN xác thực (bắt buộc cho đơn tài chính)", "PlaceholderPin": "Nhập mã PIN 4 số",
+                "BtnApprove": "Phê duyệt", "BtnReject": "Từ chối", "BtnReqEdit": "Yêu cầu chỉnh sửa",
+                "CardDiscussion": "Thảo luận", "MsgNoComments": "Chưa có bình luận nào.", "PlaceholderDiscuss": "Viết bình luận... (hỗ trợ @@mention)",
+                "CardFlow": "Luồng duyệt", "CardHistory": "Lịch sử", "ActionCreated": "Tạo mới", "ActionApproved": "Phê duyệt", "ActionRejected": "Từ chối", "ActionReqEdit": "Yêu cầu sửa", "ActionCancelled": "Hủy",
+                // Select Template
+                "TitleSelectCategory": "Chọn loại đơn", "SubtitleSelectCategory": "Tạo đơn mới nhanh chóng theo đúng quy trình", "PlaceholderSearchCat": "Tìm loại đơn...",
+                "TitleAIPrompt": "Tạo đơn thông minh bằng A.I", "DescAIPrompt": "Nhập yêu cầu của bạn bằng ngôn ngữ tự nhiên, trợ lý ảo sẽ tự động chọn biểu mẫu và điền sẵn thông tin. Ví dụ: \"Cho tôi xin nghỉ phép chiều mai vì đi khám bệnh\".", "PlaceholderAIPrompt": "Bạn muốn tạo đơn gì hôm nay?", "BtnAIPrompt": "Phân tích",
+                "Cat_Leave": "Nghỉ phép", "Cat_OT": "Làm thêm giờ", "Cat_Travel": "Công tác", "Cat_Expense": "Chi phí", "Cat_Equipment": "Thiết bị",
+                "FilterAllCat": "Tất cả", "BadgeFinance": "Tài chính", "BadgeSuspended": "Tạm ngưng", "ActionCreateReq": "Tạo đơn", "DescStdForm": "Biểu mẫu tiêu chuẩn, điền nhanh và gửi duyệt.", "BtnAIAnalyzing": "Đang phân tích...",
+                // Create
+                "LabelReqTitle": "Tiêu đề đơn", "PlaceholderReqTitle": "Nhập tiêu đề cho đơn này", "LabelPriority": "Mức độ ưu tiên", "PriNormal": "Bình thường", "PriLow": "Thấp", "PriHigh": "Cao", "PriUrgent": "Khẩn cấp", "BtnBack": "Quay lại", "BtnSaveDraft": "Lưu nháp", "BtnSubmitReq": "Gửi đơn",
+                // Admin
+                "TitleAdminSys": "Quản trị hệ thống", "SubtitleAdminSys": "Quản lý người dùng, phòng ban và cấu hình", "BtnDelegation": "Ủy quyền", "BtnAuditLogs": "Nhật ký hệ thống", "TabUsers": "Người dùng", "TabDepts": "Phòng ban", "TabForms": "Biểu mẫu", "TabWorkflows": "Luồng duyệt", "ColCode": "Mã NV", "ColName": "Họ tên", "ColEmail": "Email", "ColRole": "Vai trò", "ColActive": "Hoạt động", "ColInactive": "Vô hiệu", "LabelAddUser": "Thêm nhân viên",
+                // Common wording
+                "TblPending": "Chờ duyệt", "TblApproved": "Đã duyệt", "TblRejected": "Từ chối", "TblInProgress": "Đang xử lý", "TblCancelled": "Đã hủy", "TblSkipped": "Bỏ qua", "TblUnknown": "Chưa xác định",
+                "LayoutAITitle": "Trợ lý DANGCAPNE", "LayoutAISub": "Luôn sẵn sàng hỗ trợ bạn", "LayoutAITooltip": "Trợ lý AI (Kéo để di chuyển)", "LayoutAIClose": "Xóa cuộc trò chuyện", "LayoutAIGreet": "Xin chào! Em là trợ lý ảo của hệ thống DANGCAPNE. Anh/chị cần em giúp gì ạ?", "LayoutAIPlaceholder": "Nhắn tin cho trợ lý ảo...", "LayoutAITyping": "Đang suy nghĩ...", "LayoutAIConfirmClear": "Bạn có chắc muốn xóa lịch sử trò chuyện này?", "LayoutAIErrorConn": "Xin lỗi, đã xảy ra lỗi kết nối.", "LayoutAINoServer": "Không thể kết nối với máy chủ AI.",
+                "MarkAllRead": "Đánh dấu tất cả đã đọc", "ViewAllNotif": "Xem tất cả thông báo", "EmptyNotif": "Không có thông báo",
+                "AIErrorNoTemplate": "A.I không tìm thấy biểu mẫu phù hợp với yêu cầu của bạn. Vui lòng thử cách diễn đạt khác.", "AIErrorCall": "Có lỗi xảy ra khi gọi A.I.", "AIErrorConn": "Không thể kết nối với hệ thống A.I.", "ConfirmCancel": "Bạn có chắc chắn muốn hủy đơn này?",
+                "DetailTitlePrefix": "Chi tiết đơn", "CreateTitlePrefix": "Tạo", "OptSelect": "-- Chọn --", "DraftSavedAt": "✓ Đã lưu nháp lúc ", "AIFillP1": "A.I đã tự động điền ", "AIFillP2": " trường thông tin",
+                // HR & Advanced Admin Additions
+                "HRKanbanTitle": "Bảng Kanban nhân sự", "HRTotalReqPfx": "Tổng cộng", "HRTotalReqSfx": "đơn từ · Nhân viên", "HRAnomalyWarn": "Cảnh báo bất thường", "HRColWait": "Chờ xử lý", "HRColInProg": "Đang xử lý", "HRColDone": "Hoàn tất", "HRColRej": "Từ chối / Hủy", "HRDeptStats": "Thống kê phòng ban",
+                "LeaveTitleYearPrefix": "Quản lý Quỹ phép năm", "LeaveTotalRecordsPfx": "Tổng cộng", "LeaveTotalRecordsSfx": "bản ghi phép", "ColType": "Loại phép",
+                "TkTitle": "Quản lý chấm công", "TkSub": "Theo dõi thời gian làm việc của nhân viên", "FilterAllEmp": "Tất cả nhân viên", "BtnFilter": "Lọc", "TkTimeIn": "Giờ vào", "TkTimeOut": "Giờ ra", "TkWorkHours": "Giờ làm", "TkPresent": "Có mặt", "TkAbsent": "Vắng", "TkHoliday": "Nghỉ lễ",
+                "NotifUnreadSfx": "chưa đọc", "TitleManageUsers": "Quản lý nhân viên", "PlaceholderDeptName": "Tên phòng ban", "PlaceholderDeptCode": "Mã phòng ban", "BtnAdd": "Thêm", "LabelEmp": "nhân viên", "TitleDynamicForms": "Biểu mẫu động", "TitleCreateForm": "Tạo biểu mẫu", "ColFormName": "Tên", "ColCategory": "Danh mục", "ColWorkflow": "Luồng duyệt", "ColFinance": "Tài chính", "LabelReqPin": "Cần PIN", "LabelAutoSkip": "tự bỏ qua", "NavApprovalFlow": "Luồng phê duyệt", "EditUserTitle": "Chỉnh sửa nhân viên", "AddUserTitle": "Thêm nhân viên", "LabelPhone": "Số điện thoại", "LabelBranch": "Chi nhánh", "LabelJobTitle": "Chức danh", "LabelDirectMgr": "Quản lý trực tiếp", "OptActive": "Hoạt động", "OptInactive": "Vô hiệu hóa", "BtnSaveInfo": "Lưu thông tin",
+                "ModulesExt": "Phân hệ mở rộng", "BtnManage": "Quản lý", "ModulesNoAccess": "Bạn không có quyền truy cập phân hệ nào.",
+                "NavHRKanban": "Bảng Kanban", "NavRbac": "Phân quyền", "NavRecruit": "Tuyển dụng", "NavTraining": "Đào tạo & Tuân thủ", "NavAdminOps": "Hành chính", "NavDelegate": "Ủy quyền", "NavAudit": "Nhật ký hệ thống",
+                // Profile
+                "ProfileTitle": "Hồ sơ cá nhân", "ChangePassword": "Đổi mật khẩu", "NewPassword": "Mật khẩu mới", "PlaceholderNewPw": "Nhập mật khẩu mới", "ConfirmPassword": "Xác nhận mật khẩu", "PlaceholderConfirmPw": "Nhập lại mật khẩu", "BtnUpdate": "Cập nhật", "LeaveUnitDay": "ngày", "LeaveRemainPfx": "Còn",
+                // Access Denied
+                "AccessDeniedTitle": "Truy cập bị từ chối", "AccessDeniedMsg": "Bạn không có quyền truy cập trang này",
+                // Audit Logs
+                "AuditSubtitle": "Theo dõi mọi thay đổi trong hệ thống", "AuditTime": "Thời gian", "AuditActor": "Người thực hiện", "AuditReq": "Đơn", "AuditDetail": "Chi tiết", "ActionBulkApprove": "Duyệt hàng loạt",
+                // Pagination
+                "PaginationPrev": "Trước", "PaginationPage": "Trang", "PaginationNext": "Sau",
+                // Delegation
+                "DelegateTitle": "Ủy quyền phê duyệt", "DelegateSubtitle": "Ủy quyền duyệt đơn khi vắng mặt", "DelegateCreateNew": "Tạo ủy quyền mới", "DelegateToLabel": "Người được ủy quyền", "DelegateReason": "Lý do", "DelegateReasonPlaceholder": "Lý do ủy quyền (tùy chọn)", "DelegateActiveList": "Ủy quyền đang hoạt động", "DelegateActive": "Đang hoạt động", "DelegateEmpty": "Chưa có ủy quyền nào",
+                // Chart labels  
+                "ChartLabelReqCount": "Số đơn"
+            },
+            "en": {
+                // Sidebar
+                "TitleDashboard": "Dashboard", "NavOverview": "Overview", "NavNotif": "Notifications", "NavRequests": "Requests", "NavCreate": "Create Request", "NavMyReq": "My Requests", "NavApproval": "Approvals", "NavHR": "HR Menu", "NavLeave": "Leave Mgmt", "NavTime": "Timekeeping", "NavModules": "Extra Modules", "NavAdmin": "Administration", "NavUsers": "User Management", "NavBuilder": "Form Builder",
+                // Dashboard & Shared
+                "DashPending": "Pending Action", "DashApproved": "Approved", "DashRejected": "Rejected", "DashLeave": "Leave Balance",
+                "DashWelcome": "Welcome, ", "DashDatePfx": "", "DashNoReq": "No requests found", "BtnCreateReq": "Create Request",
+                "TitleTeamLeave": "Team Leave Balance", "ColEmp": "Employee", "ColTotalLeave": "Total Entitled", "ColUsed": "Used", "ColRemain": "Remaining", "ColProgress": "Progress",
+                "PlaceholderSearchIndex": "Search by code, title...", "MsgNoReqFilters": "No requests match the current filters", "MsgNoData": "No data available", "BtnView": "View",
+                "ChartMonthly": "Monthly Requests", "ChartStatus": "By Status", "ChartDept": "By Department", "ChartType": "By Type",
+                "TitleNeedApproval": "Pending Approvals", "TitleRecent": "Recent Requests", "BtnViewAll": "View All",
+                "LabelSearch": "Search...", "LabelFrom": "From Date", "LabelTo": "To Date", 
+                "FilterType": "Filter by Type", "FilterStatus": "Filter by Status", "FilterAllStatus": "All Statuses",
+                "ColReqCode": "Req Code", "ColRequester": "Requester", "ColType": "Type", "ColDate": "Date", "ColTitle": "Title", "ColStatus": "Status", "ColAction": "Action", "ColStep": "Step", "ColSubmitDate": "Submitted", "ColComment": "Comments", "ColProcessedDate": "Processed", "ColDept": "Department",
+                // Approvals
+                "TitleApproveReq": "Approve Requests", "SubtitlePendingReq": "pending requests", "BtnBulkApprove": "Bulk Approve",
+                "ApproveTabWait": "Pending Approval", "ApproveTabDone": "Processed", "BtnApproveAll": "Approve All", "BtnRejectAll": "Reject All", "LabelSelected": "Selected", "PlaceholderComment": "Comments (optional)",
+                // Details
+                "DetailTitle": "Request Details", "CardGenInfo": "General Info", "CardReqData": "Request Data", "CardAppHistory": "Approval History", "CardAttach": "Attachments",
+                "BtnBackHome": "Back to Home", "BtnBackApprove": "Back to Approvals", "BtnCancel": "Cancel Request",
+                "CardApproveAction": "Approval Action", "LabelCommentReason": "Comments / Reason", "PlaceholderLongComment": "Enter comments (optional if approved, required if rejected)",
+                "LabelPin": "Security PIN (required for finance reqs)", "PlaceholderPin": "Enter 4-digit PIN",
+                "BtnApprove": "Approve", "BtnReject": "Reject", "BtnReqEdit": "Request Edit",
+                "CardDiscussion": "Discussion", "MsgNoComments": "No comments yet.", "PlaceholderDiscuss": "Write a comment... (supports @@mention)",
+                "CardFlow": "Approval Flow", "CardHistory": "History Logs", "ActionCreated": "Created", "ActionApproved": "Approved", "ActionRejected": "Rejected", "ActionReqEdit": "Requested Edit", "ActionCancelled": "Cancelled",
+                // Select Template
+                "TitleSelectCategory": "Select Template", "SubtitleSelectCategory": "Create a new request efficiently", "PlaceholderSearchCat": "Search templates...",
+                "TitleAIPrompt": "Smart A.I Request Generation", "DescAIPrompt": "Enter your request in natural language, and the virtual assistant will automatically pick the form and fill in the details. Example: \"I want to take leave tomorrow afternoon for a medical checkup.\"", "PlaceholderAIPrompt": "What type of request do you want to create today?", "BtnAIPrompt": "Analyze",
+                "Cat_Leave": "Leave", "Cat_OT": "Overtime", "Cat_Travel": "Business Trip", "Cat_Expense": "Expenses", "Cat_Equipment": "Equipment",
+                "FilterAllCat": "All", "BadgeFinance": "Finance", "BadgeSuspended": "Suspended", "ActionCreateReq": "Create Request", "DescStdForm": "Standard request form.", "BtnAIAnalyzing": "Analyzing...",
+                // Create
+                "LabelReqTitle": "Request Title", "PlaceholderReqTitle": "Enter a title for this request", "LabelPriority": "Priority Level", "PriNormal": "Normal", "PriLow": "Low", "PriHigh": "High", "PriUrgent": "Urgent", "BtnBack": "Back", "BtnSaveDraft": "Save Draft", "BtnSubmitReq": "Submit Request",
+                // Admin
+                "TitleAdminSys": "System Administration", "SubtitleAdminSys": "Manage users, departments and configuration", "BtnDelegation": "Delegation", "BtnAuditLogs": "Audit Logs", "TabUsers": "Users", "TabDepts": "Departments", "TabForms": "Forms", "TabWorkflows": "Workflows", "ColCode": "Emp Code", "ColName": "Name", "ColEmail": "Email", "ColRole": "Role", "ColActive": "Active", "ColInactive": "Inactive", "LabelAddUser": "Add User",
+                // Common wording
+                "TblPending": "Pending", "TblApproved": "Approved", "TblRejected": "Rejected", "TblInProgress": "In Progress", "TblCancelled": "Cancelled", "TblSkipped": "Skipped", "TblUnknown": "Unknown",
+                "LayoutAITitle": "DANGCAPNE Assistant", "LayoutAISub": "Always ready to support you", "LayoutAITooltip": "AI Assistant (Drag to move)", "LayoutAIClose": "Clear chat history", "LayoutAIGreet": "Hello! I am DANGCAPNE's virtual assistant. How can I help you today?", "LayoutAIPlaceholder": "Message the virtual assistant...", "LayoutAITyping": "Thinking...", "LayoutAIConfirmClear": "Are you sure you want to clear this chat history?", "LayoutAIErrorConn": "Sorry, a connection error occurred.", "LayoutAINoServer": "Cannot connect to AI server.",
+                "MarkAllRead": "Mark all as read", "ViewAllNotif": "View all notifications", "EmptyNotif": "No notifications",
+                "AIErrorNoTemplate": "A.I could not find a suitable template for your request. Please try rephrasing.", "AIErrorCall": "An error occurred calling A.I.", "AIErrorConn": "Cannot connect to A.I. system.", "ConfirmCancel": "Are you sure you want to cancel this request?",
+                "DetailTitlePrefix": "Request Details", "CreateTitlePrefix": "Create", "OptSelect": "-- Select --", "DraftSavedAt": "✓ Draft saved at ", "AIFillP1": "A.I automatically filled ", "AIFillP2": " fields",
+                // HR & Advanced Admin Additions
+                "HRKanbanTitle": "HR Kanban Board", "HRTotalReqPfx": "Total", "HRTotalReqSfx": "requests · Employees", "HRAnomalyWarn": "Anomaly Alerts", "HRColWait": "Pending", "HRColInProg": "In Progress", "HRColDone": "Completed", "HRColRej": "Rejected / Cancelled", "HRDeptStats": "Department Statistics",
+                "LeaveTitleYearPrefix": "Leave Management Year", "LeaveTotalRecordsPfx": "Total", "LeaveTotalRecordsSfx": "leave records", "ColType": "Leave Type",
+                "TkTitle": "Timekeeping Management", "TkSub": "Track employee working hours", "FilterAllEmp": "All Employees", "BtnFilter": "Filter", "TkTimeIn": "Check In", "TkTimeOut": "Check Out", "TkWorkHours": "Work Hours", "TkPresent": "Present", "TkAbsent": "Absent", "TkHoliday": "Holiday",
+                "NotifUnreadSfx": "unread", "TitleManageUsers": "User Management", "PlaceholderDeptName": "Department Name", "PlaceholderDeptCode": "Department Code", "BtnAdd": "Add", "LabelEmp": "employees", "TitleDynamicForms": "Dynamic Forms", "TitleCreateForm": "Create Form", "ColFormName": "Name", "ColCategory": "Category", "ColWorkflow": "Workflow", "ColFinance": "Finance", "LabelReqPin": "Requires PIN", "LabelAutoSkip": "auto-skip", "NavApprovalFlow": "Approval Workflows", "EditUserTitle": "Edit User", "AddUserTitle": "Add User", "LabelPhone": "Phone Number", "LabelBranch": "Branch", "LabelJobTitle": "Job Title", "LabelDirectMgr": "Direct Manager", "OptActive": "Active", "OptInactive": "Inactive", "BtnSaveInfo": "Save Information",
+                "ModulesExt": "Extension Modules", "BtnManage": "Manage", "ModulesNoAccess": "You do not have access to any modules.",
+                "NavHRKanban": "HR Kanban Board", "NavRbac": "Permissions", "NavRecruit": "Recruitment", "NavTraining": "Training & Compliance", "NavAdminOps": "Administration", "NavDelegate": "Delegation", "NavAudit": "Audit Logs",
+                // Profile
+                "ProfileTitle": "My Profile", "ChangePassword": "Change Password", "NewPassword": "New Password", "PlaceholderNewPw": "Enter new password", "ConfirmPassword": "Confirm Password", "PlaceholderConfirmPw": "Re-enter password", "BtnUpdate": "Update", "LeaveUnitDay": "days", "LeaveRemainPfx": "Remaining",
+                // Access Denied
+                "AccessDeniedTitle": "Access Denied", "AccessDeniedMsg": "You do not have permission to access this page",
+                // Audit Logs
+                "AuditSubtitle": "Track all changes in the system", "AuditTime": "Timestamp", "AuditActor": "Actor", "AuditReq": "Request", "AuditDetail": "Details", "ActionBulkApprove": "Bulk Approve",
+                // Pagination
+                "PaginationPrev": "Prev", "PaginationPage": "Page", "PaginationNext": "Next",
+                // Delegation
+                "DelegateTitle": "Approval Delegation", "DelegateSubtitle": "Delegate approval when you are away", "DelegateCreateNew": "Create Delegation", "DelegateToLabel": "Delegate To", "DelegateReason": "Reason", "DelegateReasonPlaceholder": "Reason for delegation (optional)", "DelegateActiveList": "Active Delegations", "DelegateActive": "Active", "DelegateEmpty": "No delegations yet",
+                // Chart labels
+                "ChartLabelReqCount": "Requests"
+            }
+        };
+
+        function toggleLanguage() {
+            let currentLang = localStorage.getItem('dangcapne_lang') || 'vi';
+            let newLang = currentLang === 'vi' ? 'en' : 'vi';
+            localStorage.setItem('dangcapne_lang', newLang);
+            applyLanguage(newLang);
+            window.dispatchEvent(new Event('languageChanged'));
+        }
+
+        function applyLanguage(lang) {
+            document.getElementById('langDisplay').innerText = lang.toUpperCase();
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(dict[lang] && dict[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.setAttribute('placeholder', dict[lang][key]);
+                    } else {
+                        const icon = el.querySelector('i');
+                        if (icon) {
+                            el.innerHTML = '';
+                            el.appendChild(icon);
+                            el.append(' ' + dict[lang][key]);
+                        } else {
+                            el.innerText = dict[lang][key];
+                        }
+                    }
+                }
+            });
+            // Global hook — pages can override window.onPageLanguageChange(lang) to react
+            if (typeof window.onPageLanguageChange === 'function') {
+                window.onPageLanguageChange(lang);
+            }
+        }
+
+        // Initialize Theme & Lang on load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.documentElement.setAttribute('data-theme', 'light');
+            
+            const savedLang = localStorage.getItem('dangcapne_lang') || 'vi';
+            applyLanguage(savedLang);
+        });
+
+        document.addEventListener('click', function (e) {
+            const dd = document.getElementById('notifDropdown');
+            const bell = document.getElementById('notifBell');
+            if (dd && bell && !dd.contains(e.target) && !bell.contains(e.target)) {
+                dd.classList.remove('show');
+            }
+        });
+
+        async function loadNotifications() {
+            try {
+                const res = await fetch('/Notifications/GetRecent');
+                const data = await res.json();
+                const list = document.getElementById('notifList');
+                if (!list) return;
+                list.innerHTML = data.notifications.map(n => `
+                    <a href="${n.actionUrl || '#'}" class="notif-item ${n.isRead ? '' : 'unread'}" onclick="markRead(${n.id})">
+                        <div class="notif-title">${n.title}</div>
+                        <div class="notif-msg">${n.message}</div>
+                        <div class="notif-time">${n.createdAt}</div>
+                    </a>
+                `).join('') || '<div class="empty-state" style="padding:32px"><i class="bi bi-bell-slash"></i><p data-i18n="EmptyNotif">' + (dict[localStorage.getItem('dangcapne_lang') || 'vi']?.EmptyNotif || 'Không có thông báo') + '</p></div>';
+                updateBadge(data.unreadCount);
+            } catch (e) { }
+        }
+
+        function updateBadge(count) {
+            const badge = document.getElementById('notifBadge');
+            const sideCount = document.getElementById('sidebarNotifCount');
+            if (badge) {
+                badge.style.display = count > 0 ? 'inline-flex' : 'none';
+                badge.textContent = count;
+            }
+            if (sideCount) {
+                sideCount.style.display = count > 0 ? 'inline-flex' : 'none';
+                sideCount.textContent = count;
+            }
+        }
+
+        async function markRead(id) {
+            try {
+                await fetch(`/Notifications/MarkRead/${id}`, { method: 'POST' });
+                loadNotifications();
+            } catch (e) { }
+        }
+
+        async function markAllRead() {
+            try {
+                await fetch('/Notifications/MarkAllRead', { method: 'POST' });
+                loadNotifications();
+            } catch (e) { }
+        }
+    </script>
+
+    <!-- Global AI Chatbox -->
+    <div class="ai-chat-widget" id="aiChatWidget">
+        <button class="ai-chat-btn" id="aiChatBtn" title="Trợ lý AI (Kéo để di chuyển)">
+            <i class="bi bi-robot"></i>
+        </button>
+        <div class="ai-chat-panel" id="aiChatPanel" style="display: none;">
+            <div class="ai-chat-header">
+                <div>
+                    <div class="ai-chat-title"><i class="bi bi-stars"></i> <span data-i18n="LayoutAITitle">Trợ lý DANGCAPNE</span></div>
+                    <div class="ai-chat-subtitle" data-i18n="LayoutAISub">Luôn sẵn sàng hỗ trợ bạn</div>
+                </div>
+                <div style="display:flex; gap: 8px;">
+                    <button class="ai-close-btn" onclick="clearAIChat()"><i class="bi bi-trash"></i></button>
+                    <button class="ai-close-btn" onclick="toggleAIChat()"><i class="bi bi-x"></i></button>
+                </div>
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="chat-msg ai-msg" data-i18n="LayoutAIGreet">Xin chào! Em là trợ lý ảo của hệ thống DANGCAPNE. Anh/chị cần em giúp gì ạ?</div>
+            </div>
+            <div class="ai-chat-input">
+                <input type="text" id="aiChatInput" placeholder="Nhắn tin cho trợ lý ảo..." data-i18n="LayoutAIPlaceholder" onkeypress="handleAIChatEnter(event)" autocomplete="off" />
+                <button onclick="sendAIChat()"><i class="bi bi-send-fill"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Drag Chatbox Logic ---
+        const widget = document.getElementById('aiChatWidget');
+        const chatBtn = document.getElementById('aiChatBtn');
+        let isDraggingChat = false;
+        let dragStartX, dragStartY;
+
+        chatBtn.addEventListener('mousedown', startDrag);
+        chatBtn.addEventListener('touchstart', startDrag, { passive: true });
+
+        document.addEventListener('mousemove', doDrag);
+        document.addEventListener('touchmove', doDrag, { passive: false });
+
+        document.addEventListener('mouseup', endDrag);
+        document.addEventListener('touchend', endDrag);
+
+        function startDrag(e) {
+            isDraggingChat = false;
+            let clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            let clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            
+            dragStartX = clientX;
+            dragStartY = clientY;
+            
+            let rect = widget.getBoundingClientRect();
+            widget.style.bottom = 'auto';
+            widget.style.right = 'auto';
+            widget.style.left = rect.left + 'px';
+            widget.style.top = rect.top + 'px';
+            
+            chatBtn.style.cursor = 'grabbing';
+        }
+
+        function doDrag(e) {
+            if (dragStartX === undefined) return;
+            
+            let clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            let clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            
+            let dx = clientX - dragStartX;
+            let dy = clientY - dragStartY;
+            
+            if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+                isDraggingChat = true;
+                if(e.type === 'touchmove') e.preventDefault();
+                
+                let rect = widget.getBoundingClientRect();
+                let newLeft = rect.left + dx;
+                let newTop = rect.top + dy;
+                
+                // Keep widget within screen bounds
+                newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - rect.width));
+                newTop = Math.max(0, Math.min(newTop, window.innerHeight - rect.height));
+
+                widget.style.left = newLeft + 'px';
+                widget.style.top = newTop + 'px';
+                
+                dragStartX = clientX;
+                dragStartY = clientY;
+            }
+        }
+
+        function endDrag(e) {
+            if (dragStartX !== undefined) {
+                if (!isDraggingChat) {
+                    toggleAIChat();
+                }
+                dragStartX = undefined;
+                dragStartY = undefined;
+                chatBtn.style.cursor = 'grab';
+            }
+        }
+
+        // --- Chat Logic ---
+        const currentUserId = '@Context.Session.GetInt32("UserId")' || 'guest';
+        const chatStorageKey = 'dangcapne_chat_history_' + currentUserId;
+        let chatHistory = JSON.parse(localStorage.getItem(chatStorageKey)) || [];
+        let isChatInitialLoaded = false;
+
+        function toggleAIChat() {
+            const panel = document.getElementById('aiChatPanel');
+            const btn = document.getElementById('aiChatBtn');
+            const currentLang = localStorage.getItem('dangcapne_lang') || 'vi';
+
+            // Sync titles dynamically because titles aren't auto-checked by applyLanguage easily
+            btn.title = dict[currentLang]?.LayoutAITooltip || "Trợ lý AI (Kéo để di chuyển)";
+
+            if (panel.style.display === 'none') {
+                panel.style.display = 'flex';
+                btn.classList.add('active');
+                
+                if (!isChatInitialLoaded) {
+                    renderChatHistory();
+                    isChatInitialLoaded = true;
+                } else {
+                    // Refresh translations inside dynamically loaded UI elements
+                    applyLanguage(currentLang);
+                }
+                
+                const messagesDiv = document.getElementById('aiChatMessages');
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                document.getElementById('aiChatInput').focus();
+            } else {
+                panel.style.display = 'none';
+                btn.classList.remove('active');
+            }
+        }
+
+        function renderChatHistory() {
+            const messagesDiv = document.getElementById('aiChatMessages');
+            const currentLang = localStorage.getItem('dangcapne_lang') || 'vi';
+            const greetMsg = dict[currentLang]?.LayoutAIGreet || "Xin chào! Em là trợ lý ảo của hệ thống DANGCAPNE. Anh/chị cần em giúp gì ạ?";
+            messagesDiv.innerHTML = `<div class="chat-msg ai-msg" data-i18n="LayoutAIGreet">${greetMsg}</div>`;
+            
+            chatHistory.forEach(msg => {
+                let formattedText = msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>');
+                if (msg.role === 'user') {
+                    messagesDiv.innerHTML += `<div class="chat-msg user-msg">${formattedText}</div>`;
+                } else {
+                    messagesDiv.innerHTML += `<div class="chat-msg ai-msg">${formattedText}</div>`;
+                }
+            });
+            applyLanguage(currentLang);
+        }
+
+        function clearAIChat() {
+            const currentLang = localStorage.getItem('dangcapne_lang') || 'vi';
+            const confirmMsg = dict[currentLang]?.LayoutAIConfirmClear || "Bạn có chắc muốn xóa lịch sử trò chuyện này?";
+            if (confirm(confirmMsg)) {
+                chatHistory = [];
+                localStorage.removeItem(chatStorageKey);
+                renderChatHistory();
+            }
+        }
+
+        async function sendAIChat() {
+            const input = document.getElementById('aiChatInput');
+            const messageText = input.value.trim();
+            if (!messageText) return;
+
+            const messagesDiv = document.getElementById('aiChatMessages');
+            const currentLang = localStorage.getItem('dangcapne_lang') || 'vi';
+            
+            // Add user message to UI
+            messagesDiv.innerHTML += `<div class="chat-msg user-msg">${escapeHtml(messageText)}</div>`;
+            input.value = '';
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            // Push to history
+            chatHistory.push({ role: 'user', text: messageText });
+            localStorage.setItem(chatStorageKey, JSON.stringify(chatHistory));
+
+            // Add typing indicator
+            const typingId = 'typing-' + Date.now();
+            const typingMsg = dict[currentLang]?.LayoutAITyping || "Đang suy nghĩ...";
+            messagesDiv.innerHTML += `<div class="chat-msg ai-msg typing" id="${typingId}" data-i18n="LayoutAITyping">${typingMsg}</div>`;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            try {
+                const response = await fetch('/Requests/Chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ history: chatHistory })
+                });
+
+                document.getElementById(typingId)?.remove();
+
+                if (response.ok) {
+                    const data = await response.json();
+                    let aiText = data.text;
+                    
+                    // Push to history
+                    chatHistory.push({ role: 'ai', text: aiText });
+                    localStorage.setItem(chatStorageKey, JSON.stringify(chatHistory));
+
+                    // Format basic markdown
+                    let formattedAiText = aiText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>');
+                    messagesDiv.innerHTML += `<div class="chat-msg ai-msg">${formattedAiText}</div>`;
+                } else {
+                    const errMsg = dict[currentLang]?.LayoutAIErrorConn || "Xin lỗi, đã xảy ra lỗi kết nối.";
+                    messagesDiv.innerHTML += `<div class="chat-msg ai-msg error" data-i18n="LayoutAIErrorConn">${errMsg}</div>`;
+                    chatHistory.pop(); // remove user msg if failed
+                }
+            } catch (e) {
+                document.getElementById(typingId)?.remove();
+                const srvMsg = dict[currentLang]?.LayoutAINoServer || "Không thể kết nối với máy chủ AI.";
+                messagesDiv.innerHTML += `<div class="chat-msg ai-msg error" data-i18n="LayoutAINoServer">${srvMsg}</div>`;
+                chatHistory.pop(); // remove user msg if failed
+            }
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function handleAIChatEnter(e) {
+            if (e.key === 'Enter') sendAIChat();
+        }
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                 .replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>

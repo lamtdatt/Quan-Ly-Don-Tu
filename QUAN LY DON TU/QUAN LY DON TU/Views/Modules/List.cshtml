@@ -1,0 +1,56 @@
+@model DANGCAPNE.ViewModels.DynamicCrudListViewModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="page-content">
+    <div class="glass-card">
+        <div class="card-header" style="display:flex;align-items:center;justify-content:space-between">
+            <h3><i class="bi bi-table"></i> @Model.Title</h3>
+            <a class="btn btn-primary" href="@Url.Action("Create", "Modules", new { key = Model.EntityKey })">
+                <i class="bi bi-plus-circle"></i> Thêm mới
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-wrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            @foreach (var col in Model.Columns)
+                            {
+                                <th>@col</th>
+                            }
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var row in Model.Rows)
+                        {
+                            <tr>
+                                @foreach (var col in Model.Columns)
+                                {
+                                    <td>@(row.ContainsKey(col) ? row[col] : null)</td>
+                                }
+                                <td style="white-space:nowrap">
+                                    <a class="btn btn-outline btn-sm" href="@Url.Action("Edit", "Modules", new { key = Model.EntityKey, id = row["Id"] })">Sửa</a>
+                                    <form method="post" action="@Url.Action("Delete", "Modules", new { key = Model.EntityKey, id = row["Id"] })" style="display:inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Xóa bản ghi này?')">Xóa</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                @if (!Model.Rows.Any())
+                {
+                    <div class="empty-state" style="padding:24px">
+                        <i class="bi bi-inbox"></i>
+                        <p>Chưa có dữ liệu.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

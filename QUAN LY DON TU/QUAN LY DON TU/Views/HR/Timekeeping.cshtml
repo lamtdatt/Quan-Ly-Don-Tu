@@ -1,0 +1,67 @@
+@model DANGCAPNE.ViewModels.TimekeepingViewModel
+@{
+    ViewData["TitleI18n"] = "NavTime";
+    ViewData["Title"] = "Chấm công";
+}
+<div class="page-content">
+    <div class="d-flex justify-between align-center mb-24">
+        <div>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px" data-i18n="TkTitle">Quản lý chấm công</h2>
+            <p class="text-muted" data-i18n="TkSub">Theo dõi thời gian làm việc của nhân viên</p>
+        </div>
+    </div>
+
+    <div class="filter-bar">
+        <form method="get" class="d-flex gap-8 flex-wrap" style="flex:1">
+            <div class="form-group" style="margin:0">
+                <input type="date" name="startDate" class="form-control" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+            </div>
+            <div class="form-group" style="margin:0">
+                <input type="date" name="endDate" class="form-control" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+            </div>
+            <select name="employeeId" class="form-control">
+                <option value="" data-i18n="FilterAllEmp">Tất cả nhân viên</option>
+                @foreach (var e in Model.Employees)
+                {
+                    <option value="@e.Id" selected="@(Model.UserId == e.Id)">@e.FullName</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-outline"><i class="bi bi-funnel"></i> <span data-i18n="BtnFilter">Lọc</span></button>
+        </form>
+    </div>
+
+    <div class="glass-card">
+        <div class="card-body" style="padding:0">
+            @if (Model.Timesheets.Any())
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr><th data-i18n="ColDate">Ngày</th><th data-i18n="ColEmp">Nhân viên</th><th data-i18n="ColDept">Phòng ban</th><th data-i18n="TkTimeIn">Giờ vào</th><th data-i18n="TkTimeOut">Giờ ra</th><th data-i18n="TkWorkHours">Giờ làm</th><th>OT</th><th data-i18n="ColStatus">Trạng thái</th></tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var t in Model.Timesheets)
+                        {
+                            var scl = t.Status switch { "Present" => "approved", "Leave" => "warning", "Absent" => "rejected", _ => "draft" };
+                            var stx = t.Status switch { "Present" => "Có mặt", "Leave" => "Nghỉ phép", "Absent" => "Vắng", "Holiday" => "Nghỉ lễ", _ => t.Status };
+                            var si18n = t.Status switch { "Present" => "TkPresent", "Leave" => "Cat_Leave", "Absent" => "TkAbsent", "Holiday" => "TkHoliday", _ => "" };
+                            <tr>
+                                <td><strong>@t.Date.ToString("dd/MM/yyyy")</strong><br><small class="text-muted">@t.Date.ToString("dddd", new System.Globalization.CultureInfo("vi-VN"))</small></td>
+                                <td>@t.User?.FullName</td>
+                                <td class="text-muted">@t.User?.Department?.Name</td>
+                                <td>@t.CheckIn?.ToString("HH:mm")</td>
+                                <td>@t.CheckOut?.ToString("HH:mm")</td>
+                                <td><strong>@t.WorkHours.ToString("0.#")h</strong></td>
+                                <td class="@(t.OtHours > 0 ? "text-warning fw-600" : "text-muted")">@t.OtHours.ToString("0.#")h</td>
+                                <td><span class="status-badge @scl" data-i18n="@si18n">@stx</span></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="empty-state"><i class="bi bi-clock"></i><h3 data-i18n="MsgNoData">Không có dữ liệu</h3></div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,168 @@
+@model DANGCAPNE.ViewModels.RequestCreateViewModel
+@{
+    ViewData["TitleI18n"] = "CreateTitlePrefix";
+    ViewData["TitleSuffix"] = Model.FormTemplate?.Name;
+    ViewData["Title"] = "Tạo";
+}
+<div class="page-content">
+    <div class="glass-card" style="max-width:900px;margin:0 auto">
+        <div class="card-header">
+            <h3>
+                <i class="bi @Model.FormTemplate?.Icon" style="color:@Model.FormTemplate?.IconColor"></i>
+                @Model.FormTemplate?.Name
+            </h3>
+            <span class="text-muted" id="draftStatus"></span>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" id="requestForm" asp-action="Create" asp-route-templateId="@Model.FormTemplate?.Id">
+                <div class="form-row" style="margin-bottom:20px">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="LabelReqTitle">Tiêu đề đơn</label>
+                            <input type="text" name="Title" class="form-control" placeholder="Nhập tiêu đề cho đơn này" data-i18n="PlaceholderReqTitle" value="@Model.Title" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    @foreach (var field in Model.Fields)
+                    {
+                        var colClass = field.Width == 6 ? "col-6" : field.Width == 4 ? "col-4" : "col-12";
+                        var savedVal = Model.FormData.ContainsKey(field.FieldName) ? Model.FormData[field.FieldName] : "";
+                        <div class="@colClass">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    @field.Label
+                                    @if (field.IsRequired) { <span class="text-danger">*</span> }
+                                </label>
+                                @switch (field.FieldType)
+                                {
+                                    case "Text":
+                                        <input type="text" name="@field.FieldName" class="form-control" placeholder="@field.Placeholder" value="@savedVal" @(field.IsRequired ? "required" : "") />
+                                        break;
+                                    case "Number":
+                                        <input type="number" name="@field.FieldName" class="form-control" placeholder="@field.Placeholder" value="@savedVal" @(field.IsRequired ? "required" : "") />
+                                        break;
+                                    case "Date":
+                                        <input type="date" name="@field.FieldName" class="form-control" value="@savedVal" @(field.IsRequired ? "required" : "") />
+                                        break;
+                                    case "Textarea":
+                                        <textarea name="@field.FieldName" class="form-control" placeholder="@field.Placeholder" @(field.IsRequired ? "required" : "")>@savedVal</textarea>
+                                        break;
+                                    case "Dropdown":
+                                        <select name="@field.FieldName" class="form-control" @(field.IsRequired ? "required" : "")>
+                                            <option value="" data-i18n="OptSelect">-- Chọn --</option>
+                                            @foreach (var opt in field.Options)
+                                            {
+                                                <option value="@opt.Value" selected="@(savedVal == opt.Value)">@opt.Label</option>
+                                            }
+                                        </select>
+                                        break;
+                                    case "FileUpload":
+                                        <input type="file" name="@field.FieldName" class="form-control" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx" />
+                                        break;
+                                    case "Checkbox":
+                                        <label class="form-check">
+                                            <input type="checkbox" name="@field.FieldName" value="true" @(savedVal == "true" ? "checked" : "") />
+                                            <span>@field.Placeholder</span>
+                                        </label>
+                                        break;
+                                    default:
+                                        <input type="text" name="@field.FieldName" class="form-control" value="@savedVal" />
+                                        break;
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="form-row" style="margin-top:8px">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="LabelPriority">Mức độ ưu tiên</label>
+                            <select name="Priority" class="form-control">
+                                <option value="Normal" data-i18n="PriNormal">Bình thường</option>
+                                <option value="Low" data-i18n="PriLow">Thấp</option>
+                                <option value="High" data-i18n="PriHigh">Cao</option>
+                                <option value="Urgent" data-i18n="PriUrgent">Khẩn cấp</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:24px;padding-top:24px;border-top:1px solid var(--border-glass)">
+                    <a href="@Url.Action("SelectTemplate", "Requests")" class="btn btn-outline"><i class="bi bi-arrow-left"></i> <span data-i18n="BtnBack">Quay lại</span></a>
+                    <button type="button" class="btn btn-outline" onclick="saveDraft()"><i class="bi bi-save"></i> <span data-i18n="BtnSaveDraft">Lưu nháp</span></button>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> <span data-i18n="BtnSubmitReq">Gửi đơn</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    let autoSaveTimer;
+    function saveDraft() {
+        const form = document.getElementById('requestForm');
+        const formData = {};
+        new FormData(form).forEach((v, k) => { if (k !== '__RequestVerificationToken' && k !== 'Priority' && k !== 'Title') formData[k] = v; });
+        fetch('/Requests/SaveDraft', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ templateId: @Model.FormTemplate?.Id, formData })
+        }).then(r => r.json()).then(d => {
+            const lang = localStorage.getItem('dangcapne_lang') || 'vi';
+            const pf = typeof dict !== 'undefined' && dict[lang]?.DraftSavedAt ? dict[lang].DraftSavedAt : '✓ Đã lưu nháp lúc ';
+            document.getElementById('draftStatus').textContent = pf + new Date().toLocaleTimeString(lang === 'vi' ? 'vi-VN' : 'en-US');
+        }).catch(() => {});
+    }
+
+    document.getElementById('requestForm').addEventListener('input', () => {
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = setTimeout(saveDraft, 30000);
+    });
+
+    // AI Auto-fill from Session Storage
+    document.addEventListener('DOMContentLoaded', function() {
+        const templateId = '@Model.FormTemplate?.Id';
+        const aiDataKey = 'ai_formData_' + templateId;
+        const aiDataStr = sessionStorage.getItem(aiDataKey);
+        
+        if (aiDataStr) {
+            try {
+                const aiData = JSON.parse(aiDataStr);
+                const form = document.getElementById('requestForm');
+                
+                // Clear ai session data so it doesn't persistently auto-fill on manual reload
+                sessionStorage.removeItem(aiDataKey);
+                
+                let filledCount = 0;
+                for (const key in aiData) {
+                    const inputElement = form.querySelector(`[name="${key}"]`);
+                    if (inputElement && (inputElement.tagName === 'INPUT' || inputElement.tagName === 'TEXTAREA' || inputElement.tagName === 'SELECT')) {
+                        // Avoid overwriting checkboxes/files naively, stick to text/number/select
+                        if(inputElement.type !== 'file' && inputElement.type !== 'checkbox' && inputElement.type !== 'radio') {
+                            inputElement.value = aiData[key];
+                            filledCount++;
+                        }
+                    }
+                }
+                
+                if (filledCount > 0) {
+                    // Show a toast or notification
+                    const draftStatus = document.getElementById('draftStatus');
+                    const lang = localStorage.getItem('dangcapne_lang') || 'vi';
+                    const p1 = typeof dict !== 'undefined' && dict[lang]?.AIFillP1 ? dict[lang].AIFillP1 : 'A.I đã tự động điền ';
+                    const p2 = typeof dict !== 'undefined' && dict[lang]?.AIFillP2 ? dict[lang].AIFillP2 : ' trường thông tin';
+                    draftStatus.innerHTML = '<i class="bi bi-robot text-primary"></i> ' + p1 + filledCount + p2;
+                    draftStatus.classList.add('text-primary');
+                    draftStatus.classList.remove('text-muted');
+                }
+            } catch(e) {
+                console.error('Error parsing AI data', e);
+            }
+        }
+    });
+</script>
+}

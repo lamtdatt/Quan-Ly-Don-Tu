@@ -1,0 +1,344 @@
+@model DANGCAPNE.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Tổng quan";
+}
+<div class="page-content">
+    <div style="margin-bottom:32px">
+        <h2 style="font-size:28px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:8px;">
+            <span data-i18n="DashWelcome">Xin chào, </span> @Model.CurrentUser?.FullName! <i class="bi bi-stars" style="color:var(--warning);font-size:24px;"></i>
+        </h2>
+        <p class="text-muted"><span data-i18n="DashDatePfx"></span>@DateTime.Now.ToString("dd/MM/yyyy") · @Model.RoleName</p>
+    </div>
+
+    <div class="stat-grid">
+        @if (Model.IsAttendanceDone)
+        {
+            <div class="stat-card" style="background: white; border: 1px solid #e2e8f0;">
+                <div class="stat-icon" style="background: #f0fdf4; color: #10b981;"><i class="bi bi-check-all"></i></div>
+                <div class="stat-value" style="font-size: 20px; color: #10b981;">Hoàn tất ca</div>
+                <div class="stat-label">Vào: @Model.CheckInTime · @DateTime.Now.ToString("dd/MM")</div>
+            </div>
+        }
+        else if (Model.IsCheckInDone)
+        {
+            <div class="stat-card" onclick="location.href='@Url.Action("Index", "Attendance")'" style="cursor:pointer; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;">
+                <div class="stat-icon" style="background: rgba(255,255,255,0.25);"><i class="bi bi-box-arrow-right"></i></div>
+                <div class="stat-value" style="font-size: 18px;">Chấm công RA</div>
+                <div class="stat-label" style="color: rgba(255,255,255,0.85);">Đã vào lúc @Model.CheckInTime · Bấm để Check-out</div>
+            </div>
+        }
+        else
+        {
+            <div class="stat-card primary" onclick="location.href='@Url.Action("Index", "Attendance")'" style="cursor:pointer; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white;">
+                <div class="stat-icon" style="background: rgba(255,255,255,0.2);"><i class="bi bi-camera-fill"></i></div>
+                <div class="stat-value" style="font-size: 20px;">Quét khuôn mặt</div>
+                <div class="stat-label" style="color: rgba(255,255,255,0.8);">Chấm công ngay</div>
+            </div>
+        }
+        <div class="stat-card" style="background: white;">
+            <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
+            <div class="stat-value">@Model.TotalPendingRequests</div>
+            <div class="stat-label" data-i18n="DashPending">Đang chờ xử lý</div>
+        </div>
+        <div class="stat-card success">
+            <div class="stat-icon"><i class="bi bi-check-circle"></i></div>
+            <div class="stat-value">@Model.TotalApprovedRequests</div>
+            <div class="stat-label" data-i18n="DashApproved">Đã duyệt</div>
+        </div>
+        <div class="stat-card danger">
+            <div class="stat-icon"><i class="bi bi-x-circle"></i></div>
+            <div class="stat-value">@Model.TotalRejectedRequests</div>
+            <div class="stat-label" data-i18n="DashRejected">Bị từ chối</div>
+        </div>
+        <div class="stat-card info">
+            <div class="stat-icon"><i class="bi bi-calendar-check"></i></div>
+            <div class="stat-value">@Model.LeaveBalance.ToString("0.#")</div>
+            <div class="stat-label" data-i18n="DashLeave">Ngày phép còn lại</div>
+        </div>
+    </div>
+
+    <div class="charts-grid">
+        <div class="glass-card">
+            <div class="card-header"><h3 data-i18n="ChartMonthly"><i class="bi bi-bar-chart-fill text-primary"></i> Đơn từ theo tháng</h3></div>
+            <div class="chart-container"><canvas id="monthlyChart"></canvas></div>
+        </div>
+        <div class="glass-card">
+            <div class="card-header"><h3 data-i18n="ChartStatus"><i class="bi bi-pie-chart-fill text-info"></i> Theo trạng thái</h3></div>
+            <div class="chart-container"><canvas id="statusChart"></canvas></div>
+        </div>
+        <div class="glass-card">
+            <div class="card-header"><h3 data-i18n="ChartDept"><i class="bi bi-building text-warning"></i> Theo phòng ban</h3></div>
+            <div class="chart-container"><canvas id="deptChart"></canvas></div>
+        </div>
+        <div class="glass-card">
+            <div class="card-header"><h3 data-i18n="ChartType"><i class="bi bi-file-earmark-text text-success"></i> Theo loại đơn</h3></div>
+            <div class="chart-container"><canvas id="typeChart"></canvas></div>
+        </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        @if (Model.PendingApprovals.Any())
+        {
+            <div class="glass-card">
+                <div class="card-header">
+                    <h3 data-i18n="TitleNeedApproval"><i class="bi bi-clock-fill text-warning"></i> Đơn cần duyệt</h3>
+                    <a href="@Url.Action("Index", "Approvals")" class="btn btn-outline btn-sm" data-i18n="BtnViewAll">Xem tất cả</a>
+                </div>
+                <div class="card-body" style="padding:0">
+                    <table class="data-table">
+                        <thead><tr><th data-i18n="ColReqCode">Mã đơn</th><th data-i18n="ColRequester">Người gửi</th><th data-i18n="ColType">Loại</th><th data-i18n="ColDate">Ngày</th></tr></thead>
+                        <tbody>
+                        @foreach (var r in Model.PendingApprovals.Take(5))
+                        {
+                            <tr onclick="location.href='@Url.Action("Detail", "Requests", new { id = r.Id })'" style="cursor:pointer">
+                                <td><strong class="text-primary">@r.RequestCode</strong></td>
+                                <td>@r.Requester?.FullName</td>
+                                <td>@r.FormTemplate?.Name</td>
+                                <td class="text-muted">@r.CreatedAt.ToString("dd/MM")</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+
+        <div class="glass-card">
+            <div class="card-header">
+                <h3 data-i18n="TitleRecent"><i class="bi bi-file-text-fill text-info"></i> Đơn gần đây</h3>
+                <a href="@Url.Action("Index", "Requests")" class="btn btn-outline btn-sm" data-i18n="BtnViewAll">Xem tất cả</a>
+            </div>
+            <div class="card-body" style="padding:0">
+                @if (Model.RecentRequests.Any())
+                {
+                    <table class="data-table">
+                        <thead><tr><th data-i18n="ColReqCode">Mã đơn</th><th data-i18n="ColTitle">Tiêu đề</th><th data-i18n="ColStatus">Trạng thái</th><th data-i18n="ColDate">Ngày</th></tr></thead>
+                        <tbody>
+                        @foreach (var r in Model.RecentRequests.Take(5))
+                        {
+                            var statusCss = r.Status switch { "Pending" => "pending", "Approved" => "approved", "Rejected" => "rejected", "InProgress" => "in-progress", "Cancelled" => "cancelled", _ => "draft" };
+                            var statusI18n = r.Status switch { "Pending" => "TblPending", "Approved" => "TblApproved", "Rejected" => "TblRejected", "InProgress" => "TblInProgress", "Cancelled" => "TblCancelled", _ => "" };
+                            var statusText = r.Status switch { "Pending" => "Chờ duyệt", "Approved" => "Đã duyệt", "Rejected" => "Từ chối", "InProgress" => "Đang xử lý", "Cancelled" => "Đã hủy", _ => r.Status };
+                            <tr onclick="location.href='@Url.Action("Detail", "Requests", new { id = r.Id })'" style="cursor:pointer">
+                                <td><strong class="text-primary">@r.RequestCode</strong></td>
+                                <td>@r.Title</td>
+                                <td><span class="status-badge @statusCss" data-i18n="@statusI18n">@statusText</span></td>
+                                <td class="text-muted">@r.CreatedAt.ToString("dd/MM")</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <i class="bi bi-inbox"></i>
+                        <h3 data-i18n="DashNoReq">Chưa có đơn nào</h3>
+                        <a href="@Url.Action("SelectTemplate", "Requests")" class="btn btn-primary btn-sm mt-16"><i class="bi bi-plus-circle"></i> <span data-i18n="BtnCreateReq">Tạo đơn</span></a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @if (Model.TeamLeaveBalances.Any())
+        {
+            <div class="glass-card" style="grid-column:span 2">
+                <div class="card-header"><h3 data-i18n="TitleTeamLeave"><i class="bi bi-people-fill text-success"></i> Quỹ phép nhóm</h3></div>
+                <div class="card-body" style="padding:0">
+                    <table class="data-table">
+                        <thead><tr><th data-i18n="ColEmp">Nhân viên</th><th data-i18n="ColTotalLeave">Tổng phép</th><th data-i18n="ColUsed">Đã dùng</th><th data-i18n="ColRemain">Còn lại</th><th data-i18n="ColProgress">Tiến độ</th></tr></thead>
+                        <tbody>
+                        @foreach (var lb in Model.TeamLeaveBalances)
+                        {
+                            var pct = lb.TotalEntitled > 0 ? (lb.Used / lb.TotalEntitled * 100) : 0;
+                            var barCls = pct > 80 ? "danger" : pct > 60 ? "warning" : "";
+                            <tr>
+                                <td><strong>@lb.EmployeeName</strong></td>
+                                <td>@lb.TotalEntitled</td>
+                                <td>@lb.Used</td>
+                                <td class="@(lb.Remaining <= 3 ? "text-danger fw-600" : "")">@lb.Remaining</td>
+                                <td style="width:200px"><div class="leave-bar"><div class="leave-bar-fill @barCls" style="width:@pct%"></div></div></td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // Theme is fixed to light mode
+    let c_txt  = '#1e293b';                    // dark slate for readable labels
+    let c_grid = 'rgba(15, 23, 42, 0.07)';    // very light grey grid lines
+    let c_bord = '#f1f5f9';                    // light card border between slices
+
+    // Set Chart.js global defaults for light mode
+    Chart.defaults.color = c_txt;
+    Chart.defaults.borderColor = c_grid;
+    Chart.defaults.font.family = 'Inter, sans-serif';
+
+    // Get current language label for "Number of requests"
+    const getLang = () => localStorage.getItem('dangcapne_lang') || 'vi';
+    const getChartLabel = () => {
+        const d = typeof dict !== 'undefined' ? dict[getLang()] : null;
+        return d ? (d['ChartLabelReqCount'] || 'Số đơn') : 'Số đơn';
+    };
+
+    const getDef = () => ({ 
+        responsive: true, 
+        maintainAspectRatio: false, 
+        plugins: {
+            legend: { labels: { color: c_txt, font: { family: 'Inter', size: 12, weight: 'bold' }, padding: 16 } }
+        },
+        scales: {
+            x: { ticks: { color: c_txt, font: { weight: '600' } }, grid: { color: c_grid, drawBorder: false } },
+            y: { ticks: { color: c_txt, font: { weight: '600' }, backdropColor: 'transparent' }, grid: { color: c_grid, drawBorder: false } }
+        } 
+    });
+
+    const chartM = new Chart(document.getElementById('monthlyChart'), {
+        type: 'bar',
+        data: {
+            labels: [@Html.Raw(string.Join(",", Model.RequestsByMonth.Keys.Select(k => $"'{k}'")))],
+            datasets: [{
+                label: getChartLabel(),
+                data: [@string.Join(",", Model.RequestsByMonth.Values)],
+                backgroundColor: 'rgba(99, 102, 241, 0.85)',
+                hoverBackgroundColor: 'rgba(99, 102, 241, 1)',
+                borderRadius: 8,
+                borderSkipped: false
+            }]
+        },
+        options: getDef()
+    });
+
+    // Status label translation map
+    const statusLabelMap = {
+        "vi": { "Approved": "Đã duyệt", "Pending": "Chờ duyệt", "Rejected": "Từ chối", "InProgress": "Đang xử lý", "Cancelled": "Đã hủy", "Draft": "Nháp" },
+        "en": { "Approved": "Approved", "Pending": "Pending", "Rejected": "Rejected", "InProgress": "In Progress", "Cancelled": "Cancelled", "Draft": "Draft" }
+    };
+    const rawStatusKeys = [@Html.Raw(string.Join(",", Model.RequestsByStatus.Keys.Select(k => $"'{k}'")))];
+    const getStatusLabels = () => {
+        const lang = getLang();
+        return rawStatusKeys.map(k => (statusLabelMap[lang] && statusLabelMap[lang][k]) ? statusLabelMap[lang][k] : k);
+    };
+
+    const chartS = new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: getStatusLabels(),
+            datasets: [{
+                data: [@string.Join(",", Model.RequestsByStatus.Values)],
+                backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#3b82f6', '#9ca3af', '#8b5cf6'],
+                borderWidth: 2,
+                borderColor: c_bord,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: { legend: { position: 'bottom', labels: { color: c_txt, padding: 16, font: { family: 'Inter', size: 12, weight: 'bold' } } } }
+        }
+    });
+
+    const chartD = new Chart(document.getElementById('deptChart'), {
+        type: 'bar',
+        data: {
+            labels: [@Html.Raw(string.Join(",", Model.RequestsByDepartment.Keys.Select(k => $"'{k}'")))],
+            datasets: [{
+                label: getChartLabel(),
+                data: [@string.Join(",", Model.RequestsByDepartment.Values)],
+                backgroundColor: ['rgba(99, 102, 241, 0.8)', 'rgba(139, 92, 246, 0.8)', 'rgba(16, 185, 129, 0.8)', 'rgba(245, 158, 11, 0.8)', 'rgba(59, 130, 246, 0.8)', 'rgba(236, 72, 153, 0.8)'],
+                borderRadius: 6,
+                borderSkipped: false
+            }]
+        },
+        options: { ...getDef(), indexAxis: 'y' }
+    });
+
+    const chartT = new Chart(document.getElementById('typeChart'), {
+        type: 'polarArea',
+        data: {
+            labels: [@Html.Raw(string.Join(",", Model.RequestsByType.Keys.Select(k => $"'{k}'")))],
+            datasets: [{
+                data: [@string.Join(",", Model.RequestsByType.Values)],
+                backgroundColor: ['rgba(99, 102, 241, 0.7)', 'rgba(16, 185, 129, 0.7)', 'rgba(245, 158, 11, 0.7)', 'rgba(236, 72, 153, 0.7)', 'rgba(139, 92, 246, 0.7)'],
+                borderColor: c_bord,
+                borderWidth: 2,
+                hoverBackgroundColor: ['rgba(99, 102, 241, 0.9)', 'rgba(16, 185, 129, 0.9)', 'rgba(245, 158, 11, 0.9)', 'rgba(236, 72, 153, 0.9)', 'rgba(139, 92, 246, 0.9)']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    grid: { color: c_grid },
+                    ticks: { color: c_txt, font: { weight: 'bold' }, backdropColor: 'transparent', z: 1 },
+                    angleLines: { color: c_grid }
+                }
+            },
+            plugins: { legend: { position: 'bottom', labels: { color: c_txt, padding: 12, font: { family: 'Inter', size: 12, weight: 'bold' } } } }
+        }
+    });
+
+    const obs = new MutationObserver((m) => {
+        m.forEach((record) => {
+            if (record.attributeName === 'data-theme') {
+                is_l = document.documentElement.getAttribute('data-theme') === 'light';
+                c_txt = is_l ? '#1e293b' : '#ffffff';
+                c_grid = is_l ? 'rgba(15,23,42,0.08)' : 'rgba(255,255,255,0.08)';
+                c_bord = is_l ? '#ffffff' : '#121726';
+                updateCharts();
+            }
+        });
+    });
+    obs.observe(document.documentElement, { attributes: true });
+
+    // Hook into layout's language switch — fires on BOTH initial load and toggle
+    window.onPageLanguageChange = (lang) => {
+        const lbl = lang === 'vi' ? (dict && dict.vi ? dict.vi['ChartLabelReqCount'] : 'Số đơn') : 'Requests';
+        chartM.data.datasets[0].label = lbl;
+        chartD.data.datasets[0].label = lbl;
+        chartM.update();
+        chartD.update();
+        // Update status labels
+        const sMap = {
+            "vi": { "Approved": "Đã duyệt", "Pending": "Chờ duyệt", "Rejected": "Từ chối", "InProgress": "Đang xử lý", "Cancelled": "Đã hủy", "Draft": "Nháp" },
+            "en": { "Approved": "Approved", "Pending": "Pending", "Rejected": "Rejected", "InProgress": "In Progress", "Cancelled": "Cancelled", "Draft": "Draft" }
+        };
+        chartS.data.labels = rawStatusKeys.map(k => (sMap[lang] && sMap[lang][k]) ? sMap[lang][k] : k);
+        chartS.update();
+    };
+
+    function updateCharts() {
+        // M & D
+        [chartM, chartD].forEach(c => {
+            c.options.plugins.legend.labels.color = c_txt;
+            c.options.scales.x.ticks.color = c_txt; 
+            c.options.scales.x.grid.color = c_grid;
+            c.options.scales.y.ticks.color = c_txt; 
+            c.options.scales.y.grid.color = c_grid;
+            c.update();
+        });
+        
+        // S
+        chartS.options.plugins.legend.labels.color = c_txt;
+        chartS.data.datasets[0].borderColor = c_bord;
+        chartS.update();
+        
+        // T
+        chartT.options.scales.r.grid.color = c_grid;
+        chartT.options.scales.r.ticks.color = c_txt;
+        chartT.options.scales.r.angleLines.color = c_grid;
+        chartT.options.plugins.legend.labels.color = c_txt;
+        chartT.data.datasets[0].borderColor = c_bord;
+        chartT.update();
+    }
+</script>
+}

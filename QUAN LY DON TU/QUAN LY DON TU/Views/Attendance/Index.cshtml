@@ -1,0 +1,271 @@
+@{
+    ViewData["Title"] = "Xác thực khuôn mặt";
+    Layout = "_Layout";
+}
+
+<div class="attendance-page-wrapper" style="background: #f8fafc; min-height: calc(100vh - 100px); padding: 24px; color: #1e293b; font-family: 'Inter', sans-serif;">
+    <div class="container-fluid" style="width: 100%; max-width: 100%; padding: 0 12px;">
+        
+        <!-- Header Title Bar -->
+        <div class="d-flex justify-content-between align-items-center mb-24">
+            <div class="d-flex align-items-center gap-16">
+                <div style="width: 44px; height: 44px; background: #eef2ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #4f46e5;">
+                    <i class="bi bi-person-bounding-box" style="font-size: 24px;"></i>
+                </div>
+                <div>
+                    <div style="font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px;">Cảm biến AI</div>
+                    <div style="font-size: 22px; font-weight: 800; color: #0f172a;">Xác thực khuôn mặt</div>
+                </div>
+                <div id="statusBadge" class="status-badge-mockup ms-16">HỆ THỐNG SẴN SÀNG</div>
+            </div>
+        </div>
+
+        <!-- Main Content Card (Full Screen) -->
+        <div class="attendance-card-mockup" style="width: 100%;">
+            <div class="d-flex flex-row align-items-stretch" style="min-height: 580px;">
+                <!-- LEFT: Camera Area (65%) -->
+                <div class="camera-side" style="flex: 0 0 65%; border-right: 1px solid #f1f5f9; padding: 48px;">
+                    <div id="videoWrapper" class="video-container-mockup">
+                        <div id="frameRing" class="frame-ring-mockup"></div>
+                        
+                        <div id="cameraStandby" class="camera-standby-mockup">
+                            <div class="mb-40" style="font-size: 100px; color: #f1f5f9;"><i class="bi bi-camera-video-off"></i></div>
+                            <div style="color: #94a3b8; font-size: 15px; font-weight: 600; margin-bottom: 32px;">Camera đang ở chế độ chờ</div>
+                            <button id="btnStartCamera" class="btn-start-mockup">
+                                <i class="bi bi-power me-10"></i> Bắt đầu chấm công
+                            </button>
+                        </div>
+
+                        <div class="video-actual-mockup">
+                            <video id="video" autoplay muted playsinline></video>
+                            <canvas id="overlay"></canvas>
+                            <div id="scanLine" class="scan-line-mockup"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Info Area (35%) -->
+                <div class="info-side" style="flex: 0 0 35%; padding: 48px; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="results-hint mb-40">Hệ thống sẵn xác thực.</div>
+                    
+                    <div class="clock-display-mockup mb-40">
+                        <div id="liveClock" style="font-size: 96px; font-weight: 950; letter-spacing: -5px; line-height: 1; color: #0f172a;">00:00:00</div>
+                        <div id="liveDate" style="font-size: 17px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 3px; margin-top: 12px;">THỨ NĂM, 19 THÁNG 3, 2026</div>
+                    </div>
+
+                    <div style="width: 100%; height: 1px; background: #f1f5f9; margin-bottom: 40px;"></div>
+
+                    <div id="locationStatus" class="loc-status-mockup">
+                        Văn phòng chính - Landmark
+                    </div>
+                    
+                    <div id="statusMessage" class="mt-40" style="font-weight: 700; color: #4f46e5; min-height: 24px; font-size: 18px;"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+    <script>
+        // Real-time Clock
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('liveClock').textContent = `${h}:${m}:${s}`;
+            
+            const days = ["CHỦ NHẬT", "THỨ HAI", "THỨ BA", "THỨ TƯ", "THỨ NĂM", "THỨ SÁU", "THỨ BẢY"];
+            const df = `${days[now.getDay()]}, ${now.getDate()} THÁNG ${now.getMonth() + 1}, ${now.getFullYear()}`;
+            document.getElementById('liveDate').textContent = df;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        const video = document.getElementById('video');
+        const overlay = document.getElementById('overlay');
+        const statusBadge = document.getElementById('statusBadge');
+        const statusMessage = document.getElementById('statusMessage');
+        const btnStartCamera = document.getElementById('btnStartCamera');
+        const cameraStandby = document.getElementById('cameraStandby');
+        const frameRing = document.getElementById('frameRing');
+
+        let faceMatcher;
+        const faceDescriptorModel = '@Html.Raw(ViewBag.FaceDescriptor)';
+        const avatarUrl = '@ViewBag.AvatarUrl';
+        const MODEL_URL = 'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights/';
+
+        async function loadModels() {
+            try {
+                statusMessage.innerText = "Đang kết nối AI...";
+                await Promise.all([
+                    faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+                    faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+                    faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL)
+                ]);
+
+                if (faceDescriptorModel) {
+                    const desc = new Float32Array(JSON.parse(faceDescriptorModel));
+                    faceMatcher = new faceapi.FaceMatcher(new faceapi.LabeledFaceDescriptors("Nhân viên", [desc]), 0.6);
+                } else if (avatarUrl) {
+                    const img = await faceapi.fetchImage(avatarUrl);
+                    const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
+                    if (detection) faceMatcher = new faceapi.FaceMatcher(new faceapi.LabeledFaceDescriptors("Nhân viên", [detection.descriptor]), 0.6);
+                }
+                statusBadge.innerText = "HỆ THỐNG SẴN SÀNG";
+                statusMessage.innerText = "";
+            } catch (err) { console.error(err); statusBadge.innerText = "LỖI KẾT NỐI"; }
+        }
+
+        if (btnStartCamera) {
+            btnStartCamera.onclick = async () => {
+                btnStartCamera.disabled = true;
+                btnStartCamera.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+                await startCamera();
+            };
+        }
+
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+                video.srcObject = stream;
+                video.style.display = 'block';
+                overlay.style.display = 'block';
+                cameraStandby.style.display = 'none';
+                video.onloadedmetadata = () => { startDetection(); };
+                statusBadge.innerText = "ĐANG QUÉT...";
+                statusBadge.classList.add('scanning');
+            } catch (err) {
+                Swal.fire({ icon: 'error', title: 'Lỗi', text: 'Vui lòng cho phép quyền máy ảnh.' });
+                btnStartCamera.disabled = false;
+                btnStartCamera.innerHTML = '<i class="bi bi-power me-10"></i> Bắt đầu chấm công';
+            }
+        }
+
+        let scanProgress = 0;
+        let isProcessing = false;
+
+        async function startDetection() {
+            const displaySize = { width: video.clientWidth, height: video.clientHeight };
+            overlay.width = displaySize.width; overlay.height = displaySize.height;
+            faceapi.matchDimensions(overlay, displaySize);
+            document.getElementById('scanLine').style.display = 'block';
+
+            setInterval(async () => {
+                if (isProcessing) return;
+                const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();
+                const resizedDetections = faceapi.resizeResults(detections, displaySize);
+                const ctx = overlay.getContext('2d');
+                ctx.clearRect(0, 0, overlay.width, overlay.height);
+                
+                if (detections.length > 0) {
+                    if (faceMatcher) {
+                        const bestMatch = faceMatcher.findBestMatch(detections[0].descriptor);
+                        if (bestMatch.label !== 'unknown') {
+                            scanProgress += 4; if (scanProgress > 100) scanProgress = 100;
+                            updateProgressRing(scanProgress);
+                            statusMessage.innerHTML = `<span style="color: #4f46e5;">Xác minh: ${Math.round(scanProgress)}%</span>`;
+                            if (scanProgress >= 100) {
+                                isProcessing = true;
+                                frameRing.classList.add('success');
+                                await submitAttendance();
+                            }
+                        } else {
+                            statusMessage.innerHTML = `<span style="color: #ef4444;">Không nhận dạng được tài khoản!</span>`;
+                            resetScanVisuals();
+                        }
+                    }
+                    faceapi.draw.drawDetections(overlay, resizedDetections);
+                } else {
+                    resetScanVisuals();
+                    statusMessage.innerText = "Vui lòng đưa khuôn mặt vào khung quét...";
+                }
+            }, 100);
+        }
+
+        function updateProgressRing(p) {
+            const color = p < 100 ? '#4f46e5' : '#10b981';
+            frameRing.style.backgroundImage = `conic-gradient(${color} ${p}%, #f1f5f9 0%)`;
+            frameRing.style.opacity = '1';
+        }
+
+        function resetScanVisuals() {
+            scanProgress = 0;
+            frameRing.style.backgroundImage = 'none';
+        }
+
+        async function submitAttendance() {
+            try {
+                const resp = await fetch('@Url.Action("CheckIn")', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ faceMatched: true, lat: 0, lon: 0 })
+                });
+                const r = await resp.json();
+                if (r.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thông báo',
+                        html: r.type === 'checkin' ? `Đã xác thực GIỜ VÀO: <b>${r.time}</b>` : `Đã xác thực GIỜ RA: <b>${r.time}</b>`,
+                        timer: 2000,
+                        showConfirmButton: false,
+                        willClose: () => { location.reload(); }
+                    });
+                } else {
+                    Swal.fire({ icon: 'error', title: 'Thất bại', text: r.message });
+                    isProcessing = false;
+                }
+            } catch(e) { Swal.fire({ icon: 'error', title: 'Lỗi', text: 'Mất kết nối server.' }); }
+        }
+
+        loadModels();
+    </script>
+}
+
+<style>
+    .attendance-card-mockup {
+        background: #ffffff; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); overflow: hidden;
+    }
+
+    .status-badge-mockup {
+        padding: 8px 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 100px; font-size: 11px; font-weight: 800; color: #4f46e5; letter-spacing: 1px;
+    }
+    .status-badge-mockup.scanning { color: #f59e0b; border-color: #fef3c7; }
+
+    .video-container-mockup {
+        position: relative; width: 100%; height: 580px; border-radius: 36px; background: #f8fafc; padding: 12px;
+    }
+    .video-actual-mockup {
+        position: relative; width: 100%; height: 100%; border-radius: 28px; overflow: hidden; background: #fff; line-height: 0;
+    }
+    #video, #overlay { width: 100%; height: 100%; object-fit: cover; display: none; transform: scaleX(-1); }
+    #overlay { position: absolute; top: 0; left: 0; }
+
+    .camera-standby-mockup {
+        position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px; background: #fff; border-radius: 28px; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+
+    .frame-ring-mockup {
+        position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 40px; z-index: 5; padding: 6px;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
+    }
+    .frame-ring-mockup.success { background: #10b981 !important; }
+
+    .btn-start-mockup {
+        background: #4f46e5; color: #fff; border: none; padding: 18px 56px; border-radius: 20px; font-weight: 800; font-size: 19px; font-family: 'Montserrat', sans-serif; box-shadow: 0 12px 30px rgba(79, 70, 229, 0.25); transition: all 0.3s ease;
+    }
+    .btn-start-mockup:hover { transform: translateY(-3px); background: #4338ca; box-shadow: 0 15px 35px rgba(79, 70, 229, 0.3); }
+
+    .results-hint { font-size: 16px; font-weight: 600; color: #64748b; }
+    .loc-status-mockup { font-size: 20px; font-weight: 800; color: #0f172a; }
+
+    .scan-line-mockup {
+        position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: #4f46e5; box-shadow: 0 0 15px #4f46e5; z-index: 6; display: none; animation: scanLineAnimMock 3s infinite ease-in-out;
+    }
+    @@keyframes scanLineAnimMock { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+</style>

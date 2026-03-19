@@ -1,0 +1,93 @@
+@model DANGCAPNE.ViewModels.RequestListViewModel
+@{
+    ViewData["Title"] = "Đơn từ";
+}
+<div class="page-content">
+    <div class="d-flex justify-between align-center mb-24" style="flex-wrap:wrap;gap:16px">
+        <div>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px" data-i18n="NavRequests">Quản lý đơn từ</h2>
+            <p class="text-muted">Theo dõi và quản lý tất cả đơn từ</p>
+        </div>
+        <a href="@Url.Action("SelectTemplate")" class="btn btn-primary" data-i18n="NavCreate"><i class="bi bi-plus-circle"></i> Tạo đơn mới</a>
+    </div>
+
+    <div class="filter-bar">
+        <form method="get" class="d-flex gap-8 flex-wrap" style="flex:1">
+            <input type="text" name="search" class="form-control search-input" placeholder="Tìm theo mã đơn, tiêu đề..." value="@Model.SearchQuery" data-i18n="LabelSearch" />
+            <select name="status" class="form-control">
+                <option value="" data-i18n="FilterAllStatus">Tất cả trạng thái</option>
+                <option value="Pending" selected="@(Model.StatusFilter == "Pending")" data-i18n="TblPending">Chờ duyệt</option>
+                <option value="InProgress" selected="@(Model.StatusFilter == "InProgress")" data-i18n="TblInProgress">Đang xử lý</option>
+                <option value="Approved" selected="@(Model.StatusFilter == "Approved")" data-i18n="TblApproved">Đã duyệt</option>
+                <option value="Rejected" selected="@(Model.StatusFilter == "Rejected")" data-i18n="TblRejected">Từ chối</option>
+                <option value="Cancelled" selected="@(Model.StatusFilter == "Cancelled")" data-i18n="TblCancelled">Đã hủy</option>
+            </select>
+            <select name="type" class="form-control">
+                <option value="" data-i18n="FilterType">Tất cả loại đơn</option>
+                @foreach (var ft in Model.FormTemplates)
+                {
+                    <option value="@ft.Category" selected="@(Model.TypeFilter == ft.Category)">@ft.Name</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-outline"><i class="bi bi-funnel"></i> Lọc</button>
+        </form>
+    </div>
+
+    <div class="glass-card">
+        <div class="card-body" style="padding:0">
+            @if (Model.Requests.Any())
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="ColReqCode">Mã đơn</th>
+                            <th data-i18n="ColTitle">Tiêu đề</th>
+                            <th data-i18n="ColType">Loại</th>
+                            <th data-i18n="ColRequester">Người tạo</th>
+                            <th data-i18n="ColStatus">Trạng thái</th>
+                            <th data-i18n="LabelPriority">Ưu tiên</th>
+                            <th data-i18n="ColDate">Ngày tạo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in Model.Requests)
+                        {
+                            var statusCss = r.Status switch { "Pending" => "pending", "Approved" => "approved", "Rejected" => "rejected", "InProgress" => "in-progress", "Cancelled" => "cancelled", "RequestEdit" => "warning", _ => "draft" };
+                            var statusText = r.Status switch { "Pending" => "Chờ duyệt", "Approved" => "Đã duyệt", "Rejected" => "Từ chối", "InProgress" => "Đang xử lý", "Cancelled" => "Đã hủy", "RequestEdit" => "Yêu cầu sửa", _ => r.Status };
+                            var statusI18n = r.Status switch { "Pending" => "TblPending", "Approved" => "TblApproved", "Rejected" => "TblRejected", "InProgress" => "TblInProgress", "Cancelled" => "TblCancelled", _ => "" };
+                            var priCss = r.Priority switch { "High" => "high", "Urgent" => "urgent", "Low" => "low", _ => "normal" };
+                            <tr onclick="location.href='@Url.Action("Detail", new { id = r.Id })'" style="cursor:pointer">
+                                <td><strong class="text-primary">@r.RequestCode</strong></td>
+                                <td>@r.Title</td>
+                                <td><i class="bi @r.FormTemplate?.Icon" style="color:@r.FormTemplate?.IconColor"></i> @r.FormTemplate?.Name</td>
+                                <td>@r.Requester?.FullName</td>
+                                <td><span class="status-badge @statusCss" data-i18n="@statusI18n">@statusText</span></td>
+                                <td><span class="priority-badge @priCss">@r.Priority</span></td>
+                                <td class="text-muted">@r.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="empty-state">
+                    <i class="bi bi-inbox"></i>
+                    <h3 data-i18n="DashNoReq">Không có đơn nào</h3>
+                    <p data-i18n="MsgNoReqFilters">Chưa có đơn từ nào phù hợp với bộ lọc</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <div class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <a href="@Url.Action("Index", new { page = i, status = Model.StatusFilter, type = Model.TypeFilter, search = Model.SearchQuery })"
+                   class="page-link @(i == Model.CurrentPage ? "active" : "")">@i</a>
+            }
+        </div>
+    }
+</div>

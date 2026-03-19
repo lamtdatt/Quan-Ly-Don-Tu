@@ -1,0 +1,85 @@
+@model DANGCAPNE.ViewModels.DelegationViewModel
+@{
+    ViewData["TitleI18n"] = "NavDelegate";
+    ViewData["Title"] = "Quản lý ủy quyền";
+}
+<div class="page-content">
+    <div class="d-flex justify-between align-center mb-24">
+        <div>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px" data-i18n="DelegateTitle">Ủy quyền phê duyệt</h2>
+            <p class="text-muted" data-i18n="DelegateSubtitle">Ủy quyền duyệt đơn khi vắng mặt</p>
+        </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div class="glass-card">
+            <div class="card-header"><h3><i class="bi bi-plus-circle text-primary"></i> <span data-i18n="DelegateCreateNew">Tạo ủy quyền mới</span></h3></div>
+            <div class="card-body">
+                <form method="post" asp-action="CreateDelegation">
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="DelegateToLabel">Người được ủy quyền *</label>
+                        <select name="DelegateId" class="form-control" required>
+                            <option value="" data-i18n="OptSelect">-- Chọn nhân viên --</option>
+                            @foreach (var u in Model.PotentialDelegates)
+                            {
+                                <option value="@u.Id">@u.FullName (@u.EmployeeCode)</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="LabelFrom">Từ ngày *</label>
+                                <input type="date" name="StartDate" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="LabelTo">Đến ngày *</label>
+                                <input type="date" name="EndDate" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="DelegateReason">Lý do</label>
+                        <textarea name="Reason" class="form-control" data-i18n="DelegateReasonPlaceholder" placeholder="Lý do ủy quyền (tùy chọn)"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-arrow-left-right"></i> <span data-i18n="DelegateCreateNew">Tạo ủy quyền</span></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-header"><h3><i class="bi bi-arrow-left-right text-success"></i> <span data-i18n="DelegateActiveList">Ủy quyền đang hoạt động</span></h3></div>
+            <div class="card-body">
+                @if (Model.ActiveDelegations.Any())
+                {
+                    @foreach (var d in Model.ActiveDelegations)
+                    {
+                        <div style="padding:16px;background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--radius-md);margin-bottom:12px">
+                            <div class="d-flex justify-between align-center">
+                                <div>
+                                    <strong>@d.Delegator?.FullName</strong>
+                                    <i class="bi bi-arrow-right text-primary" style="margin:0 8px"></i>
+                                    <strong class="text-primary">@d.Delegate?.FullName</strong>
+                                </div>
+                                <span class="status-badge approved" data-i18n="DelegateActive">Đang hoạt động</span>
+                            </div>
+                            <div class="text-muted" style="font-size:12px;margin-top:8px">
+                                <i class="bi bi-calendar"></i> @d.StartDate.ToString("dd/MM/yyyy") → @d.EndDate.ToString("dd/MM/yyyy")
+                                @if (!string.IsNullOrEmpty(d.Reason))
+                                {
+                                    <br/><i class="bi bi-chat-left-text"></i> @d.Reason
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="empty-state" style="padding:32px"><i class="bi bi-arrow-left-right"></i><h3 data-i18n="DelegateEmpty">Chưa có ủy quyền nào</h3></div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+@model DANGCAPNE.ViewModels.ModulesIndexViewModel
+@{
+    ViewData["TitleI18n"] = "NavModules";
+    ViewData["Title"] = "Phân hệ";
+}
+
+<div class="page-content">
+    <div class="glass-card">
+        <div class="card-header">
+            <h3><i class="bi bi-grid-3x3-gap-fill text-primary"></i> <span data-i18n="ModulesExt">Phân hệ mở rộng</span></h3>
+        </div>
+        <div class="card-body">
+            <div class="grid-3">
+                @foreach (var m in Model.Modules)
+                {
+                    <a href="@Url.Action("List", "Modules", new { key = m.Key })" class="module-card">
+                        <div class="module-title">@m.Title</div>
+                        <div class="module-desc">@m.Description</div>
+                        <div class="module-cta" data-i18n="BtnManage">Quản lý</div>
+                    </a>
+                }
+                @if (!Model.Modules.Any())
+                {
+                    <div class="empty-state" style="grid-column:1/-1">
+                        <i class="bi bi-shield-lock"></i>
+                        <p data-i18n="ModulesNoAccess">Bạn không có quyền truy cập phân hệ nào.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

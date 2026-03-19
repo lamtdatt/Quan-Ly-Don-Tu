@@ -1,0 +1,64 @@
+@model DANGCAPNE.ViewModels.DynamicCrudEditViewModel
+@{
+    ViewData["Title"] = Model.IsEdit ? "Cập nhật " + Model.Title : "Tạo mới " + Model.Title;
+}
+
+<div class="page-content">
+    <div class="glass-card" style="max-width:900px;margin:0 auto">
+        <div class="card-header">
+            <h3><i class="bi bi-pencil-square"></i> @ViewData["Title"]</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                @Html.AntiForgeryToken()
+                <div class="form-row">
+                    @foreach (var field in Model.Fields)
+                    {
+                        if (field.Type == "select")
+                        {
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label">@field.DisplayName</label>
+                                    <select class="form-control" name="Fields[@field.Name]" @(field.ReadOnly ? "disabled" : "")>
+                                        <option value="">-- Chọn --</option>
+                                        @foreach (var opt in field.Options)
+                                        {
+                                            <option value="@opt.Value" selected="@(opt.Value == field.Value)">@opt.Label</option>
+                                        }
+                                    </select>
+                                    @if (field.ReadOnly)
+                                    {
+                                        <input type="hidden" name="Fields[@field.Name]" value="@field.Value" />
+                                    }
+                                </div>
+                            </div>
+                        }
+                        else if (field.Type == "checkbox")
+                        {
+                            <div class="col-6">
+                                <label class="form-check">
+                                    <input type="hidden" name="Fields[@field.Name]" value="false" />
+                                    <input type="checkbox" name="Fields[@field.Name]" value="true" @(field.Value == "true" ? "checked" : "") />
+                                    <span>@field.DisplayName</span>
+                                </label>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="form-label">@field.DisplayName</label>
+                                    <input class="form-control" type="@field.Type" name="Fields[@field.Name]" value="@field.Value" @(field.ReadOnly ? "readonly" : "") />
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:24px;padding-top:24px;border-top:1px solid var(--border-glass)">
+                    <a class="btn btn-outline" href="@Url.Action("List", "Modules", new { key = Model.EntityKey })">Quay lại</a>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

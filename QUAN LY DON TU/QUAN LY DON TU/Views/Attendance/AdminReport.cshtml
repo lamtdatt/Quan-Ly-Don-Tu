@@ -1,0 +1,249 @@
+@{
+    ViewData["Title"] = "Bảng Chấm công";
+    var timesheets = ViewBag.Timesheets as List<DANGCAPNE.Models.Timekeeping.Timesheet> ?? new();
+    var departments = ViewBag.Departments as List<DANGCAPNE.Models.Organization.Department> ?? new();
+    var employees = ViewBag.Employees as List<DANGCAPNE.Models.Organization.User> ?? new();
+    int totalPresent = ViewBag.TotalPresent ?? 0;
+    // Group by date for absent count
+    var dateRange = new List<DateTime>();
+    var d = DateTime.Parse(ViewBag.FromDate.ToString());
+    var dEnd = DateTime.Parse(ViewBag.ToDate.ToString());
+    while (d <= dEnd) { if (d.DayOfWeek != DayOfWeek.Saturday && d.DayOfWeek != DayOfWeek.Sunday) dateRange.Add(d); d = d.AddDays(1); }
+    int totalWorkDays = dateRange.Count;
+    int totalEmployees = employees.Count;
+}
+<style>
+    .att-stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-bottom: 28px; }
+    .att-stat-card { background: white; border-radius: 20px; padding: 24px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 16px; border: 1px solid #f1f5f9; transition: transform .2s, box-shadow .2s; }
+    .att-stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,0.10); }
+    .att-stat-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+    .att-stat-val { font-size: 28px; font-weight: 800; line-height: 1; }
+    .att-stat-label { font-size: 13px; color: #64748b; margin-top: 4px; }
+    .filter-card { background: white; border-radius: 20px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #f1f5f9; }
+    .filter-row { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+    .badge-present { background: #dcfce7; color: #15803d; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+    .badge-absent  { background: #fee2e2; color: #b91c1c; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+    .badge-late    { background: #fef9c3; color: #854d0e; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+    .avatar-sm { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .avatar-sm-fallback { width: 36px; height: 36px; border-radius: 50%; background: #6366f1; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+    .name-cell { display: flex; align-items: center; gap: 10px; }
+    @@media (max-width:900px) { .att-stat-grid { grid-template-columns: repeat(2,1fr); } .filter-row { flex-direction: column; } }
+</style>
+
+<div class="page-content">
+    <div class="d-flex justify-between align-center mb-24">
+        <div>
+            <h2 style="font-size:24px; font-weight:800;">📋 Bảng Chấm công Nhân viên</h2>
+            <p class="text-muted" style="margin-top:4px;">Theo dõi và quản lý chấm công toàn bộ nhân viên</p>
+        </div>
+        <button onclick="exportToExcel()" class="btn btn-primary">
+            <i class="bi bi-file-earmark-excel-fill"></i> Xuất Excel
+        </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="att-stat-grid">
+        <div class="att-stat-card">
+            <div class="att-stat-icon" style="background:#eef2ff; color:#6366f1;"><i class="bi bi-people-fill"></i></div>
+            <div>
+                <div class="att-stat-val" style="color:#6366f1;">@totalEmployees</div>
+                <div class="att-stat-label">Tổng nhân viên</div>
+            </div>
+        </div>
+        <div class="att-stat-card">
+            <div class="att-stat-icon" style="background:#f0fdf4; color:#10b981;"><i class="bi bi-check-circle-fill"></i></div>
+            <div>
+                <div class="att-stat-val" style="color:#10b981;">@totalPresent</div>
+                <div class="att-stat-label">Lượt có mặt</div>
+            </div>
+        </div>
+        <div class="att-stat-card">
+            <div class="att-stat-icon" style="background:#fef9c3; color:#b45309;"><i class="bi bi-calendar-check-fill"></i></div>
+            <div>
+                <div class="att-stat-val" style="color:#b45309;">@totalWorkDays</div>
+                <div class="att-stat-label">Ngày làm trong kỳ</div>
+            </div>
+        </div>
+        <div class="att-stat-card">
+            <div class="att-stat-icon" style="background:#fce7f3; color:#db2777;"><i class="bi bi-clock-history"></i></div>
+            <div>
+                <div class="att-stat-val" style="color:#db2777;">@((ViewBag.TotalWorkHours ?? 0.0).ToString("0.#"))</div>
+                <div class="att-stat-label">Giờ làm tổng cộng</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-card">
+        <form method="get" asp-action="AdminReport">
+            <div class="filter-row">
+                <div>
+                    <label class="form-label" style="font-weight:600; font-size:13px;">📅 Từ ngày</label>
+                    <input type="date" name="fromDate" class="form-control" value="@ViewBag.FromDate" style="width:160px;" />
+                </div>
+                <div>
+                    <label class="form-label" style="font-weight:600; font-size:13px;">📅 Đến ngày</label>
+                    <input type="date" name="toDate" class="form-control" value="@ViewBag.ToDate" style="width:160px;" />
+                </div>
+                <div>
+                    <label class="form-label" style="font-weight:600; font-size:13px;">🏢 Phòng ban</label>
+                    <select name="deptId" class="form-control" style="width:200px;">
+                        <option value="">-- Tất cả phòng ban --</option>
+                        @foreach (var dept in departments)
+                        {
+                            if (ViewBag.SelectedDeptId?.ToString() == dept.Id.ToString())
+                            {
+                                <option value="@dept.Id" selected="selected">@dept.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@dept.Id">@dept.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label" style="font-weight:600; font-size:13px;">👤 Nhân viên</label>
+                    <select name="searchUserId" class="form-control" style="width:220px;">
+                        <option value="">-- Tất cả nhân viên --</option>
+                        @foreach (var emp in employees)
+                        {
+                            if (ViewBag.SelectedUserId?.ToString() == emp.Id.ToString())
+                            {
+                                <option value="@emp.Id" selected="selected">@emp.FullName</option>
+                            }
+                            else
+                            {
+                                <option value="@emp.Id">@emp.FullName</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="height:42px; padding: 0 24px;">
+                    <i class="bi bi-funnel-fill"></i> Lọc
+                </button>
+                <a href="@Url.Action("AdminReport")" class="btn btn-ghost" style="height:42px; padding: 0 20px; line-height:42px;">
+                    <i class="bi bi-arrow-counterclockwise"></i> Đặt lại
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Table -->
+    <div class="glass-card">
+        <div class="card-header d-flex justify-between align-center">
+            <h3><i class="bi bi-table text-primary"></i> Dữ liệu chấm công</h3>
+            <span class="text-muted" style="font-size:13px; font-weight:600;">@totalPresent bản ghi</span>
+        </div>
+        <div class="card-body" style="padding:0; overflow-x:auto;">
+            <table class="data-table" id="attendanceTable">
+                <thead>
+                    <tr>
+                        <th>Nhân viên</th>
+                        <th>Phòng ban</th>
+                        <th>Ngày</th>
+                        <th>Giờ vào</th>
+                        <th>Giờ ra</th>
+                        <th>Giờ làm</th>
+                        <th>Trạng thái</th>
+                        <th>Nguồn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (timesheets.Any())
+                    {
+                        @foreach (var t in timesheets)
+                        {
+                            var isLate = t.CheckIn.HasValue && t.CheckIn.Value.TimeOfDay > new TimeSpan(8, 15, 0);
+                            var statusClass = isLate ? "badge-late" : "badge-present";
+                            var statusText = isLate ? "Trễ" : "Có mặt";
+                            var sourceIcon = t.Source switch {
+                                "FaceRecognition" => "bi-camera-fill",
+                                "QRCode" => "bi-qr-code",
+                                "GPS" => "bi-geo-alt-fill",
+                                "Wifi" => "bi-wifi",
+                                _ => "bi-hand-index-thumb"
+                            };
+                            var sourceLabel = t.Source switch {
+                                "FaceRecognition" => "Khuôn mặt",
+                                "QRCode" => "QR Code",
+                                "GPS" => "GPS",
+                                "Wifi" => "Wifi",
+                                _ => "Thủ công"
+                            };
+                            <tr>
+                                <td>
+                                    <div class="name-cell">
+                                        @if (!string.IsNullOrEmpty(t.User?.AvatarUrl))
+                                        {
+                                            <img src="@t.User.AvatarUrl" class="avatar-sm" />
+                                        }
+                                        else
+                                        {
+                                            <div class="avatar-sm-fallback">@t.User?.FullName?.Substring(0,1)</div>
+                                        }
+                                        <div>
+                                            <div style="font-weight:600; font-size:14px;">@t.User?.FullName</div>
+                                            <div class="text-muted" style="font-size:12px;">@t.User?.EmployeeCode</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-muted">@(t.User?.Department?.Name ?? "--")</td>
+                                <td><strong>@t.Date.ToString("dd/MM/yyyy")</strong><br /><span class="text-muted" style="font-size:11px;">@t.Date.ToString("ddd")</span></td>
+                                <td class="text-success fw-600">@(t.CheckIn?.ToString("HH:mm") ?? "--:--")</td>
+                                <td class="text-info fw-600">@(t.CheckOut?.ToString("HH:mm") ?? "--:--")</td>
+                                <td>
+                                    @if (t.WorkHours > 0)
+                                    {
+                                        <strong>@t.WorkHours.ToString("0.#")h</strong>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">--</span>
+                                    }
+                                </td>
+                                <td><span class="@statusClass">@statusText</span></td>
+                                <td>
+                                    <span style="font-size:13px;" title="@sourceLabel">
+                                        <i class="bi @sourceIcon" style="color:#6366f1;"></i> @sourceLabel
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" style="text-align:center; padding:48px; color:#94a3b8;">
+                                <i class="bi bi-inbox" style="font-size:48px; display:block; margin-bottom:12px;"></i>
+                                Không có dữ liệu chấm công trong khoảng thời gian này.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    function exportToExcel() {
+        const table = document.getElementById('attendanceTable');
+        let csv = [];
+        const rows = table.querySelectorAll('tr');
+        rows.forEach(row => {
+            const cols = row.querySelectorAll('th, td');
+            const rowData = [];
+            cols.forEach(col => rowData.push('"' + col.innerText.replace(/\n/g,' ').trim() + '"'));
+            csv.push(rowData.join(','));
+        });
+        const csvContent = '\uFEFF' + csv.join('\n'); // BOM for UTF-8 Excel
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'bang-cham-cong-@DateTime.Now.ToString("yyyyMMdd")' + '.csv';
+        link.click();
+    }
+</script>
+}

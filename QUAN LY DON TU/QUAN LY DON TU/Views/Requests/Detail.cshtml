@@ -1,0 +1,180 @@
+@model DANGCAPNE.ViewModels.RequestDetailViewModel
+@{
+    ViewData["TitleI18n"] = "DetailTitlePrefix";
+    ViewData["TitleSuffix"] = Model.Request?.RequestCode;
+    ViewData["Title"] = "Chi tiết đơn";
+    var statusCss = Model.Request?.Status switch { "Pending" => "pending", "Approved" => "approved", "Rejected" => "rejected", "InProgress" => "in-progress", "Cancelled" => "cancelled", _ => "draft" };
+    var statusText = Model.Request?.Status switch { "Pending" => "Chờ duyệt", "Approved" => "Đã duyệt", "Rejected" => "Từ chối", "InProgress" => "Đang xử lý", "Cancelled" => "Đã hủy", "RequestEdit" => "Yêu cầu sửa", _ => Model.Request?.Status ?? "" };
+}
+<div class="page-content">
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:24px">
+        <div>
+            <div class="glass-card mb-24">
+                <div class="card-header">
+                    <h3><i class="bi @Model.Request?.FormTemplate?.Icon" style="color:@Model.Request?.FormTemplate?.IconColor"></i> @Model.Request?.FormTemplate?.Name</h3>
+                    <span class="status-badge @statusCss" style="font-size:14px" data-i18n="@(Model.Request?.Status switch { "Pending" => "TblPending", "Approved" => "TblApproved", "Rejected" => "TblRejected", "InProgress" => "TblInProgress", "Cancelled" => "TblCancelled", _ => "" })">@statusText</span>
+                </div>
+                <div class="card-body">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+                        <div><span class="text-muted" style="font-size:12px" data-i18n="ColReqCode">Mã đơn</span><br><strong class="text-primary">@Model.Request?.RequestCode</strong></div>
+                        <div><span class="text-muted" style="font-size:12px" data-i18n="ColRequester">Người tạo</span><br><strong>@Model.Request?.Requester?.FullName</strong></div>
+                        <div><span class="text-muted" style="font-size:12px" data-i18n="ColDept">Phòng ban</span><br><strong>@Model.Request?.Requester?.Department?.Name</strong></div>
+                        <div><span class="text-muted" style="font-size:12px" data-i18n="ColDate">Ngày tạo</span><br><strong>@Model.Request?.CreatedAt.ToString("dd/MM/yyyy HH:mm")</strong></div>
+                    </div>
+                    <h4 style="font-size:18px;font-weight:700;margin-bottom:16px">@Model.Request?.Title</h4>
+
+                    <div style="background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--radius-md);padding:20px">
+                        @foreach (var field in Model.FormFields)
+                        {
+                            var val = Model.FormData.ContainsKey(field.FieldName) ? Model.FormData[field.FieldName] : "—";
+                            if (field.FieldType == "Dropdown" && field.Options.Any())
+                            {
+                                var opt = field.Options.FirstOrDefault(o => o.Value == val);
+                                if (opt != null) val = opt.Label;
+                            }
+                            <div style="margin-bottom:12px">
+                                <span class="text-muted" style="font-size:12px">@field.Label</span>
+                                <div style="font-size:14px;font-weight:500">@val</div>
+                            </div>
+                        }
+                    </div>
+
+                    @if (Model.Request?.Attachments?.Any() == true)
+                    {
+                        <div style="margin-top:16px">
+                            <span class="text-muted" style="font-size:12px" data-i18n="CardAttach">File đính kèm</span>
+                            @foreach (var att in Model.Request.Attachments)
+                            {
+                                <div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg-glass);border-radius:var(--radius-sm);margin-top:4px">
+                                    <i class="bi bi-file-earmark text-primary"></i>
+                                    <a href="@att.FilePath" target="_blank" style="color:var(--accent-primary);font-size:13px;text-decoration:none">@att.FileName</a>
+                                    <span class="text-muted" style="font-size:11px">(@((att.FileSize / 1024.0).ToString("0.#")) KB)</span>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+
+            @if (Model.CanApprove)
+            {
+                <div class="glass-card mb-24">
+                    <div class="card-header"><h3><i class="bi bi-check2-square text-success"></i> <span data-i18n="CardApproveAction">Thao tác phê duyệt</span></h3></div>
+                    <div class="card-body">
+                        <form method="post" asp-controller="Approvals" asp-action="ProcessApproval">
+                            <input type="hidden" name="ApprovalId" value="@Model.CurrentApprovalId" />
+                            <input type="hidden" name="RequestId" value="@Model.Request?.Id" />
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="LabelCommentReason">Nhận xét / Lý do</label>
+                                <textarea name="Comments" class="form-control" placeholder="Nhập nhận xét (tùy chọn khi duyệt, bắt buộc khi từ chối)" data-i18n="PlaceholderLongComment"></textarea>
+                            </div>
+                            @if (Model.RequiresPin)
+                            {
+                                <div class="form-group">
+                                    <label class="form-label"><i class="bi bi-shield-lock text-warning"></i> <span data-i18n="LabelPin">Mã PIN xác thực (bắt buộc cho đơn tài chính)</span></label>
+                                    <input type="password" name="Pin" class="form-control" placeholder="Nhập mã PIN 4 số" data-i18n="PlaceholderPin" maxlength="4" style="max-width:200px" />
+                                </div>
+                            }
+                            <div style="display:flex;gap:12px">
+                                <button type="submit" name="Action" value="Approve" class="btn btn-success"><i class="bi bi-check-lg"></i> <span data-i18n="BtnApprove">Phê duyệt</span></button>
+                                <button type="submit" name="Action" value="Reject" class="btn btn-danger"><i class="bi bi-x-lg"></i> <span data-i18n="BtnReject">Từ chối</span></button>
+                                <button type="submit" name="Action" value="RequestEdit" class="btn btn-warning"><i class="bi bi-pencil"></i> <span data-i18n="BtnReqEdit">Yêu cầu chỉnh sửa</span></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+
+            <div class="glass-card mb-24">
+                <div class="card-header"><h3><i class="bi bi-chat-dots-fill text-info"></i> <span data-i18n="CardDiscussion">Thảo luận</span> (@Model.Comments.Count)</h3></div>
+                <div class="card-body">
+                    <div class="comment-list">
+                        @foreach (var c in Model.Comments)
+                        {
+                            <div class="comment-item">
+                                <div class="comment-avatar">@c.User?.FullName?.Substring(0, 1)</div>
+                                <div class="comment-body">
+                                    <div class="comment-header">
+                                        <strong>@c.User?.FullName</strong>
+                                        <span>@c.CreatedAt.ToString("HH:mm dd/MM/yyyy")</span>
+                                    </div>
+                                    <div class="comment-content">@c.Content</div>
+                                </div>
+                            </div>
+                        }
+                        @if (!Model.Comments.Any())
+                        {
+                            <p class="text-muted" style="font-size:13px" data-i18n="MsgNoComments">Chưa có bình luận nào.</p>
+                        }
+                    </div>
+                    <form method="post" asp-action="AddComment" style="display:flex;gap:12px;margin-top:16px">
+                        <input type="hidden" name="requestId" value="@Model.Request?.Id" />
+                        <input type="text" name="content" class="form-control" placeholder="Viết bình luận... (hỗ trợ @@mention)" data-i18n="PlaceholderDiscuss" required />
+                        <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-send"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="glass-card mb-24">
+                <div class="card-header"><h3><i class="bi bi-signpost-split-fill"></i> <span data-i18n="CardFlow">Luồng duyệt</span></h3></div>
+                <div class="card-body">
+                    <div class="approval-timeline">
+                        @foreach (var a in Model.ApprovalHistory)
+                        {
+                            var sCss = a.Status.ToLower();
+                            <div class="timeline-item @sCss">
+                                <div class="step-name">@a.StepName</div>
+                                <div class="step-info">
+                                    <strong>@(a.Approver?.FullName != null ? a.Approver.FullName : "<span data-i18n=\"TblUnknown\">Chưa xác định</span>")</strong><br />
+                                    <span class="status-badge @sCss" style="margin-top:6px;font-size:11px" data-i18n="@(a.Status switch { "Pending" => "TblPending", "Approved" => "TblApproved", "Rejected" => "TblRejected", "Skipped" => "TblSkipped", _ => "" })">
+                                        @(a.Status switch { "Pending" => "Đang chờ", "Approved" => "Đã duyệt", "Rejected" => "Từ chối", "Skipped" => "Bỏ qua", _ => a.Status })
+                                    </span>
+                                    @if (a.ActionDate != null)
+                                    {
+                                        <br /><small class="text-muted">@a.ActionDate?.ToString("HH:mm dd/MM/yyyy")</small>
+                                    }
+                                </div>
+                                @if (!string.IsNullOrEmpty(a.Comments))
+                                {
+                                    <div class="step-comment">"@a.Comments"</div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.CanCancel)
+            {
+                <div class="glass-card mb-24">
+                    <div class="card-body">
+                        <form method="post" asp-action="Cancel" asp-route-id="@Model.Request?.Id" onsubmit="return confirm(typeof dict !== 'undefined' ? dict[localStorage.getItem('dangcapne_lang') || 'vi']?.ConfirmCancel : 'Bạn có chắc chắn muốn hủy đơn này?');">
+                            <button type="submit" class="btn btn-danger" style="width:100%"><i class="bi bi-x-circle"></i> <span data-i18n="BtnCancel">Hủy đơn</span></button>
+                        </form>
+                    </div>
+                </div>
+            }
+
+            <div class="glass-card">
+                <div class="card-header"><h3><i class="bi bi-clock-history"></i> <span data-i18n="CardHistory">Lịch sử</span></h3></div>
+                <div class="card-body" style="padding:12px 20px">
+                    @foreach (var log in Model.AuditLogs.Take(10))
+                    {
+                        var actionText = log.Action switch { "Created" => "Tạo mới", "Approved" => "Phê duyệt", "Rejected" => "Từ chối", "RequestEdit" => "Yêu cầu sửa", "Cancelled" => "Hủy", _ => log.Action };
+                        var actionI18n = log.Action switch { "Created" => "ActionCreated", "Approved" => "ActionApproved", "Rejected" => "ActionRejected", "RequestEdit" => "ActionReqEdit", "Cancelled" => "ActionCancelled", _ => "" };
+                        var iconCss = log.Action.ToLower() switch { "created" => "created", "approved" => "approved", "rejected" => "rejected", _ => "commented" };
+                        <div class="audit-item">
+                            <div class="audit-icon @iconCss"><i class="bi bi-@(log.Action == "Created" ? "plus" : log.Action == "Approved" ? "check" : log.Action == "Rejected" ? "x" : "chat")"></i></div>
+                            <div style="flex:1">
+                                <div style="font-size:13px;font-weight:500">@log.User?.FullName <span class="text-muted" data-i18n="@actionI18n">@actionText</span></div>
+                                <div style="font-size:11px;color:var(--text-muted)">@log.CreatedAt.ToString("HH:mm dd/MM/yyyy")</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

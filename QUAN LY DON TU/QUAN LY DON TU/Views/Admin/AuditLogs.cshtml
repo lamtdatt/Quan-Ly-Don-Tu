@@ -1,0 +1,44 @@
+@model List<DANGCAPNE.Models.Requests.RequestAuditLog>
+@{
+    ViewData["TitleI18n"] = "NavAudit";
+    ViewData["Title"] = "Nhật ký hệ thống";
+}
+<div class="page-content">
+    <div class="d-flex justify-between align-center mb-24">
+        <div>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px" data-i18n="NavAudit">Nhật ký hệ thống</h2>
+            <p class="text-muted" data-i18n="AuditSubtitle">Theo dõi mọi thay đổi trong hệ thống</p>
+        </div>
+    </div>
+
+    <div class="glass-card">
+        <div class="card-body" style="padding:0">
+            <table class="data-table">
+                <thead><tr><th data-i18n="AuditTime">Thời gian</th><th data-i18n="AuditActor">Người thực hiện</th><th data-i18n="AuditReq">Đơn</th><th data-i18n="ColAction">Hành động</th><th data-i18n="AuditDetail">Chi tiết</th><th>IP</th></tr></thead>
+                <tbody>
+                    @foreach (var log in Model)
+                    {
+                        var actionCss = log.Action switch { "Created" => "info", "Approved" => "success", "Rejected" => "danger", "BulkApprove" => "success", "Cancelled" => "rejected", _ => "primary" };
+                        var actionKey = log.Action switch { "Created" => "ActionCreated", "Approved" => "ActionApproved", "Rejected" => "ActionRejected", "BulkApprove" => "ActionBulkApprove", "Cancelled" => "ActionCancelled", _ => "" };
+                        var actionText = log.Action switch { "Created" => "Tạo mới", "Approved" => "Phê duyệt", "Rejected" => "Từ chối", "BulkApprove" => "Duyệt hàng loạt", "Cancelled" => "Hủy", _ => log.Action };
+                        <tr>
+                            <td class="text-muted" style="font-size:12px;white-space:nowrap">@log.CreatedAt.ToString("HH:mm:ss dd/MM/yyyy")</td>
+                            <td><strong>@log.User?.FullName</strong></td>
+                            <td><a href="@Url.Action("Detail", "Requests", new { id = log.RequestId })" class="text-primary" style="text-decoration:none">@log.Request?.RequestCode</a></td>
+                            <td><span class="priority-badge @actionCss" data-i18n="@actionKey">@actionText</span></td>
+                            <td class="text-muted">@log.Details</td>
+                            <td class="text-muted" style="font-size:12px">@log.IpAddress</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="pagination">
+        @{ var pg = (int)(ViewBag.CurrentPage ?? 1); }
+        @if (pg > 1) { <a href="@Url.Action("AuditLogs", new { page = pg - 1 })" class="page-link">← <span data-i18n="PaginationPrev">Trước</span></a> }
+        <span class="page-link active"><span data-i18n="PaginationPage">Trang</span> @pg</span>
+        @if (Model.Count == 50) { <a href="@Url.Action("AuditLogs", new { page = pg + 1 })" class="page-link"><span data-i18n="PaginationNext">Sau</span> →</a> }
+    </div>
+</div>

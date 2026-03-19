@@ -1,0 +1,181 @@
+@model IEnumerable<DANGCAPNE.Models.Workflow.FormTemplate>
+@{
+    ViewData["Title"] = "Chọn loại đơn";
+    var categories = Model.Select(m => m.Category).Where(c => !string.IsNullOrWhiteSpace(c)).Distinct().OrderBy(c => c).ToList();
+
+    string TranslateCategory(string cat) {
+        switch (cat) {
+            case "Leave": return "Nghỉ phép";
+            case "OT": return "Làm thêm giờ";
+            case "Travel": return "Công tác";
+            case "Expense": return "Chi phí";
+            case "Equipment": return "Thiết bị";
+            default: return cat;
+        }
+    }
+}
+
+<div class="page-content">
+    <div class="page-header">
+        <div>
+            <h2 class="page-title" data-i18n="TitleSelectCategory">Chọn loại đơn</h2>
+            <p class="text-muted" data-i18n="SubtitleSelectCategory">Tạo đơn mới nhanh chóng theo đúng quy trình</p>
+        </div>
+        <div class="template-search-wrap">
+            <i class="bi bi-search"></i>
+            <input id="templateSearch" type="text" class="template-search" placeholder="Tìm loại đơn..." data-i18n="PlaceholderSearchCat" />
+        </div>
+    </div>
+    
+    <!-- AI Assistant Prompt Area -->
+    <div class="glass-card mb-24" style="padding: 24px;">
+        <div class="d-flex align-items-center mb-16">
+            <i class="bi bi-stars text-warning" style="font-size:24px; margin-right:12px;"></i>
+            <h4 class="mb-0" style="font-weight:700;" data-i18n="TitleAIPrompt">Tạo đơn thông minh bằng A.I</h4>
+        </div>
+        <p class="text-muted" style="margin-bottom:16px;" data-i18n="DescAIPrompt">Nhập yêu cầu của bạn bằng ngôn ngữ tự nhiên, trợ lý ảo sẽ tự động chọn biểu mẫu và điền sẵn thông tin. Ví dụ: "Cho tôi xin nghỉ phép chiều mai vì đi khám bệnh".</p>
+        <div class="d-flex gap-16 align-center">
+            <input type="text" id="aiPromptInput" class="form-control" placeholder="Bạn muốn tạo hệ đơn gì hôm nay?" data-i18n="PlaceholderAIPrompt" style="flex: 1;" />
+            <button id="btnAiCreate" class="btn btn-primary" style="min-width: 140px;">
+                <i class="bi bi-send"></i> <span data-i18n="BtnAIPrompt">Phân tích</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="template-filters">
+        <button class="chip active" data-filter="all" data-i18n="FilterAllCat">Tất cả</button>
+        @foreach (var cat in categories)
+        {
+            <button class="chip" data-filter="@cat" data-i18n="Cat_@cat">@TranslateCategory(cat)</button>
+        }
+    </div>
+
+    <div class="template-grid" id="templateGrid">
+        @foreach (var t in Model)
+        {
+            var desc = string.IsNullOrWhiteSpace(t.Description) ? "Biểu mẫu tiêu chuẩn, điền nhanh và gửi duyệt." : t.Description;
+            <a class="template-card" data-category="@t.Category" href="@Url.Action("Create", "Requests", new { templateId = t.Id })">
+                <div class="template-card-top">
+                    <div class="template-icon" style="--icon-color:@(string.IsNullOrWhiteSpace(t.IconColor) ? "#6366f1" : t.IconColor)">
+                        <i class="bi @(string.IsNullOrWhiteSpace(t.Icon) ? "bi-file-earmark-text" : t.Icon)"></i>
+                    </div>
+                    <div class="template-badges">
+                        <span class="badge badge-category" data-i18n="Cat_@t.Category">@TranslateCategory(t.Category)</span>
+                        @if (t.RequiresFinancialApproval)
+                        {
+                            <span class="badge badge-warning" data-i18n="BadgeFinance">Tài chính</span>
+                        }
+                        @if (!t.IsActive)
+                        {
+                            <span class="badge badge-muted" data-i18n="BadgeSuspended">Tạm ngưng</span>
+                        }
+                    </div>
+                </div>
+                <h3 class="template-title">@t.Name</h3>
+                @if (string.IsNullOrWhiteSpace(t.Description))
+                {
+                    <p class="template-desc" data-i18n="DescStdForm">@desc</p>
+                }
+                else
+                {
+                    <p class="template-desc">@desc</p>
+                }
+                <div class="template-footer">
+                    <span class="template-action"><span data-i18n="ActionCreateReq">Tạo đơn</span> <i class="bi bi-arrow-right"></i></span>
+                </div>
+            </a>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const search = document.getElementById('templateSearch');
+            const chips = document.querySelectorAll('.template-filters .chip');
+            const cards = Array.from(document.querySelectorAll('.template-card'));
+
+            function applyFilters() {
+                const activeChip = document.querySelector('.template-filters .chip.active');
+                const filter = activeChip ? activeChip.getAttribute('data-filter') : 'all';
+                const query = (search.value || '').toLowerCase().trim();
+
+                cards.forEach(card => {
+                    const category = (card.getAttribute('data-category') || '').toLowerCase();
+                    const text = card.innerText.toLowerCase();
+                    const matchCategory = filter === 'all' || category === filter.toLowerCase();
+                    const matchQuery = !query || text.includes(query);
+                    card.style.display = (matchCategory && matchQuery) ? '' : 'none';
+                });
+            }
+
+            chips.forEach(chip => {
+                chip.addEventListener('click', function () {
+                    chips.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    applyFilters();
+                });
+            });
+
+            search.addEventListener('input', applyFilters);
+            
+            // AI Integration
+            const btnAi = document.getElementById('btnAiCreate');
+            const aiInput = document.getElementById('aiPromptInput');
+            
+            btnAi.addEventListener('click', async function() {
+                let btn = this;
+                const prompt = aiInput.value.trim();
+                if (!prompt) return;
+                
+                // Vô hiệu hóa nút và đổi text thành Đang xử lý
+                btn.disabled = true;
+                aiInput.disabled = true;
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> <span data-i18n="BtnAIAnalyzing">Đang phân tích...</span>';
+                
+                try {
+                    const response = await fetch('@Url.Action("AnalyzeIntent", "Requests")', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ prompt: prompt })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.error) {
+                            alert(data.error);
+                        } else if (data.TemplateId) {
+                            // Store formData in sessionStorage to be read by Create page
+                            if(data.FormData) {
+                                sessionStorage.setItem('ai_formData_' + data.TemplateId, JSON.stringify(data.FormData));
+                            }
+                            window.location.href = '/Requests/Create?templateId=' + data.TemplateId;
+                        } else {
+                            const lang = localStorage.getItem('dangcapne_lang') || 'vi';
+                            const msg = typeof dict !== 'undefined' && dict[lang]?.AIErrorNoTemplate ? dict[lang].AIErrorNoTemplate : "A.I không tìm thấy biểu mẫu phù hợp với yêu cầu của bạn. Vui lòng thử cách diễn đạt khác.";
+                            alert(msg);
+                        }
+                    } else {
+                        const lang = localStorage.getItem('dangcapne_lang') || 'vi';
+                        const msg = typeof dict !== 'undefined' && dict[lang]?.AIErrorCall ? dict[lang].AIErrorCall : "Có lỗi xảy ra khi gọi A.I.";
+                        alert(msg);
+                    }
+                } catch(e) {
+                    const lang = localStorage.getItem('dangcapne_lang') || 'vi';
+                    const msg = typeof dict !== 'undefined' && dict[lang]?.AIErrorConn ? dict[lang].AIErrorConn : "Không thể kết nối với hệ thống A.I.";
+                    alert(msg);
+                } finally {
+                    // Sau khi có kết quả (thành công hoặc lỗi), mở lại nút
+                    btn.disabled = false;
+                    aiInput.disabled = false;
+                    btn.innerHTML = originalContent; // hoặc 'Phân tích'
+                }
+            });
+            
+            aiInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') btnAi.click();
+            });
+        })();
+    </script>
+}

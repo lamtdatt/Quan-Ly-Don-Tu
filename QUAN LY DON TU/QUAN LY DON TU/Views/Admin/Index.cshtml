@@ -1,0 +1,147 @@
+@model DANGCAPNE.ViewModels.AdminViewModel
+@{
+    ViewData["TitleI18n"] = "TitleAdminSys";
+    ViewData["Title"] = "Quản trị hệ thống";
+}
+<div class="page-content">
+    <div class="d-flex justify-between align-center mb-24">
+        <div>
+            <h2 style="font-size:24px;font-weight:800;margin-bottom:4px" data-i18n="TitleAdminSys">Quản trị hệ thống</h2>
+            <p class="text-muted" data-i18n="SubtitleAdminSys">Quản lý người dùng, phòng ban và cấu hình</p>
+        </div>
+        <div class="d-flex gap-8">
+            <a href="@Url.Action("Delegation")" class="btn btn-outline"><i class="bi bi-arrow-left-right"></i> <span data-i18n="BtnDelegation">Ủy quyền</span></a>
+            <a href="@Url.Action("AuditLogs")" class="btn btn-outline"><i class="bi bi-shield-lock"></i> <span data-i18n="BtnAuditLogs">Nhật ký hệ thống</span></a>
+        </div>
+    </div>
+
+    <div class="tab-nav">
+        <a href="@Url.Action("Index", new { tab = "users" })" class="tab-link @(Model.ActiveTab == "users" ? "active" : "")"><i class="bi bi-people"></i> <span data-i18n="TabUsers">Người dùng</span> (@Model.Users.Count)</a>
+        <a href="@Url.Action("Index", new { tab = "departments" })" class="tab-link @(Model.ActiveTab == "departments" ? "active" : "")"><i class="bi bi-building"></i> <span data-i18n="TabDepts">Phòng ban</span> (@Model.Departments.Count)</a>
+        <a href="@Url.Action("Index", new { tab = "forms" })" class="tab-link @(Model.ActiveTab == "forms" ? "active" : "")"><i class="bi bi-ui-checks-grid"></i> <span data-i18n="TabForms">Biểu mẫu</span> (@Model.FormTemplates.Count)</a>
+        <a href="@Url.Action("Index", new { tab = "workflows" })" class="tab-link @(Model.ActiveTab == "workflows" ? "active" : "")"><i class="bi bi-diagram-3"></i> <span data-i18n="TabWorkflows">Luồng duyệt</span> (@Model.Workflows.Count)</a>
+    </div>
+
+    @if (Model.ActiveTab == "users")
+    {
+        <div class="glass-card">
+            <div class="card-header">
+                <h3><i class="bi bi-people-fill text-primary"></i> <span data-i18n="TitleManageUsers">Quản lý nhân viên</span></h3>
+                <a href="@Url.Action("EditUser", new { id = 0 })" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> <span data-i18n="LabelAddUser">Thêm nhân viên</span></a>
+            </div>
+            <div class="card-body" style="padding:0">
+                <table class="data-table">
+                    <thead><tr><th data-i18n="ColCode">Mã NV</th><th data-i18n="ColName">Họ tên</th><th data-i18n="ColEmail">Email</th><th data-i18n="ColDept">Phòng ban</th><th data-i18n="ColRole">Vai trò</th><th data-i18n="ColStatus">Trạng thái</th><th></th></tr></thead>
+                    <tbody>
+                        @foreach (var u in Model.Users)
+                        {
+                            var statusText = u.Status == "Active" ? "Hoạt động" : "Vô hiệu";
+                            var statusI18n = u.Status == "Active" ? "ColActive" : "ColInactive";
+                            <tr>
+                                <td><strong>@u.EmployeeCode</strong></td>
+                                <td>
+                                    <div class="d-flex align-center gap-8">
+                                        <div class="user-avatar" style="width:32px;height:32px;font-size:12px">@u.FullName.Substring(0, 1)</div>
+                                        @u.FullName
+                                    </div>
+                                </td>
+                                <td class="text-muted">@u.Email</td>
+                                <td>@u.Department?.Name</td>
+                                <td>
+                                    @foreach (var ur in u.UserRoles)
+                                    {
+                                        var roleCss = ur.Role?.Name switch { "Admin" => "danger", "HR" => "warning", "Manager" => "info", _ => "primary" };
+                                        <span class="priority-badge @roleCss">@ur.Role?.Name</span>
+                                    }
+                                </td>
+                                <td><span class="status-badge @(u.Status == "Active" ? "approved" : "rejected")" data-i18n="@statusI18n">@statusText</span></td>
+                                <td><a href="@Url.Action("EditUser", new { id = u.Id })" class="btn btn-ghost btn-sm"><i class="bi bi-pencil"></i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else if (Model.ActiveTab == "departments")
+    {
+        <div class="glass-card">
+            <div class="card-header">
+                <h3><i class="bi bi-building text-warning"></i> <span data-i18n="TabDepts">Phòng ban</span></h3>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-action="CreateDepartment" class="d-flex gap-8 mb-24">
+                    <input type="text" name="name" class="form-control" placeholder="Tên phòng ban" data-i18n="PlaceholderDeptName" required />
+                    <input type="text" name="code" class="form-control" placeholder="Mã phòng ban" data-i18n="PlaceholderDeptCode" style="max-width:120px" required />
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-plus"></i> <span data-i18n="BtnAdd">Thêm</span></button>
+                </form>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px">
+                    @foreach (var d in Model.Departments)
+                    {
+                        <div style="background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--radius-md);padding:20px">
+                            <div style="font-size:15px;font-weight:600">@d.Name</div>
+                            <div class="text-muted" style="font-size:12px"><span data-i18n="ColCode">Mã NV</span>: @d.Code · @Model.Users.Count(u => u.DepartmentId == d.Id) <span data-i18n="LabelEmp">nhân viên</span></div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.ActiveTab == "forms")
+    {
+        <div class="glass-card">
+            <div class="card-header">
+                <h3><i class="bi bi-ui-checks-grid text-info"></i> <span data-i18n="TitleDynamicForms">Biểu mẫu động</span></h3>
+                <a href="@Url.Action("FormBuilder")" class="btn btn-primary btn-sm"><i class="bi bi-plus-circle"></i> <span data-i18n="TitleCreateForm">Tạo biểu mẫu</span></a>
+            </div>
+            <div class="card-body" style="padding:0">
+                <table class="data-table">
+                    <thead><tr><th data-i18n="ColFormName">Tên</th><th data-i18n="ColCategory">Danh mục</th><th data-i18n="ColWorkflow">Luồng duyệt</th><th data-i18n="ColFinance">Tài chính</th><th data-i18n="ColStatus">Trạng thái</th><th></th></tr></thead>
+                    <tbody>
+                        @foreach (var f in Model.FormTemplates)
+                        {
+                            <tr>
+                                <td><i class="bi @f.Icon" style="color:@f.IconColor"></i> <strong>@f.Name</strong></td>
+                                <td>@f.Category</td>
+                                <td>@f.Workflow?.Name</td>
+                                <td>@(f.RequiresFinancialApproval ? Html.Raw("✓ <span data-i18n='LabelReqPin'>Cần PIN</span>") : Html.Raw("—"))</td>
+                                <td><span class="status-badge @(f.IsActive ? "approved" : "rejected")" data-i18n="@(f.IsActive ? "ColActive" : "ColInactive")">@(f.IsActive ? "Hoạt động" : "Ẩn")</span></td>
+                                <td><a href="@Url.Action("FormBuilder", new { id = f.Id })" class="btn btn-ghost btn-sm"><i class="bi bi-pencil"></i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else if (Model.ActiveTab == "workflows")
+    {
+        <div class="glass-card">
+            <div class="card-header"><h3><i class="bi bi-diagram-3 text-success"></i> <span data-i18n="NavApprovalFlow">Luồng phê duyệt</span></h3></div>
+            <div class="card-body">
+                @foreach (var w in Model.Workflows)
+                {
+                    <div style="margin-bottom:24px;padding:20px;background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:var(--radius-md)">
+                        <h4 style="font-size:16px;font-weight:600;margin-bottom:12px">@w.Name</h4>
+                        <p class="text-muted" style="font-size:13px;margin-bottom:12px">@w.Description</p>
+                        <div class="d-flex gap-8 flex-wrap">
+                            @foreach (var step in w.Steps.OrderBy(s => s.StepOrder))
+                            {
+                                <div class="d-flex align-center gap-8">
+                                    <div style="background:rgba(99,102,241,0.15);padding:8px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:500">
+                                        <span class="text-muted">#@step.StepOrder</span> @step.Name
+                                        @if (step.CanSkipIfApplicant) { <span class="text-warning" style="font-size:11px">(<span data-i18n="LabelAutoSkip">tự bỏ qua</span>)</span> }
+                                    </div>
+                                    @if (step != w.Steps.OrderBy(s => s.StepOrder).Last())
+                                    {
+                                        <i class="bi bi-arrow-right text-muted"></i>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
